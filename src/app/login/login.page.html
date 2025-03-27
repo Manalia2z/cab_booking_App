@@ -1,0 +1,56 @@
+<div class="auth-bg-image-box">
+  <div class="auth-bg-image"></div>
+  <div class="auth-content-bg auth-content-bg-bottom">
+      <div class="custom-container white-background pb-2">
+          <div class="auth-title mt-0">
+              <div class="loader-line"></div>
+              <h6>Hey, You have been missed !</h6>
+          </div>
+
+          <form class="auth-form mt-0">
+              <div class="form-group">
+                  <label class="form-label mb-2" for="Inputemail">Email</label>
+                  <div class="position-relative">
+                      <input type="email" class="form-control" id="Inputemail" placeholder="Enter email">
+                      <i class="iconsax icon" data-icon="mail"></i>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="form-label mb-2" for="Inputpassword">Password</label>
+                  <div class="position-relative">
+                      <input type="password" class="form-control" id="Inputpassword" placeholder="Enter password">
+                      <i class="iconsax icon" data-icon="lock-2"></i>
+                  </div>
+                  <div class="show-hide toggler">
+                      <i class="iconsax eye-icon icon-eye" data-icon="eye"></i>
+                      <i class="iconsax eye-icon icon-eye-splash" data-icon="eye-slash"></i>
+                  </div>
+              </div>
+              <div class="flex-spacing">
+                  <div class="form-group mt-0">
+                    
+                  </div>
+                  <a class="forgot" >Forgot password?</a>
+              </div>
+
+              <div class="division">
+                  <span>OR</span>
+              </div>
+
+
+              <a routerLink="/login-with-number" class="btn theme-btn google-btn w-100 flex-center gap-2 mt-2">
+                  <img class="img-fluid google" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/mobile.svg" alt="mobile" /> with
+                  Number</a>
+
+              <a  class="btn theme-btn w-100 auth-btn mt-2" routerLink="/user/home">Login</a>
+              <h6 class="content-color fw-normal text-center"> New User ?
+                  <a routerLink="/user-registration" class="title-color fw-medium">Sign up</a>
+              </h6>
+              <h6 class="content-color fw-normal mt-0 p-0 text-center"> Sign Up ?
+                <a routerLink="/driver-registration" class="title-color fw-medium">As Driver</a>
+            </h6>
+          </form>
+      </div>
+  </div>
+</div>

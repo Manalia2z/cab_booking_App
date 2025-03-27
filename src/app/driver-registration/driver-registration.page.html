@@ -1,0 +1,97 @@
+
+
+<ion-content [fullscreen]="true">
+
+    <!-- header starts -->
+    <header id="header" class="auth-header">
+      <div class="custom-container">
+          <div class="header-panel pb-0">
+              <img class="img-fluid mx-auto logo" src="../../assets/images/logo/driver/driver-logo.png" alt="logo">
+              <img class="img-fluid mx-auto logo-dark" src="../../assets/images/logo/driver/driver-logo-dark.png"
+                  alt="logo">
+          </div>
+      </div>
+  </header>
+  <!-- header end -->
+
+  <!-- signup page starts -->
+  <div class="auth-bg-image-box">
+      <div class="auth-bg-image"></div>
+      <div class="auth-content-bg auth-content-bg-bottom">
+          <div class="custom-container white-background pb-2">
+              <div class="auth-title">
+                  <div class="loader-line"></div>
+                  <h2>Create your account</h2>
+                  <h6>Explore your life by joining with Ride.</h6>
+              </div>
+
+            <form class="auth-form" id="loginForm" [formGroup]="loginForm" (ngSubmit)="registerNewUser()" enctype="multipart/form-data">
+                  <div class="form-group mt-0">
+                      <label class="form-label mb-2" for="Inputname">Driver Full Name</label>
+                      <div class="position-relative">
+                          <input type="text" formControlName="d_name"  class="form-control" id="Inputname" placeholder="Enter your name">
+                          <i class="fa fa-user-o text-secondary icon" data-icon="user-2"></i>
+                      </div>
+                      <div class="m-0 p-0" *ngIf="loginForm.get('d_name')?.invalid && loginForm.get('d_name')?.touched">
+                        <small class="text-danger">Please Enter Your Full Name...</small>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label mb-2" for="Inputnumner">Mobile Number</label>
+                      <div class="position-relative">
+                          <input type="number" formControlName="d_number" class="form-control" id="Inputnumner" placeholder="Enter your number">
+                          <i class="fa fa-phone text-secondary icon" data-icon="phone"></i>
+                      </div>
+                      <div class="m-0 p-0" *ngIf="loginForm.get('d_number')?.invalid && loginForm.get('d_number')?.touched">
+                        <small class="text-danger">Enter 10 Digit Mobile No Start With 7, 8, 9 </small>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label mb-2" for="Inputemail">Email</label>
+                      <div class="position-relative">
+                          <input type="email" formControlName="d_email" class="form-control" id="Inputemail" placeholder="Enter your email">
+                          <i class="fa fa-envelope text-secondary icon" data-icon="mail"></i>
+                      </div>
+                      <div class="m-0 p-0" *ngIf="loginForm.get('d_email')?.invalid && loginForm.get('d_email')?.touched">
+                        <small class="text-danger">Enter Email</small>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="form-label mb-1" for="Inputid">Address</label>
+                      <div class="position-relative">
+                          <textarea formControlName="d_address" class="form-control" id="Inputid" placeholder="Enter Address"></textarea>
+                          <i class="fa fa-map-marker text-secondary icon" data-icon="profile-card"></i>
+                      </div>
+                      <div class="m-0 p-0" *ngIf="loginForm.get('d_address')?.invalid && loginForm.get('d_address')?.touched">
+                        <small class="text-danger">Enter Address</small>
+                      </div>
+                  </div>
+
+                  <button class="btn theme-btn w-100 auth-btn" type="submit">Sign Up</button>
+                  <h6 class="content-color fw-normal my-3 text-center"> Already have
+                      an account ? <a routerLink="/login" class="title-color fw-medium">Sign in</a> </h6>
+              </form>
+          </div>
+      </div>
+  </div>
+  <!-- signup page end -->
+
+  <!-- iconsax js -->
+  <script src="../../assets/js/iconsax.js"></script>
+
+  <!-- sticky-header js -->
+  <script src="../../assets/js/sticky-header.js"></script>
+
+  <!-- bootstrap js -->
+  <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+
+  <!-- template-setting js -->
+  <script src="../../assets/js/template-setting.js"></script>
+
+  <!-- script js -->
+  <script src="../../assets/js/script.js"></script>
+
+</ion-content>

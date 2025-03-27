@@ -1,0 +1,56 @@
+
+    <header id="header" class="auth-header">
+  <div class="custom-container">
+      <div class="header-panel">
+          <a routerLink="/login">
+              <i class="fa fa-chevron-left icon-btn" data-icon="chevron-left"> </i>
+          </a>
+          <img class="img-fluid logo" src="../../assets/images/logo/user/user-logo.png" alt="logo">
+      </div>
+  </div>
+</header>
+
+
+
+
+<ion-content class="mt-5">
+<div class="mt-5 mb-5">
+
+</div>
+  <div class="auth-bg-image-box auth-bg-image-box-inner">
+    <!-- <div class="auth-bg-image"></div> -->
+    <div class="auth-content-bg auth-content-bg-bottom mt-5">
+        <div class="custom-container" style="margin-top: 75px;">
+            <div class="auth-title pt-3">
+                <div class="loader-line"></div>
+                <h2>OTP verification</h2>
+                <h6>Enter OTP sent to +91-9075461110</h6>
+            </div>
+  
+            <h4 class="title-color fw-medium otp-name">OTP</h4>
+            <form class="otp-form">
+                <div class="form-input dark-border-gradient">
+                    <input type="number" class="form-control active" placeholder="0" id="five1"
+                        onkeyup="onKeyUpEvent(1, event)" onfocus="onFocusEvent(1)">
+                </div>
+                <div class="form-input dark-border-gradient">
+                    <input type="number" class="form-control" placeholder="0" id="five2"
+                        onkeyup="onKeyUpEvent(2, event)" onfocus="onFocusEvent(2)">
+                </div>
+                <div class="form-input dark-border-gradient">
+                    <input type="number" class="form-control" placeholder="0" id="five3"
+                        onkeyup="onKeyUpEvent(3, event)" onfocus="onFocusEvent(3)">
+                </div>
+                <div class="form-input dark-border-gradient">
+                    <input type="number" class="form-control" placeholder="0" id="five4"
+                        onkeyup="onKeyUpEvent(4, event)" onfocus="onFocusEvent(4)">
+                </div>
+                
+            </form>
+            <a routerLink="/login" class="btn theme-btn w-100 auth-btn">Verify</a>
+            <h6 class="title-color fw-semibold mt-3 text-center"> <span class="content-color fw-medium">Not Received
+                    Yet ? </span> <a href="#" class="title-color fw-medium">Resend it</a> </h6>
+        </div>
+    </div>
+  </div>
+  </ion-content>

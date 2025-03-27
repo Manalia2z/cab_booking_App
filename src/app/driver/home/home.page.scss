@@ -1,0 +1,47 @@
+.total-ride-list li .ride-box h4 {
+    font-weight: 700;
+    color: rgba(var(--theme-color), 1);
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--bs-heading-color);
+    font-family: "GT Walsheim Pro";
+}
+
+.total-ride-list li .ride-box {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: rgba(var(--white), 1);
+    border-radius: 8px;
+}
+
+h1{
+    font-size: 18px;
+}
+
+h2{
+    font-size: 17px;
+}
+
+h3{
+    font-size: 16px;
+}
+
+h4{
+    font-size: 15px;
+}
+h5{
+    font-size: 14px;
+}
+h6{
+    font-size: 13px;
+}
+
+.fw-medium{
+    font-size: 13px;
+}

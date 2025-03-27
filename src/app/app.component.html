@@ -1,0 +1,9 @@
+<ng-container *ngIf="userType === 'user'">
+  <app-user-menu></app-user-menu>
+</ng-container>
+
+<ng-container *ngIf="userType === 'driver'">
+  <app-driver-menu></app-driver-menu>
+</ng-container>
+
+<ion-router-outlet id="main-content"></ion-router-outlet>
