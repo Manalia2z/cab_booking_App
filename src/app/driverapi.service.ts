@@ -6,16 +6,15 @@ import { Injectable } from '@angular/core';
 })
 export class DriverapiService {
 
-    // endpoint:any='http://localhost/Git/Mahanubhav/api/'
     token = localStorage.getItem('token');
-    // endpoint:any='http://localhost/cab_booking/api/'
-    endpoint:any='https://192.168.1.151/cab_booking/api/'
+    endpoint:any='http://localhost/cab_booking/api/'
+    // endpoint:any='https://192.168.1.151/cab_booking/api/'
     constructor(private http:HttpClient) {
-      // localStorage.setItem('imgpath', 'http://localhost/cab_booking/uploads/'); 
-      // localStorage.setItem('path', 'http://localhost/cab_booking/api/');
+      localStorage.setItem('imgpath', 'http://localhost/cab_booking/uploads/'); 
+      localStorage.setItem('path', 'http://localhost/cab_booking/api/');
 
-      localStorage.setItem('imgpath', 'https://192.168.1.151/cab_booking/uploads/'); 
-      localStorage.setItem('path', 'https://192.168.1.151/cab_booking/');
+      // localStorage.setItem('imgpath', 'https://192.168.1.151/cab_booking/uploads/'); 
+      // localStorage.setItem('path', 'https://192.168.1.151/cab_booking/');
 
      }
 

@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { MyRidesPageRoutingModule } from './my-rides-routing.module';
 
 import { MyRidesPage } from './my-rides.page';
+import { FooterPageModule } from 'src/app/user/footer/footer.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MyRidesPageRoutingModule
+    MyRidesPageRoutingModule,FooterPageModule
   ],
   declarations: [MyRidesPage]
 })

@@ -34,6 +34,27 @@ export class MyRidesPage implements OnInit {
       console.log(res);
       this.trip_list = res.data.trip;
     })
+
+    if(this.trip_status == 'pending')
+    {
+      this.IsRideConfirmed();
+    }
+  }
+
+  getRideDet(status:any)
+  {
+    this.trip_status = status;
+    this.api.userTripList(status).subscribe((res:any)=>{
+      console.log(res);
+      this.trip_list = res.data.trip;
+    })
+  }
+
+  IsRideConfirmed()
+  {
+    setInterval(() => {
+      console.log('Function called at 5 second intervals!');
+    }, 5000); 
   }
 
 }
