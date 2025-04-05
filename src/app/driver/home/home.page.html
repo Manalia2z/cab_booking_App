@@ -16,9 +16,20 @@
 
             <div class="flex-align-center gap-sm-3 gap-2">
                 <a href="notification.html">
-                    <i class="iconsax icon-btn noti-icon" data-icon="bell-2"> </i>
+                    <i class="fa fa-bell iconsax icon-btn text-white"></i>
                 </a>
 
+            </div>
+        </div>
+        <div class="header-panel w-100 d-flex mb-2 justify-content-between border border-secondary rounded-pill p-2 bg-white">
+            <div style="vertical-align: middle;">
+                <h6 style="vertical-align: middle;">
+                    Available For Ride <span>Offline</span>
+                </h6>
+            </div>
+      
+            <div>
+                <ion-toggle (ionChange)="toggleNotification($event)"  color="success" [checked]="aval_status" style="z-index: 9999;position: relative;right: 40px;height: 20px;width: 30px;color: #199675;">Receive Push Notifications</ion-toggle>
             </div>
         </div>
     </div>
@@ -28,17 +39,18 @@
 <!-- earning section starts -->
 <section>
     <div class="custom-container">
+
         <ul class="total-ride-list mt-0 p-0">
             <li>
                 <a class="ride-box">
                     <div class="flex-spacing gap-1">
-                        <h4 class="m-0">$3100</h4>
+                        <h4 class="m-0">{{ttlPendingTrips}}</h4>
                         <div class="ride-icon">
                             <i class="iconsax icon" data-icon="wallet-open"> </i>
                         </div>
                     </div>
                     <div class="flex-spacing gap-1 mt-1">
-                        <h6 class="d-flex flex-wrap m-0">Total Earnings</h6>
+                        <h6 class="d-flex flex-wrap m-0">Total Pending Trips</h6>
                         <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
                     </div>
                 </a>
@@ -46,13 +58,13 @@
             <li>
                 <a class="ride-box">
                     <div class="flex-spacing gap-1">
-                        <h4 class="m-0">16</h4>
+                        <h4 class="m-0">{{ttl_schedule_trip}}</h4>
                         <div class="ride-icon">
                             <i class="iconsax icon" data-icon="smart-car"> </i>
                         </div>
                     </div>
                     <div class="flex-spacing gap-1 mt-1">
-                        <h6 class="d-flex flex-wrap m-0">Complete Ride</h6>
+                        <h6 class="d-flex flex-wrap m-0">Total Scheduled Trips</h6>
                         <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
                     </div>
                 </a>
@@ -61,13 +73,13 @@
             <li>
                 <a class="ride-box">
                     <div class="flex-spacing gap-1">
-                        <h4 class="m-0">02</h4>
+                        <h4 class="m-0">{{ttlCompletedTrips}}</h4>
                         <div class="ride-icon">
                             <i class="iconsax icon" data-icon="car"> </i>
                         </div>
                     </div>
                     <div class="flex-spacing gap-1 mt-1">
-                        <h6 class="d-flex flex-wrap m-0">Pending Ride</h6>
+                        <h6 class="d-flex flex-wrap m-0">Total Completed Trips</h6>
                         <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
                     </div>
                 </a>
@@ -75,13 +87,13 @@
             <li>
                 <a class="ride-box">
                     <div class="flex-spacing gap-1">
-                        <h4 class="m-0">04</h4>
+                        <h4 class="m-0">{{ttlCancelTrips}}</h4>
                         <div class="ride-icon">
                             <i class="iconsax icon" data-icon="driving"> </i>
                         </div>
                     </div>
                     <div class="flex-spacing gap-1 mt-1">
-                        <h6 class="d-flex flex-wrap m-0">Cancel Ride</h6>
+                        <h6 class="d-flex flex-wrap m-0">Total Cancel Trips</h6>
                         <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
                     </div>
                 </a>
@@ -92,8 +104,11 @@
 <!-- earning section end -->
 
 <!-- upcoming ride section starts -->
+
+
 <section class="upcoming-ride-section ">
     <div class="custom-container">
+        
         <div class="title">
             <h4 class="m-0">New Upcoming Ride</h4>
         </div>

@@ -15,17 +15,18 @@ export class AppComponent {
 
  ionViewWillEnter()
  {
-  this.checkUserType();
+  this.checkUserType();                    
  }
 
   checkUserType() {
     // Fetch user type from local storage or API (modify this logic as needed)
     const storedUserType = localStorage.getItem('userType'); 
-    if(storedUserType == 'user')
+    const token = localStorage.getItem('token'); 
+    if(storedUserType == 'user' && token)
     {
       this.userType = 'user';
     }
-    if(storedUserType == 'driver')
+    if(storedUserType == 'driver' && token)
     {
       this.userType = 'driver';
     }

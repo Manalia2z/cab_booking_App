@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Driver Feedback List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section class="section-b-space">
+    <div class="custom-container">
+      <ul class="notification-list">
+        <li *ngFor="let row of driver_feedback_list; let i = index;">
+          <div class="notification-box">
+            <div class="notification-icon">
+              <i class="iconsax icon" data-icon="clock">{{ i + 1 }}</i>
+            </div>
+            <div>
+              <h6><strong>User Name:</strong> {{ row.u_name }}</h6>
+              <p><strong>Address:</strong> {{ row.u_address }}</p>
+              <p><strong>Trip Status:</strong> {{ row.trip_status }}</p>
+              <p><strong>Feedback For:</strong> {{ row.feedback_for }}</p>
+              <p><strong>Driver Feedback:</strong> {{ row.driver_feedback }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</ion-content>

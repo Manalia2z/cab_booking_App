@@ -7,26 +7,39 @@
               <h6>Hey, You have been missed !</h6>
           </div>
 
-          <form class="auth-form mt-0">
+          <form class="auth-form" id="loginForm" [formGroup]="loginForm" (ngSubmit)="loginUser()" enctype="multipart/form-data">
+
               <div class="form-group">
                   <label class="form-label mb-2" for="Inputemail">Email</label>
                   <div class="position-relative">
-                      <input type="email" class="form-control" id="Inputemail" placeholder="Enter email">
-                      <i class="iconsax icon" data-icon="mail"></i>
+                      <input formControlName="email" type="email" class="form-control" autocomplete="email"
+                      inputmode="email" id="Inputemail" placeholder="Enter email">
+                      <i class="iconsax icon fa fa-envelope" data-icon="mail"></i>
+                  </div>
+                  <div class="m-0 p-0" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                    <small class="text-danger">Invalid Mail Format...</small>
                   </div>
               </div>
 
               <div class="form-group">
-                  <label class="form-label mb-2" for="Inputpassword">Password</label>
-                  <div class="position-relative">
-                      <input type="password" class="form-control" id="Inputpassword" placeholder="Enter password">
-                      <i class="iconsax icon" data-icon="lock-2"></i>
+                <label class="form-label mb-2" for="Inputpassword">Password</label>
+                <div class="position-relative">
+                    <input 
+                        [type]="showPassword ? 'text' : 'password'" 
+                        formControlName="password" 
+                        class="form-control" 
+                        id="Inputpassword" 
+                        placeholder="Enter password">
+                    <i class="iconsax fa fa-lock icon" data-icon="lock-2"></i>
+                </div>
+                <div class="show-hide toggler" (click)="togglePassword()">
+                    <i class="iconsax fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" data-icon="eye"></i>
+                </div>
+                <div class="m-0 p-0" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                    <small class="text-danger">Enter Password...</small>
                   </div>
-                  <div class="show-hide toggler">
-                      <i class="iconsax eye-icon icon-eye" data-icon="eye"></i>
-                      <i class="iconsax eye-icon icon-eye-splash" data-icon="eye-slash"></i>
-                  </div>
-              </div>
+            </div>
+            
               <div class="flex-spacing">
                   <div class="form-group mt-0">
                     
@@ -43,7 +56,7 @@
                   <img class="img-fluid google" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/mobile.svg" alt="mobile" /> with
                   Number</a>
 
-              <a  class="btn theme-btn w-100 auth-btn mt-2" routerLink="/user/home">Login</a>
+              <button type="submit" class="btn theme-btn w-100 auth-btn mt-2">Login</button>
               <h6 class="content-color fw-normal text-center"> New User ?
                   <a routerLink="/user-registration" class="title-color fw-medium">Sign up</a>
               </h6>

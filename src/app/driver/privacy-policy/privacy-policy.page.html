@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+    <header id="header" class="main-header inner-page-header">
+      <div class="custom-container">
+          <div class="header-panel">
+              <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
+                  <i class="fa fa-chevron-left text-secondary icon-btn" data-icon="text-align-left"> </i>
+              </a>
+              <h3>Privacy & Policy</h3>
+          </div>
+      </div>
+  </header>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+ 
+
+<!-- notification section starts -->
+<section class="section-b-space">
+    <div class="custom-container">
+        <ul class="notification-list">
+            <li *ngFor="let row of privacy_policy;let i=index;">
+                <div class="notification-box">
+                    <div class="notification-icon">
+                        <i class="iconsax icon" data-icon="clock">{{i+1}}</i>
+                    </div>
+                    <div>
+                        <h5>{{row.title}}</h5>
+                        <p>{{row.description}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+</ion-content>
+
+
+

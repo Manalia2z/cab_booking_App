@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { FooterPageModule } from '../../driver/footer/footer.module';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 
 @NgModule({
   imports: [
@@ -19,5 +20,6 @@ import { FooterPageModule } from '../../driver/footer/footer.module';
   ],
   declarations: [HomePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers : [Geolocation]
 })
 export class HomePageModule {}

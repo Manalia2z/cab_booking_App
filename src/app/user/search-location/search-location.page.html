@@ -1,0 +1,151 @@
+<ion-header [translucent]="true">
+  <header id="header" class="main-header inner-page-header">
+    <div class="custom-container">
+        <div class="header-panel">
+            <div class="flex-spacing gap-2 w-100">
+                <a routerLink="/user/home">
+                    <i class="iconsax icon-btn fa fa-chevron-left text-secondary" data-icon="chevron-left"> </i>
+                </a>
+
+                <a class="text-secondary border p-1 border-secondary rounded" (click)="getCurrentLocation()">
+                  Use Current <i class="iconsax fa fa-map-marker text-secondary" data-icon="map-marker">  </i>
+              </a>
+            </div>
+        </div>
+    </div>
+</header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ 
+<!-- header end -->
+
+<!-- location section starts -->
+<form class="auth-form" id="tripForm" [formGroup]="tripForm" (ngSubmit)="bookTrip()" enctype="multipart/form-data">
+
+<section class="location-section pt-0 bg-white">
+    <div class="custom-container bg-white">
+        <ul class="pickup-location-listing">
+            <li>
+                <div class="location-box">
+                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg" alt="location">
+                    <input formControlName="pickupLocation" type="text" id="inputpickup" class="form-control" placeholder="Pickup location"
+                        [value]="pickupLocation"
+                        (keyup)="onSearchChange($event, 'pickup')">
+                </div>
+                <div class="m-0 p-0" *ngIf="tripForm.get('pickupLocation')?.invalid && tripForm.get('pickupLocation')?.touched">
+                    <small class="text-danger">Please Enter Your Full Name...</small>
+                  </div>
+            </li>
+            <li>
+                <div class="location-box">
+                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="gps">
+                    <input formControlName="destination" type="text" id="inputdestination" class="form-control border-0" placeholder="Enter destination"
+                        [value]="destination"
+                        (keyup)="onSearchChange($event, 'destination')">
+                    <i class="iconsax add-stop" data-icon="add"></i>
+                </div>
+                <div class="m-0 p-0" *ngIf="tripForm.get('destination')?.invalid && tripForm.get('destination')?.touched">
+                    <small class="text-danger">Please Enter Your Full Name...</small>
+                  </div>
+            </li>
+        </ul>
+        
+    </div>
+</section>
+
+<section>
+  <div class="custom-container" *ngIf="suggestions.length">
+    <h3 class="title-color fw-medium mb-2">Recent Locations</h3>
+    <ul class="recent-place-list" *ngIf="suggestions.length">
+        <li *ngFor="let place of suggestions" (click)="selectPlace(place, searchType)">
+            <div class="recent-box">
+                <div class="recent-icon">
+                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/history.svg" alt="history">
+                </div>
+                <div>
+                    <h5>{{place.city}}, {{place.pincode}}</h5>
+                    <p>{{ place.description }}, <b>{{place.state}}</b></p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<div class="custom-container">
+    
+  <div class="tab-content ride-content" id="TabContent" *ngIf="destination">
+      <div class="tab-pane fade active show" id="active-tab">
+     
+          <h5>Vehicle Type</h5>
+          <ul class="ride-tab bg-white pt-2">
+              <li class="w-100" *ngFor="let row of vehicle_type;let i=index;">
+                  <input (change)="getBrands($event,row.is_brand_available,row.vehicle_type_tbl_id,row.reg_fee)" type="radio" class="btn-check" formControlName="vehicle_type_id" [value]="row.vehicle_type_tbl_id" [id]="'btn-check'+i" checked>
+                  <label class="btn selact-ride-box" [for]="'btn-check'+i">
+      
+                    <img style="width: 70px;height: 70px;" class="img-fluid vehicle-img mt-0" [src]="imgpath+row.vehicle_type_image" alt="bike">
+                    <span class="flex-spacing">
+                        <span class="title-color text-start vehicle-name">{{row.type_name}}</span>
+                        <a href="#vehicle-details" data-bs-toggle="offcanvas">
+                            <i class="iconsax icon" data-icon="info-circle"> </i>
+                        </a>
+                    </span>
+                  </label>
+              </li>
+              <div class="m-0 p-0" *ngIf="tripForm.get('vehicle_type_id')?.invalid && tripForm.get('vehicle_type_id')?.touched">
+                <small class="text-danger">Please Select Vehicle...</small>
+              </div>
+          </ul>
+          <div *ngIf="showBrands" class="vehicle-types-list bg-white rounded" style="display: block;width: 100%;overflow: visible;">
+          
+            <div *ngFor="let row of brands;let i=index;" class="p-1" style="white-space: nowrap;display: inline-block !important;">
+              <input type="radio" [value]="row.vehicle_brand_tbl_id"  formControlName="vehicle_brand_id"  class="btn-check" [id]="'btn-check'+i+'status'">
+              <label class="btn vehicle-type-button p-1 m-0 btn-outline-success" style="height: 30px;" [for]="'btn-check'+i+'status'">
+                    {{row.brand_name}}
+              </label>
+          </div>
+          <div class="m-0 p-0" *ngIf="tripForm.get('vehicle_brand_id')?.invalid && tripForm.get('vehicle_brand_id')?.touched">
+            <small class="text-danger">Please Select vehicle brand...</small>
+          </div>
+        </div>
+          <ul class="my-ride-list pb-2">
+            <li>
+                <div class="my-ride-box">
+                    <div class="my-ride-head">
+                        <div class="my-ride-content flex-column">
+                            <div class="flex-spacing">
+                                <a href="#">
+                                    <h6 class="title-color fw-medium">Distance</h6>
+                                </a>
+                                <span class="status accent-color fw-normal">{{distance}}</span>
+                            </div>
+                            <div class="flex-spacing  mt-2">
+                                <h6 class="fw-mediun success-color"></h6>
+                                <h6 class="fw-normal content-color">{{duration}}</h6>
+                            </div>
+                        </div>
+                    </div>
+
+               
+                </div>
+            </li>
+        </ul>
+      </div>
+
+ 
+
+
+  </div>
+</div>
+    <div style="background-color: aqua;height: 200px;">
+        <div #map></div>
+    </div>
+    <div class="fixed-btn">
+        <div class="custom-container">
+            <button data-bs-toggle="offcanvas" class="btn theme-btn w-100">BOOK A RIDE</button>
+        </div>
+    </div>
+</section>
+</form>
+</ion-content>

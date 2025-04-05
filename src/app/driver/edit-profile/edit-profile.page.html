@@ -1,13 +1,61 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>edit-profile</ion-title>
-  </ion-toolbar>
+  <header id="header" class="main-header inner-page-header" style="height: 40px !important; vertical-align: middle;">
+    <div class="custom-container">
+        <div class="header-panel">
+            <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+                <i class="fa fa-chevron-left text-secondary icon-btn" data-icon="text-align-left"> </i>
+            </a>
+            <h3>Edit Profile</h3>
+        </div>
+    </div>
+</header>
 </ion-header>
+<ion-content [fullscreen]="true"  style="background: #F4F4F4 !important;">
+   <div class="setting-section profile-setting-section mt-3 pb-5 pt-3" style="background: #F4F4F4;">
+        <div class="custom-container">
+            <form class="theme-form" id="editForm" [formGroup]="editForm" (ngSubmit)="UpdateDriver()">
+                <div class="form-group mt-0">
+                    <label class="form-label mb-2" for="Inputname">Driver Name</label>
+                    <input type="text"  class="form-control" formControlName="d_name"  id="Inputname" placeholder="Enter your name">
+                     <div class="m-0 p-0" *ngIf="editForm.get('d_name')?.invalid && editForm.get('d_name')?.touched">
+                        <small class="text-danger">Please Enter Your  Name...</small>
+                      </div>
+                </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit-profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+                <div class="form-group">
+                    <label class="form-label mb-2" for="Inputemail">Driver Email</label>
+                    <input type="email" class="form-control" formControlName="d_email" id="Inputemail" placeholder="Enter your email">
+                    <div class="m-0 p-0" *ngIf="editForm.get('d_email')?.invalid && editForm.get('d_email')?.touched">
+                        <small class="text-danger">Please Enter Your Email...</small>
+                      </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label mb-2" for="Inputemail">Driver Password</label>
+                    <input type="email" class="form-control" formControlName="d_password" id="Inputemail" placeholder="Enter your email">
+                    <div class="m-0 p-0" *ngIf="editForm.get('d_password')?.invalid && editForm.get('d_password')?.touched">
+                        <small class="text-danger">Please Enter Your Password...</small>
+                      </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label mb-2" for="Inputemail">Driver Address</label>
+                    <input type="email" class="form-control" formControlName="d_address" id="Inputemail" placeholder="Enter your email">
+                    <div class="m-0 p-0" *ngIf="editForm.get('d_address')?.invalid && editForm.get('d_address')?.touched">
+                        <small class="text-danger">Please Enter Driver address...</small>
+                      </div>
+                </div>
+
+
+        <div class="fixed-btn">
+            <div class="custom-container">
+                <button type="submit" class="btn theme-btn w-100 auth-btn">Update</button>
+            </div>
+        </div>
+            
+
+            </form>
+        </div>
+    </div>
 </ion-content>

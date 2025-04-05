@@ -39,11 +39,10 @@
     <div class="custom-container">
         <div class="form-input">
             <input type="search" class="form-control with-icon" id="inputusername"
-                placeholder="Search destinations">
+                placeholder="Search destinations" (click)="SearchLocation()">
             <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
-            <a href="date-time-schedule.html" class="date-time-picker">
-                <i class="iconsax icon" data-icon="calendar-1">
-                </i>
+            <a (click)="SearchLocation()" class="date-time-picker">
+                <i class="iconsax icon" data-icon="calendar-1"></i>
             </a>
         </div>
     </div>

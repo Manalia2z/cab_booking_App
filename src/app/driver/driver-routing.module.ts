@@ -41,6 +41,26 @@ const routes: Routes = [  {
     path: 'my-rides',
     loadChildren: () => import('./my-rides/my-rides.module').then( m => m.MyRidesPageModule)
   },
+  {
+    path: 'ride-verification',
+    loadChildren: () => import('./ride-verification/ride-verification.module').then( m => m.RideVerificationPageModule)
+  },
+  {
+    path: 'driver-feedback-list',
+    loadChildren: () => import('./driver-feedback-list/driver-feedback-list.module').then( m => m.DriverFeedbackListPageModule)
+  },
+  {
+    path: 'trip-details',
+    loadChildren: () => import('./trip-details/trip-details.module').then( m => m.TripDetailsPageModule)
+  },
+  {
+    path: 'terms-condition',
+    loadChildren: () => import('./terms-condition/terms-condition.module').then( m => m.TermsConditionPageModule)
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('./privacy-policy/privacy-policy.module').then( m => m.PrivacyPolicyPageModule)
+  },
 
 
 ];

@@ -19,7 +19,7 @@
       <ul class="line-design">
           <li class="active"></li>
           <li class="active"></li>
-          <li></li>
+          
       </ul>
 
       <div class="auth-title">
@@ -27,125 +27,138 @@
           <h6>Explore your life by joining with Ride.</h6>
       </div>
 
-      <ul class="vehicle-types-list">
-          <li>
-              <input type="radio" class="btn-check" name="options" id="btn-check-1">
-              <label class="btn vehicle-type-button" for="btn-check-1"> <img class="img-fluid vehicle-img"
-                      src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/bike-img2.svg" alt="bike">
-                  Bike
-              </label>
-          </li>
-          <li>
-              <input type="radio" class="btn-check" name="options" id="btn-check-2">
-              <label class="btn vehicle-type-button" for="btn-check-2"> <img class="img-fluid vehicle-img"
-                      src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/car-img2.svg" alt="car">
-                  Car
-              </label>
-          </li>
-          <li>
-              <input type="radio" class="btn-check" name="options" id="btn-check-3">
-              <label class="btn vehicle-type-button" for="btn-check-3"> <img class="img-fluid vehicle-img"
-                      src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/van-img2.svg" alt="van">
-                  Van
-              </label>
-          </li>
-          <li>
-              <input type="radio" class="btn-check" name="options" id="btn-check-4">
-              <label class="btn vehicle-type-button" for="btn-check-4"> <img class="img-fluid vehicle-img"
-                      src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/bus-img2.svg" alt="bus">
-                  Bus
-              </label>
-          </li>
-      </ul>
 
-      <form class="auth-form">
+     <form class="auth-form" id="regForm" [formGroup]="regForm" (ngSubmit)="registerNewVehicle()" enctype="multipart/form-data">
+
+        <ul class="vehicle-types-list">
+        
+            <li *ngFor="let row of vehicle_type;let i=index;">
+                <input (change)="getBrands($event,row.is_brand_available,row.vehicle_type_tbl_id,row.reg_fee)" type="radio" class="btn-check" formControlName="vehicle_type_tbl_id" [value]="row.vehicle_type_tbl_id" [id]="'btn-check'+i">
+                <label class="btn vehicle-type-button p-0" [for]="'btn-check'+i"> <img class="img-fluid vehicle-img"
+                  [src]="imgpath+row.vehicle_type_image" alt="van" style="width: 50px;height: 50px;">
+                    {{row.type_name}}
+                </label>
+            </li>
+           
+        </ul>
+        <div class="m-0 p-0" *ngIf="regForm.get('vehicle_type_tbl_id')?.invalid && regForm.get('vehicle_type_tbl_id')?.touched">
+          <small class="text-danger">Please Select Vehicle Type...</small>
+        </div>
+        <div *ngIf="showBrands" class="vehicle-types-list bg-white rounded" style="display: block;width: 100%;overflow: visible;">
+          
+            <div *ngFor="let row of brands;let i=index;" class="p-1" style="white-space: nowrap;display: inline-block !important;">
+              <input type="radio" [value]="row.vehicle_brand_tbl_id"  formControlName="vehicle_brand_id"  class="btn-check" [id]="'btn-check'+i+'status'">
+              <label class="btn vehicle-type-button p-1 m-0 btn-outline-success" style="height: 30px;" [for]="'btn-check'+i+'status'">
+                    {{row.brand_name}}
+              </label>
+          </div>
+          <div class="m-0 p-0" *ngIf="regForm.get('vehicle_brand_id')?.invalid && regForm.get('vehicle_brand_id')?.touched">
+            <small class="text-danger">Please Select vehicle brand...</small>
+          </div>
+        </div>
           <div class="form-group mt-0">
-              <label class="form-label mb-2" for="Inputname">Vehicle Name</label>
+              <label class="form-label mb-2" for="InputVehiclename">Vehicle Name</label>
               <div class="position-relative">
-                  <input type="text" class="form-control white-background" id="Inputname"
+                  <input type="text" formControlName="name_model" class="form-control white-background" id="InputVehiclename"
                       placeholder="Enter vehicle name">
-                  <i class="iconsax icon" data-icon="car"></i>
+                  <i class="iconsax fa fa-car icon" data-icon="car"></i>
+              </div>
+              <div class="m-0 p-0" *ngIf="regForm.get('name_model')?.invalid && regForm.get('name_model')?.touched">
+                <small class="text-danger">Please Enter Your Modal...</small>
               </div>
           </div>
+          <div class="form-group mt-0">
+            <label class="form-label mb-2" for="InputVehicleNo">Vehicle No</label>
+            <div class="position-relative">
+                <input type="text" formControlName="vehicle_no" class="form-control white-background" id="InputVehicleNo"
+                    placeholder="Enter vehicle No">
+                <i class="iconsax fa fa-sort icon" data-icon="car"></i>
+            </div>
+            <div class="m-0 p-0" *ngIf="regForm.get('vehicle_no')?.invalid && regForm.get('vehicle_no')?.touched">
+              <small class="text-danger">Please Enter Your Vehicle No...</small>
+            </div>
+        </div>
           <div class="form-group ">
 
-              <label class="form-label mb-2" for="Inputdate">Registration Date</label>
+              <label class="form-label mb-2" for="InputRegdate">Registration Date</label>
               <div class="position-relative">
-                  <input type="date" class="form-control white-background" id="Inputdate">
-                  <i class="iconsax icon" data-icon="calendar-1"></i>
+                  <input type="date" formControlName="v_reg_date" class="form-control white-background" id="InputRegdate">
+                  <i class="iconsax fa fa-calendar-o icon" data-icon="calendar-1"></i>
+              </div>
+              <div class="m-0 p-0" *ngIf="regForm.get('v_reg_date')?.invalid && regForm.get('v_reg_date')?.touched">
+                <small class="text-danger">Please Enter Vehicle Reg. Date...</small>
               </div>
           </div>
 
           <div class="form-group">
-              <label class="form-label mb-2" for="InputVehicle">Select Vehicle Type</label>
+              <label class="form-label mb-2" for="InputVehicleRegFee">Vehicle Registration Fee</label>
               <div class="position-relative">
-                  <input type="text" class="form-control white-background" id="InputVehicle"
-                      placeholder="Enter vehicle type">
-                  <i class="iconsax icon" data-icon="car"></i>
+                  <input formControlName="reg_fee" readonly type="text" class="form-control white-background" id="InputVehicleRegFee"
+                      placeholder="Select Type , To See Registration Fee">
+                  <i class="iconsax fa fa-rupee icon" data-icon="car"></i>
+              </div>
+              <div class="m-0 p-0" *ngIf="regForm.get('reg_fee')?.invalid && regForm.get('reg_fee')?.touched">
+                <small class="text-danger">Please Select Type...</small>
               </div>
           </div>
-
           <div class="form-group">
-              <label class="form-label mb-2" for="InputColor">Vehicle Color</label>
+              <label class="form-label mb-2" for="InputFuel">Select Fuel Type</label>
               <div class="position-relative">
-                  <input type="text" class="form-control white-background" id="InputColor"
-                      placeholder="Enter vehicle color">
-                  <i class="iconsax icon" data-icon="color-filter"></i>
+                  <select formControlName="fuel_type" class="form-control form-select white-background" id="InputFuel"
+                      placeholder="Enter maximum fuel_type">
+                    <option value="" selected disabled>Select Fuel Type</option>
+                    <option value="Petrol">Petrol</option>
+                    <option value="Disel">Disel</option>
+                    <option value="CNG">CNG</option>
+                    </select>
+                  <i class="iconsax fa fa-tint icon" data-icon="users"></i>
+              </div>
+              <div class="m-0 p-0" *ngIf="regForm.get('fuel_type')?.invalid && regForm.get('fuel_type')?.touched">
+                <small class="text-danger">Please Select Fuel type...</small>
               </div>
           </div>
+          
 
           <div class="form-group">
               <label class="form-label mb-2" for="Inputseats">Maximum Seats</label>
               <div class="position-relative">
-                  <input type="number" class="form-control white-background" id="Inputseats"
+                  <input formControlName="Seats" type="number" class="form-control white-background" id="Inputseats"
                       placeholder="Enter maximum seats">
-                  <i class="iconsax icon" data-icon="users"></i>
+                  <i class="iconsax fa fa-user-o icon" data-icon="users"></i>
               </div>
+              <div class="m-0 p-0" *ngIf="regForm.get('Seats')?.invalid && regForm.get('Seats')?.touched">
+                <small class="text-danger">Please Enter Max Seats...</small>
+              </div>
+          </div>
+          <li class="form-group">
+            <h5 class="fw-medium title-color mb-2">Vehicle Photo</h5>
+            <div id="output" class="upload-image">
+                <input formControlName="photo" id="file" (change)="onFileSelected($event)" class="form-control upload-file" type="file" id="formFileLg">
+                <i class="iconsax upload-icon" data-icon="logout-2"> </i>
+                <h5>Upload Image</h5>
+            </div>
+            <div class="m-0 p-0" *ngIf="regForm.get('photo')?.invalid && regForm.get('photo')?.touched">
+                <small class="text-danger">Please Upload Vehicle Photo</small>
+            </div>
+        </li>
+        <div class="w-50" *ngIf="imageUrl">
+          <label for="">Vehicle Image</label>
+          <img class="w-100" accept="image/*"  *ngIf="imageUrl" [src]="imageUrl" style="height: 150px;object-fit: contain;"/>
+      </div>
+          <div class="fixed-btn mt-2">
+            <div class="custom-container">
+                <button type="submit" class="btn theme-btn w-100 mt-0 auth-btn">Next</button>
+                <!-- <button routerLink="/driver/driver-bank-details" class="btn theme-btn w-100 mt-0 auth-btn">Next</button> -->
+            </div>
           </div>
       </form>
   </div>
-  <div class="custom-container">
-    <h3 class="fw-semibold title-color mb-3">Select Your Rule</h3>
-    <div class="form-check mb-2">
-        <label class="form-check-label" for="check1">
-            Max, 2 in the back
-        </label>
-        <input class="form-check-input" type="checkbox" value="" id="check1" checked>
-    </div>
-    <div class="form-check mb-2">
-        <label class="form-check-label" for="check2">
-            Food is not allowed to be eaten in cars.
-        </label>
-        <input class="form-check-input" type="checkbox" value="" id="check2">
-    </div>
-    <div class="form-check mb-2">
-        <label class="form-check-label" for="check3">
-            I apologize, but this is not a pet
-        </label>
-        <input class="form-check-input" type="checkbox" value="" id="check3">
-    </div>
-    <div class="form-check mb-2">
-        <label class="form-check-label" for="check4">
-            Please, no smoking in the car
-        </label>
-        <input class="form-check-input" type="checkbox" value="" id="check4">
-    </div>
-    <div class="form-check mb-0">
-        <label class="form-check-label" for="check5">
-            No alcohol closed/open
-        </label>
-        <input class="form-check-input" type="checkbox" value="" id="check5">
-    </div>
-</div>
+
 </section>
 
 <section class="p-3 m-4">
 
 </section>
-<div class="fixed-btn mt-2">
-  <div class="custom-container">
-      <a routerLink="/driver/driver-bank-details" class="btn theme-btn w-100 mt-0 auth-btn">Next</a>
-  </div>
-</div>
+
 
 </ion-content>

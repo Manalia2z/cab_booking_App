@@ -105,10 +105,8 @@ export class DriverDocumentVerifyPage implements OnInit {
   }
   uploadDriverDocuments()
   {
- 
-
     if (this.loginForm.valid) {
-      // this.showLoading("Please Wait..");
+      this.showLoading("Please Wait..");
       console.log(this.loginForm.value);
       this.api.uploadDriverDocuments(this.imageUrl,this.imageUrl1,this.imageUrl2).subscribe((res:any)=>{
         console.log("res",res);

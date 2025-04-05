@@ -1,0 +1,47 @@
+<header id="header" class="main-header inner-page-header">
+    <div class="custom-container">
+        <div class="header-panel">
+            <div class="flex-align-center gap-2">
+                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+                    <i class="iconsax icon-btn" data-icon="text-align-left"> </i>
+                </a>
+                <h3 class="categories-title">Categories</h3>
+            </div>
+
+            <div class="flex-align-center gap-sm-3 gap-2">
+                <a href="chatting.html">
+                    <i class="iconsax icon-btn" data-icon="messages-2"> </i>
+                </a>
+                <a href="notification.html">
+                    <i class="iconsax icon-btn noti-icon" data-icon="bell-2"> </i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+<ion-content [fullscreen]="true">
+
+<!-- header end -->
+
+<!-- categories section starts -->
+<section class="section-b-space">
+    <div class="custom-container">
+        <ul class="main-categories-list">
+            <li *ngFor="let row of ride_category;">
+                <a [routerLink]="'/user/searchLocation/'+row.ride_category_tbl_id" class="main-categories-box ride" style="background-image: url('./../../../assets/d8d74a00613c7b6c668e.png');">
+                    <div class="main-categories-content">
+                        <h5>{{row.r_cat_name}}</h5>
+                        <h6>{{row.r_cat_desc}}</h6>
+                        <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- categories section end -->
+
+<!-- panel-space start -->
+<section class="panel-space"></section>
+<app-footer></app-footer>
+</ion-content>

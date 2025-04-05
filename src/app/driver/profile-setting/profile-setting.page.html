@@ -13,22 +13,21 @@
 
 <ion-content [fullscreen]="true">
   <section class="setting-section">
-    <div class="custom-container">
+    <div class="custom-container" *ngFor="let row of driverinfo;">
         <div class="profile-section white-background rounded-2 p-3">
             <div class="flex-align-center gap-2">
                 <div class="profile-image m-0">
                     <img class="img-fluid profile-pic" src="../../assets/images/profile/p8.png" alt="p8">
                 </div>
                 <div class="profile-content">
-                    <h3 class="profile-name">Jonathan Higgins</h3>
-                    <h6 class="fw-normal content-color mt-1">jonathan01&#64;gmail.com</h6>
+                    <h3 class="profile-name">{{row.d_name}}</h3>
+                    <h6 class="fw-normal content-color mt-1">{{row.d_email}}</h6>
                 </div>
             </div>
-            <div class="wallet-part">
+            <!-- <div class="wallet-part">
                 <h6>My Wallet Balance</h6>
                 <h5>$1,568.23 </h5>
-
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -38,7 +37,7 @@
         <div class="profile-list">
             <ul class="setting-listing">
                 <li class="w-100">
-                    <a  class="setting-box">
+                    <a routerLink="/driver/edit-profile" class="setting-box">
                         <div class="setting-icon">
                             <i class="iconsax icon" data-icon="user-1"> </i>
                         </div>
@@ -84,6 +83,30 @@
                     </a>
                 </li>
 
+                <li class="w-100">
+                    <a  class="setting-box" routerLink="/driver/terms-condition">
+                        <div class="setting-icon">
+                            <i class="iconsax icon" data-icon="password-check"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Terms & Condition</h5>
+                            <i class="iconsax icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="w-100">
+                    <a  class="setting-box" routerLink="/driver/privacy-policy">
+                        <div class="setting-icon">
+                            <i class="iconsax icon" data-icon="password-check"> </i>
+                        </div>
+                        <div class="setting-content">
+                            <h5>Privacy Policy</h5>
+                            <i class="iconsax icon" data-icon="chevron-right"> </i>
+                        </div>
+                    </a>
+                </li>
+
             </ul>
         </div>
 
@@ -91,7 +114,7 @@
         <div class="profile-list">
             <ul class="setting-listing">
                 <li class="w-100">
-                    <a class="setting-box">
+                    <a  class="setting-box">
                         <div class="setting-icon">
                             <i class="iconsax icon" data-icon="document-upload"> </i>
                         </div>
@@ -103,7 +126,7 @@
                 </li>
 
                 <li class="w-100">
-                    <a  class="setting-box">
+                    <a routerLink="/driver/vehicle-registration" class="setting-box">
                         <div class="setting-icon">
                             <i class="iconsax icon" data-icon="car"> </i>
                         </div>
@@ -114,7 +137,7 @@
                     </a>
                 </li>
                 <li class="w-100">
-                    <a class="setting-box">
+                    <a routerLink="/driver/driver-bank-details" class="setting-box">
                         <div class="setting-icon">
                             <i class="iconsax icon" data-icon="bank"> </i>
                         </div>
@@ -152,7 +175,7 @@
                 </li>
 
                 <li class="w-100">
-                    <a href="#logout" class="setting-box" data-bs-toggle="modal">
+                    <a routerLink="/login" class="setting-box" data-bs-toggle="modal">
                         <div class="setting-icon">
                             <i class="iconsax icon" data-icon="logout-2"> </i>
                         </div>

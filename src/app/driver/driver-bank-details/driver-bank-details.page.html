@@ -28,62 +28,74 @@
             <h6>Explore your life by joining with Ride.</h6>
         </div>
 
-        <form class="auth-form">
+        <form class="auth-form" id="bankDetailsForm" [formGroup]="bankDetailsForm" (ngSubmit)="savebank()">
             <div class="form-group mt-0">
                 <label class="form-label mb-2" for="Inputname">Bank Name</label>
                 <div class="position-relative">
-                    <input type="text" class="form-control white-background" id="Inputname"
+                    <input type="text" class="form-control  white-background" formControlName="bank_name" id="Inputname"
                         placeholder="Enter bank name">
-                    <i class="iconsax icon" data-icon="bank"></i>
+                    <i class="iconsax icon fa fa-building" data-icon="bank"></i>
                 </div>
+                <div class="m-0 p-0" *ngIf="bankDetailsForm.get('bank_name')?.invalid && bankDetailsForm.get('bank_name')?.touched">
+                    <small class="text-danger">Please Enter Your Bank Name...</small>
+                  </div>
             </div>
             <div class="form-group ">
                 <label class="form-label mb-2" for="Inputholder">Holder Name</label>
                 <div class="position-relative">
-                    <input type="text" class="form-control white-background" id="Inputholder"
+                    <input type="text" class="form-control white-background" formControlName="bank_acc_holder_name" id="Inputholder"
                         placeholder="Enter holder name">
-                    <i class="iconsax icon" data-icon="user-1"></i>
+                    <i class="iconsax icon fa fa-user" data-icon="user-1"></i>
                 </div>
+                 <div class="m-0 p-0" *ngIf="bankDetailsForm.get('bank_acc_holder_name')?.invalid && bankDetailsForm.get('bank_acc_holder_name')?.touched">
+                    <small class="text-danger">Please Enter Your Holder Name...</small>
+                  </div>
             </div>
             <div class="form-group">
                 <label class="form-label mb-2" for="Inputnumner">Account No.</label>
                 <div class="position-relative">
-                    <input type="number" class="form-control white-background" id="Inputnumner"
+                    <input type="number" class="form-control white-background"  formControlName="bank_account_no" id="Inputnumner"
                         placeholder="Enter your account no">
-                    <i class="iconsax icon" data-icon="wallet-2"></i>
+                    <i class="iconsax icon fa fa-sort" data-icon="wallet-2"></i>
                 </div>
+                 <div class="m-0 p-0" *ngIf="bankDetailsForm.get('bank_account_no')?.invalid && bankDetailsForm.get('bank_account_no')?.touched">
+                    <small class="text-danger">Please Enter Your Account No...</small>
+                  </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label mb-2" for="Inputbranch">Branch Name</label>
                 <div class="position-relative">
                     <input type="text" class="form-control white-background" id="Inputbranch"
-                        placeholder="Enter branch name">
-                    <i class="iconsax icon" data-icon="building-1"></i>
+                        placeholder="Enter branch name"  formControlName="branch_name">
+                    <i class="iconsax icon fa fa-bank" data-icon="building-1"></i>
                 </div>
+                 <div class="m-0 p-0" *ngIf="bankDetailsForm.get('branch_name')?.invalid && bankDetailsForm.get('branch_name')?.touched">
+                    <small class="text-danger">Please Enter Your Branch Name...</small>
+                  </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label mb-2" for="Inputcode">IFSC code</label>
                 <div class="position-relative">
-                    <input type="email" class="form-control white-background" id="Inputcode"
-                        placeholder="Enter ifsc code">
-                    <i class="iconsax icon" data-icon="code-2"></i>
+                    <input type="text" class="form-control white-background" id="Inputcode"
+                        placeholder="Enter ifsc code"  formControlName="bank_ifsc_code">
+                    <i class="iconsax icon fa fa-building" data-icon="code-2"></i>
                 </div>
+                 <div class="m-0 p-0" *ngIf="bankDetailsForm.get('bank_ifsc_code')?.invalid && bankDetailsForm.get('bank_ifsc_code')?.touched">
+                    <small class="text-danger">Please Enter Your IFSC code...</small>
+                  </div>
             </div>
-        </form>
-
-        <div class="fixed-btn">
+            <div class="fixed-btn">
             <div class="custom-container">
-                <a routerLink="/driver/home" class="btn theme-btn w-100 mt-0 auth-btn">Next</a>
+                <button type="submit" class="btn theme-btn w-100 mt-0 auth-btn">Next</button>
             </div>
         </div>
+        </form>
+
+        
     </div>
 </section>
-<!-- bank details section end -->
 
-<!-- panel-space start -->
 <section class="panel-space"></section>
-<!-- panel-space end -->
-
 </ion-content>

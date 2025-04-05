@@ -1,0 +1,430 @@
+<ion-header [translucent]="true">
+  <header id="header" class="main-header inner-page-header">
+    <div class="custom-container">
+        <div class="header-panel">
+            <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+                <i class="fa fa-chevron-left text-secondary icon-btn" data-icon="text-align-left"> </i>
+            </a>
+            <h3>Ride Details</h3>
+        </div>
+    </div>
+</header>
+</ion-header>
+
+<ion-content  [fullscreen]="true">
+    <section class="trip-details-container">
+        <div class="trip-card">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="../../assets/images/profile/p5.png" alt="Driver profile">
+                </div>
+                <div class="profile-info">
+                    <div class="status-badge pending">Cancel</div>
+                    <h3 class="trip-status text-danger">The trip has been canceled</h3>
+                    <div class="rating">
+                        <img class="star-icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/star.svg" alt="Rating">
+                        <span class="rating-value">4.8</span>
+                        <span class="rating-count">(127 reviews)</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="payment-summary">
+                <div class="payment-row">
+                    <span class="payment-label">Payment method</span>
+                    <!-- <span class="payment-value">Cash</span> -->
+                    <div class="d-inline-flex align-items-center gap-1 px-2 py-1 rounded bg-warning bg-opacity-10 text-warning fw-semibold border border-warning border-opacity-25">
+                        <span class="spinner-grow spinner-grow-sm text-danger" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </span>
+                        
+                      </div>
+                </div>
+                <div class="payment-row">
+                    <span class="payment-label">Distance</span>
+                    <span class="payment-value text-warning">123KM</span>
+                </div>
+                <div class="payment-total">
+                    <span>Total</span>
+                    <span class="total-amount text-danger">$256</span>
+                </div>
+            </div>
+    <!-- Trip Details -->
+<div class="row row-cols-1 row-cols-sm-2 g-3 mb-4">
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3">
+            <span class="text-muted small">Date</span>
+            <span class="fw-semibold">May 15, 2023</span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3">
+            <span class="text-muted small">Time</span>
+            <span class="fw-semibold">2:30 PM</span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3">
+            <span class="text-muted small">Booking ID</span>
+            <span class="fw-semibold text-uppercase">DSFFDSF</span>
+        </div>
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded-3">
+            <span class="text-muted small">Mobile Number</span>
+            <span class="fw-semibold">+1 (704) 886-6008</span>
+        </div>
+    </div>
+</div>
+
+<!-- Map -->
+<div class="card border-0 shadow-sm overflow-hidden mb-4">
+    <div class="card-body p-0">
+        
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.456280342987!2d74.73604507596625!3d19.13149445022647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcba62029805c3%3A0x886d86bab127da8d!2sBhistabag%2C%20Ahilya%20Nagar%2C%20Maharashtra%20414003!5e0!3m2!1sen!2sin!4v1743671350848!5m2!1sen!2sin"  class="img-fluid route-map w-100 mt-3"  width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    </div>
+
+
+    <div class="card-footer bg-white py-2 border-top-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted small">Route Map</span>
+           
+        </div>
+    </div>
+</div>
+            <!-- Locations -->
+            <div class="location-list">
+                <div class="location-item">
+                    <img class="location-icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg" alt="Pickup">
+                    <div class="location-text">
+                        <div class="location-type">Pickup Location</div>
+                        <div class="location-address">123 Main Street, Downtown, City</div>
+                    </div>
+                </div>
+                <div class="location-item">
+                    <img class="location-icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="Dropoff">
+                    <div class="location-text">
+                        <div class="location-type">Dropoff Location</div>
+                        <div class="location-address">456 Park Avenue, Uptown, City</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #2E86DE;
+            --success-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --title-color: #2C3E50;
+            --content-color: #7F8C8D;
+            --border-color: #ECF0F1;
+            --white: #FFFFFF;
+        }
+    
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--white);
+            color: var(--title-color);
+            line-height: 1.5;
+        }
+    
+        /* Container Styles */
+        .trip-details-container {
+            max-width: 100%;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+    
+        .trip-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    
+        /* Profile Header */
+        .profile-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            position: relative;
+        }
+    
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+    
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    
+        .profile-info {
+            flex: 1;
+        }
+    
+        .status-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    
+        .status-badge.pending {
+            background-color: #FFF3E0;
+            color: #E65100;
+        }
+    
+        .trip-status {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 4px 0;
+            color: var(--title-color);
+        }
+    
+        .rating {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+    
+        .star-icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 4px;
+        }
+    
+        .rating-value {
+            font-weight: 500;
+            margin-right: 4px;
+            color: var(--title-color);
+        }
+    
+        .rating-count {
+            color: var(--content-color);
+        }
+    
+        /* Payment Summary */
+        .payment-summary {
+            background-color: #F8F9FA;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+    
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+    
+        .payment-label {
+            color: var(--content-color);
+        }
+    
+        .payment-value {
+            font-weight: 500;
+            color: var(--title-color);
+        }
+    
+        .payment-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 16px;
+        }
+    
+        .total-amount {
+            color: var(--success-color);
+        }
+    
+        /* Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+    
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .detail-label {
+            font-size: 12px;
+            color: var(--content-color);
+            margin-bottom: 4px;
+        }
+    
+        .detail-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+    
+        /* Map */
+        .map-container {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        .route-map {
+            display: block;
+            border: none;
+        }
+    
+        /* Location List */
+        .location-list {
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+    
+        .location-item {
+            display: flex;
+            margin-bottom: 16px;
+        }
+    
+        .location-item:last-child {
+            margin-bottom: 0;
+        }
+    
+        .location-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+    
+        .location-text {
+            flex: 1;
+        }
+    
+        .location-type {
+            font-size: 12px;
+            color: var(--content-color);
+            margin-bottom: 2px;
+        }
+    
+        .location-address {
+            font-size: 14px;
+            font-weight: 500;
+        }
+    
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .profile-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .trip-status {
+                font-size: 15px;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+    </style>
+        
+        <div class="container py-4">
+            <div class="text-center mb-4">
+                <div class="progress mb-3" style="height: 4px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 100%"></div>
+                </div>
+                <h2 class="fw-bold mb-3">Your Pickup Verification Code</h2>
+                <p class="text-muted">Please enter the 4-digit code sent to your mobile</p>
+            </div>
+        
+            <div class="text-center mb-4">
+                <h4 class="text-uppercase text-secondary mb-3">Verification Code</h4>
+                <form class="d-flex justify-content-center gap-3">
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control form-control-lg text-center fw-bold border-2" 
+                               style="width: 60px; height: 60px; font-size: 1.5rem;" 
+                               maxlength="1" 
+                               id="five1"
+                               onkeyup="onKeyUpEvent(1, event)" 
+                               onfocus="onFocusEvent(1)"
+                               autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control form-control-lg text-center fw-bold border-2" 
+                               style="width: 60px; height: 60px; font-size: 1.5rem;" 
+                               maxlength="1" 
+                               id="five2"
+                               onkeyup="onKeyUpEvent(2, event)" 
+                               onfocus="onFocusEvent(2)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control form-control-lg text-center fw-bold border-2" 
+                               style="width: 60px; height: 60px; font-size: 1.5rem;" 
+                               maxlength="1" 
+                               id="five3"
+                               onkeyup="onKeyUpEvent(3, event)" 
+                               onfocus="onFocusEvent(3)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control form-control-lg text-center fw-bold border-2" 
+                               style="width: 60px; height: 60px; font-size: 1.5rem;" 
+                               maxlength="1" 
+                               id="five4"
+                               onkeyup="onKeyUpEvent(4, event)" 
+                               onfocus="onFocusEvent(4)">
+                    </div>
+                </form>
+            </div>
+        
+            <div class="text-center mt-4">
+                <p class="text-muted">Didn't receive code? <a href="#" class="text-primary text-decoration-none">Resend</a></p>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <section class="panel-space"></section>
+        <app-footer></app-footer>
+        
+</ion-content>

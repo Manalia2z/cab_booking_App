@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-user-menu',
   templateUrl: './user-menu.component.html',
@@ -8,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserMenuComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit() {
     localStorage.setItem('userType','user');
   }
-
+  logout()
+  {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+    location.href='/login';
+  }
 }
