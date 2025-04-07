@@ -26,6 +26,7 @@ export class HomePage implements OnInit {
   ttlCompletedTrips:any;
   ttlCancelTrips:any;
   ttl_schedule_trip:any;
+  trip_list:any;
   private loading: HTMLIonLoadingElement | null = null;
   ngOnInit() {
     this.api.driver_dashboard().subscribe((res:any)=>{
@@ -34,8 +35,14 @@ export class HomePage implements OnInit {
       this.ttlCompletedTrips = res.data.ttl_completed_trip
       this.ttlCancelTrips = res.data.ttl_cancel_trip
       this.ttl_schedule_trip = res.data.ttl_schedule_trip
+
     })
-    
+
+    this.api.tripList().subscribe((res:any)=>{
+      console.log(res);
+      this.trip_list = res.data;
+    })
+
     localStorage.setItem('userType','driver');
     this.api.getDriverDetails().subscribe((res:any)=>{
       console.log(res);
@@ -60,6 +67,24 @@ export class HomePage implements OnInit {
   setAvailibilty()
   {
     
+  }
+  acceptUserTrip(trip_id:any){
+    if(confirm('Are you sure want to confirm trip ?')){
+      this.showLoading("Please Wait..");
+      this.api.acceptTrip(trip_id).subscribe((res:any)=>{
+        console.log(res);
+        if(res.status == 'success'){
+            this.dismissLoader();
+            this.presentToast(res.msg);
+            this.ngOnInit();
+        }
+        else{
+            this.dismissLoader();
+            this.presentToast(res.msg);
+        }
+      })
+    }
+    console.log(trip_id);
   }
   toggleNotification(event: any) {
     this.showLoading("Please Wait..");

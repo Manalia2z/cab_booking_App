@@ -1,39 +1,44 @@
 
 
 <ion-content [fullscreen]="true">
-  <header id="header" class="main-header">
-    <div class="custom-container">
-        <div class="header-panel">
-            <div class="flex-align-center gap-2">
-                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                    <ion-buttons slot="start">
-                        <ion-menu-button class="text-white"></ion-menu-button>
-                      </ion-buttons>
-                </a>
-                <img class="img-fluid logo" src="../../assets/images/logo/driver/driver-logo-white.png" alt="logo">
-            </div>
+ <header id="header" class="main-header py-2 shadow-sm">
+  <div class="custom-container px-3">
+    <!-- Top header panel -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="d-flex align-items-center gap-2">
+        <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+          <ion-buttons slot="start">
+            <ion-menu-button class="text-white"></ion-menu-button>
+          </ion-buttons>
+        </a>
+        <img class="logo" src="../../assets/images/logo/driver/driver-logo-white.png" alt="logo" style="height: 30px;">
+      </div>
 
-
-            <div class="flex-align-center gap-sm-3 gap-2">
-                <a href="notification.html">
-                    <i class="fa fa-bell iconsax icon-btn text-white"></i>
-                </a>
-
-            </div>
-        </div>
-        <div class="header-panel w-100 d-flex mb-2 justify-content-between border border-secondary rounded-pill p-2 bg-white">
-            <div style="vertical-align: middle;">
-                <h6 style="vertical-align: middle;">
-                    Available For Ride <span>Offline</span>
-                </h6>
-            </div>
-      
-            <div>
-                <ion-toggle (ionChange)="toggleNotification($event)"  color="success" [checked]="aval_status" style="z-index: 9999;position: relative;right: 40px;height: 20px;width: 30px;color: #199675;">Receive Push Notifications</ion-toggle>
-            </div>
-        </div>
+      <div class="d-flex align-items-center gap-3">
+        <a href="notification.html" class="position-relative">
+          <i class="fa fa-bell text-white fs-5"></i>
+          <!-- Optional notification badge -->
+          <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span> -->
+        </a>
+      </div>
     </div>
+
+    <!-- Ride Availability Panel -->
+    <div class="d-flex justify-content-between align-items-center bg-white border border-secondary rounded-pill px-4 py-2">
+      <h6 class="mb-0 text-dark fw-semibold">
+        Available For Ride: <span class="text-muted">Offline</span>
+      </h6>
+
+      <ion-toggle 
+        (ionChange)="toggleNotification($event)"  
+        color="success"
+        [checked]="aval_status"
+        style="height: 20px; width: 40px;">
+      </ion-toggle>
+    </div>
+  </div>
 </header>
+
 <!-- header end -->
 
 <!-- earning section starts -->
@@ -110,10 +115,10 @@
     <div class="custom-container">
         
         <div class="title">
-            <h4 class="m-0">New Upcoming Ride</h4>
+            <h4 class="m-0">All Pending Ride</h4>
         </div>
-        <ul class="my-ride-list driver-ride-list mt-0">
-            <li>
+        <ul class="my-ride-list driver-ride-list mt-0" >
+            <li *ngFor = "let row of trip_list">
                 <div class="my-ride-box">
                     <div class="my-ride-head">
                         <a class="my-ride-img">
@@ -123,14 +128,15 @@
                         <div class="my-ride-content flex-column">
                             <div class="flex-spacing">
                                 <a href="#">
-                                    <h5 class="title-color fw-medium">Peter Thornton</h5>
+                                    <h5 class="title-color fw-medium">{{row.u_name}}</h5>
                                 </a>
                                 <div class="flex-align-center">
-                                    <div class="flex-align-center gap-1 pe-2">
+                                    <div class="flex-align-center gap-1 pe-2 d-none">
                                         <img class="star" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/star.svg" alt="star">
                                         <h5 class="fw-normal title-color p-0">4.8</h5>
                                     </div>
-                                    <h5 class="fw-mediun theme-color price ps-2 pe-0">$256</h5>
+                                    <h5 class="fw-mediun theme-color price ps-2 pe-0">
+                                        <button class="btn btn-success btn-sm p-0 m-0 pt-1 pl-1 pr-1 pb-1" (click)="acceptUserTrip(row.trip_tbl_id)">Accept Trip</button></h5>
                                 </div>
                             </div>
                         </div>
@@ -141,75 +147,23 @@
                             <div class="flex-align-center gap-1">
                                 <img class="icon img-fluid" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg"
                                     alt="location">
-                                <h6 class="fw-normal title-color">10 km</h6>
+                                <h6 class="fw-normal title-color">{{row.distance}} km</h6>
                             </div>
-                            <h6 class="fw-normal title-color">10 May’25 at 4:10 AM</h6>
+                            <h6 class="fw-normal title-color">{{ row.trip_date | date: 'medium' }}</h6>
                         </div>
                         <ul class="ride-location-listing">
                             <li class="border-0 shadow-none box-background">
                                 <div class="location-box bg-transparent">
                                     <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg"
                                         alt="location">
-                                    <h5 class="fw-light title-color">17, Yonge St, Toronto, Canada</h5>
+                                    <h5 class="fw-light title-color">{{row.pickup_point}}</h5>
                                 </div>
                             </li>
 
                             <li class="border-0 shadow-none box-background">
                                 <div class="location-box bg-transparent">
                                     <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="gps">
-                                    <h5 class="fw-light title-color border-0">20, Avenue St, Toronto, Canada</h5>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="my-ride-box">
-                    <div class="my-ride-head">
-                        <a class="my-ride-img">
-                            <img class="img-fluid profile-img" src="../../assets/images/profile/p6.png" alt="p5">
-                        </a>
-                        <div class="my-ride-content flex-column">
-                            <div class="flex-spacing">
-                                <a href="#">
-                                    <h5 class="title-color fw-medium">Tony Danza</h5>
-                                </a>
-                                <div class="flex-align-center">
-                                    <div class="flex-align-center gap-1 pe-2">
-                                        <img class="star" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/star.svg" alt="star">
-                                        <h5 class="fw-normal title-color p-0">4.4</h5>
-                                    </div>
-                                    <h5 class="fw-mediun theme-color price ps-2 pe-0">$158</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="my-ride-details">
-                        <div class="ride-info">
-                            <div class="flex-align-center gap-1">
-                                <img class="icon img-fluid" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg"
-                                    alt="location">
-                                <h6 class="fw-normal title-color">8 km</h6>
-                            </div>
-                            <h6 class="fw-normal title-color">15 May’25 at 10:15 AM</h6>
-                        </div>
-                        <ul class="ride-location-listing">
-                            <li class="border-0 shadow-none box-background">
-                                <div class="location-box bg-transparent">
-                                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg"
-                                        alt="location">
-                                    <h5 class="fw-light title-color">10, Avenue St, Toronto, Canada</h5>
-                                </div>
-                            </li>
-
-                            <li class="border-0 shadow-none box-background">
-                                <div class="location-box bg-transparent">
-                                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="gps">
-                                    <h5 class="fw-light title-color border-0">35, Critch Cir, Toronto, Canada
-                                    </h5>
+                                    <h5 class="fw-light title-color border-0">{{row.drop_point}}</h5>
                                 </div>
                             </li>
                         </ul>
@@ -222,7 +176,7 @@
 <!-- upcoming ride section end -->
 
 <!-- active offer section starts -->
-<section>
+<!-- <section>
     <div class="custom-container">
         <div class="title">
             <h3>Today’s Offer</h3>
@@ -351,7 +305,7 @@
             </li>
         </ul>
     </div>
-</section>
+</section> -->
 <!-- active offer section end -->
 
 <!-- panel-space start -->

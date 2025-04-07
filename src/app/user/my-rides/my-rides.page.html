@@ -56,7 +56,7 @@
                         <div class="my-ride-box">
                             <div class="my-ride-head">
                                 <a href="#" class="my-ride-img">
-                                    <img class="img-fluid my-ride-icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/car-img.svg"
+                                    <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
                                         alt="receipt">
                                 </a>
 
@@ -129,7 +129,7 @@
                         <div class="my-ride-box">
                             <div class="my-ride-head">
                                 <a href="#" class="my-ride-img">
-                                    <img class="img-fluid my-ride-icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/car-img.svg"
+                                    <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
                                         alt="receipt">
                                 </a>
 
@@ -138,11 +138,15 @@
                                         <a href="#">
                                             <h6 class="title-color fw-medium">ID : 12000052</h6>
                                         </a>
-                                        <span class="status accent-color fw-normal">Pending</span>
+                                        <span class="status text-success fw-normal">Confirmed</span>
                                     </div>
-                                    <div class="flex-spacing  mt-2">
-                                        <h6 class="fw-mediun success-color">&#8377; </h6>
+                                    <div class="flex-spacing  mt-1">
+                                        <h6 class="fw-mediun success-color">&#8377; 203</h6>
                                         <h6 class="fw-normal content-color">{{row.entry_time * 1000 | date:'medium'}}</h6>
+                                    </div>
+                                    <div class="flex-spacing  mt-1">
+                                        <h6 class="fw-mediun success-color">Confirmed At</h6>
+                                        <h6 class="fw-normal content-color">{{row.accepted_time * 1000 | date:'short'}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -150,15 +154,19 @@
                             <div class="my-ride-details">
                                 <div class="ride-info">
                                     <div class="ride-info-content">
-                                        <div class="d-flex align-content-center gap-2 lh-base">
-                                            <div class="flex-align-center gap-1">
-                                                <h5 class="fw-normal title-color">{{row.distance}} KM</h5>
+                                        <div class="d-flex align-content-center lh-base">
+                                            
+                                            <div class="flex-align-center">
+                                                <h5 class="fw-normal title-color">Abhay h Kardile | {{row.distance}} KM</h5>
                                                 <span class="count content-color fw-normal">({{row.type_name}})</span>
                                             </div>
                                         </div>
-                                        <h6 class="fw-normal content-color mt-1">Tesla car</h6>
+                                        <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
                                     </div>
-                                    <i class="fa fa-user bg-light rounded-circle p-2" style="font-size: 29px;"></i>
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon rounded-circle border border-warning" style="height: 50px;width: 50px;" [src]="imgpath+row.driver_photo"
+                                            alt="receipt">
+                                    </a>
                                 </div>
 
                                 <ul class="ride-location-listing mt-3">
@@ -173,10 +181,49 @@
                                         <h5 class="fw-light title-color border-0">{{row.dropLocation}}
                                         </h5>
                                     </li>
+                                    
                                 </ul>
+                                
+                                <div class="w-100">
+                                    <ul class="ride-location-listing align-content-center">
+                                        <li class="location-box">
+                                            <img class="icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhX6yk4PuUseDOFGctqr6E2t0osNNefMaceA&s"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">
+                                                Your ride has been accepted by the driver. The driver is en route to your pickup location. Please be ready.
+                                            </h5>
+                                        </li>
+                                        
+                                    </ul>
+                                    <div class="custom-container pb-2" style="background: #F5F5F5;">
+                                        
+                                        <form class="otp-form">
+                                            <div class="form-input dark-border-gradient bg-white">
+                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[0]">
+                                            </div>
+                                            <div class="form-input dark-border-gradient bg-white">
+                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[1]">
+                                            </div>
+                                            <div class="form-input dark-border-gradient bg-white">
+                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[2]">
+                                            </div>
+                                            <div class="form-input dark-border-gradient bg-white">
+                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[3]">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="ride-info-content">
+                                        <div class="gap-1">
+                                            <img src="./../../../assets/trip-accepted1.gif" class="rounded-3" style="width: 100%;height: 180px;" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                               
                             </div>
+                       
                         </div>
                     </li>
+             
                 </ul>
                 
             </div>

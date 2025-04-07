@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { Platform } from '@ionic/angular';
@@ -22,39 +22,74 @@ export class MyRidesPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private cdr: ChangeDetectorRef
   ) {
 
    }
    trip_list:any;
    trip_status:any;
+   tripId:any;
+   imgpath:any;
+   intervalId: any;
   ngOnInit() {
-    this.trip_status = 'pending';
-    this.api.userTripList(this.trip_status).subscribe((res:any)=>{
+    this.imgpath = localStorage.getItem('imgpath');
+ 
+    this.api.userTripList().subscribe((res:any)=>{
       console.log(res);
       this.trip_list = res.data.trip;
+      this.tripId = res.data.trip[0].trip_tbl_id;
+      this.trip_status = res.data.trip[0].trip_status;
+      if(res.data.trip[0].trip_status == 'pending')
+        {
+          this.IsRideConfirmed(this.tripId);
+        }
+
     })
 
-    if(this.trip_status == 'pending')
-    {
-      this.IsRideConfirmed();
-    }
+
   }
 
   getRideDet(status:any)
   {
     this.trip_status = status;
-    this.api.userTripList(status).subscribe((res:any)=>{
+    this.api.userTripList().subscribe((res:any)=>{
       console.log(res);
       this.trip_list = res.data.trip;
+      
     })
   }
 
-  IsRideConfirmed()
+  IsRideConfirmed(tripId:any)
   {
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       console.log('Function called at 5 second intervals!');
+      this.api.isTripConfirmed(tripId).subscribe((res:any)=>{
+        console.log(res);
+        if(res.status == 'success' && res.trip_status == 'accepted' && this.trip_status=='pending')
+        {
+          console.log('OK');
+          this.trip_status = 'accepted';
+          this.cdr.detectChanges(); 
+          this.api.userTripList().subscribe((res:any)=>{
+            console.log(res);
+            this.trip_list = res.data.trip;
+            this.tripId = res.data.trip[0].trip_tbl_id;
+            this.stopInterval();
+            
+      
+          })
+        }
+
+      })
     }, 5000); 
   }
+  stopInterval() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      console.log('Interval stopped!');
+    }
+  }
+
 
 }
