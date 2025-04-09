@@ -30,9 +30,9 @@ export class UserapiService {
      {
       return this.http.post(this.endpoint+'SearchLocation',{'searchLocation':data,'searchType':searchType});
      }
-     bookTrip(data:any,locationData:any,token:any)
+     bookTrip(data:any,locationData:any,token:any,fare_det:any)
      {
-      return this.http.post(this.endpoint+'bookTrip',{'form':data,'locationData':locationData,'token':token});
+      return this.http.post(this.endpoint+'bookTrip',{'form':data,'locationData':locationData,'token':token,'fare_det':fare_det});
      }
      GetPlaceDetails(data:any)
      {

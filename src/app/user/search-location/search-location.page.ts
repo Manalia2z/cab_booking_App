@@ -136,6 +136,7 @@ export class SearchLocationPage implements OnInit {
   brands:any;
   reg_fee:any;
   showBrands:any;
+  fare_det : any
   getBrands(ev:any,isAval:any,vehicle_type_id:any,regFee:any)
   {
     this.tripForm.patchValue({
@@ -165,7 +166,8 @@ export class SearchLocationPage implements OnInit {
   {
     this.api.calculatefareDistance(brandId,this.duration,this.distance).subscribe((res:any)=>{
       console.log(res);
-      this.payment_amt = res.total_pay_to_cust
+      this.payment_amt = res.total_pay_to_cust;
+      this.fare_det = res.fare;
       this.tripForm.patchValue({
         "payment_amt":this.payment_amt
       })
@@ -263,7 +265,7 @@ export class SearchLocationPage implements OnInit {
         }
       ];
       console.log(locations);
-      this.api.bookTrip(this.tripForm.value,locations,this.token).subscribe((res:any)=>{
+      this.api.bookTrip(this.tripForm.value,locations,this.token,this.fare_det).subscribe((res:any)=>{
         console.log("res",res);
         if(res.status == 'success')
         {
