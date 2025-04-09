@@ -57,15 +57,17 @@ export class SearchLocationPage implements OnInit {
     });
    }
    vehicle_type:any;
-
+   payment_amt:any;
    tripForm : any = new FormGroup({
     "vehicle_type_id": new FormControl("", [Validators.required]),
     "pickupLocation": new FormControl("", [Validators.required]),
     "destination": new FormControl("", [Validators.required]),
     "vehicle_brand_id": new FormControl("", [Validators.required]),
+    "payment_amt": new FormControl("", [Validators.required]),
   });
 
   ngOnInit() {
+    this.payment_amt=0;
     this.token = localStorage.getItem('token');
     this.imgpath = localStorage.getItem('imgpath');
     this.api.get_vehicle_types().subscribe((res:any)=>{
@@ -139,7 +141,7 @@ export class SearchLocationPage implements OnInit {
     this.tripForm.patchValue({
       vehicle_brand_id : ''
     })
-
+    this.payment_amt=0;
     if(isAval == 'yes')
     {
       this.reg_fee = regFee;
@@ -159,7 +161,17 @@ export class SearchLocationPage implements OnInit {
     }
     console.log(ev.target.value,isAval,vehicle_type_id,regFee);
   }
-
+  getAmount(ev:any,brandId:any)
+  {
+    this.api.calculatefareDistance(brandId,this.duration,this.distance).subscribe((res:any)=>{
+      console.log(res);
+      this.payment_amt = res.total_pay_to_cust
+      this.tripForm.patchValue({
+        "payment_amt":this.payment_amt
+      })
+    })
+    console.log(brandId,this.duration,this.distance);
+  }
   selectPlace(place: any,type:any) {
     const formData = new FormData();
     formData.append("place_id", place.place_id);

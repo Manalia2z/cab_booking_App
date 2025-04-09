@@ -1,84 +1,136 @@
 
 
 <ion-content [fullscreen]="true">
-  <header id="" class="">
-    <div class="custom-container">
-        <div class="header-panel d-flex">
-            <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                <i class="iconsax icon-btn" data-icon="text-align-left"> </i>
-            </a>
-            <h3>Active Ride</h3>
-        </div>
-    </div>
+<header id="" class="">
+<div class="custom-container">
+<div class="header-panel d-flex">
+<a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+    <i class="iconsax icon-btn" data-icon="text-align-left"> </i>
+</a>
+<h3>Active Ride</h3>
+</div>
+</div>
 </header>
 <!-- header end -->
 
 <!-- active ride starts -->
 <section>
-    <div class="custom-container">
-        <ul class="my-ride-list driver-ride-list mt-0">
-            <li>
-                <div class="my-ride-box">
-                    <div class="my-ride-head">
-                        <a class="my-ride-img">
-                            <img class="img-fluid profile-img" src="../../assets/images/profile/p5.png" alt="p5">
-                        </a>
+<div class="custom-container">
+<ul class="my-ride-list driver-ride-list mt-0">
+<li *ngFor = "let row of accepted_trip">
+    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="validateOtp()" enctype="multipart/form-data">
+    <div class="my-ride-box">
+        <div class="my-ride-head">
+            <a class="my-ride-img">
+                <img class="img-fluid profile-img" src="../../assets/images/profile/p5.png" alt="p5">
+            </a>
 
-                        <div class="my-ride-content flex-column">
-                            <div class="flex-spacing">
-                                <a>
-                                    <h6 class="title-color fw-medium">Peter Thornton</h6>
-                                </a>
-                                <h5 class="fw-mediun success-color m-0">$256</h5>
-                            </div>
-                            <div class="flex-align-center gap-3">
-                                <div class="flex-align-center gap-1">
-                                    <img class="star" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/star.svg" alt="star">
-                                    <h5 class="fw-normal m-0 title-color" style="">4.8</h5>
-                                    <span class="content-color fw-normal">(127)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="my-ride-details">
-                        <div class="ride-info">
-                            <h6 class="fw-normal content-color">15 May’25 at 10:15 AM</h6>
-                            <div class="flex-align-center gap-2">
-                                <a class="comm-icon">
-                                    <img class="img-fluid icon-btn" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/messages-fill.svg"
-                                        alt="messages">
-                                </a>
-                                <a href="tel:+4733378901" class="comm-icon">
-                                    <img class="img-fluid icon-btn" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/call-fill.svg"
-                                        alt="call">
-                                </a>
-                            </div>
-                        </div>
-                        <ul class="ride-location-listing mt-3">
-                            <li class="border-0 shadow-none">
-                                <div class="location-box">
-                                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg"
-                                        alt="location">
-                                    <h5 class="fw-light m-0 title-color">17, Yonge St, Toronto, Canada</h5>
-                                </div>
-                            </li>
-
-                            <li class="border-0 shadow-none">
-                                <div class="location-box">
-                                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="gps">
-                                    <h5 class="fw-light m-0 title-color border-0">20, Yonge St, Toronto, Canada
-                                    </h5>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <a class="btn theme-btn w-100 mt-3">Pickup Customer</a>
-
+            <div class="my-ride-content flex-column">
+                <div class="flex-spacing">
+                    <a>
+                        <h6 class="title-color fw-medium">{{row.u_name}}</h6>
+                    </a>
+                    <h5 class="fw-mediun success-color m-0">$256</h5>
                 </div>
-            </li>
-        </ul>
+                <div class="flex-align-center gap-3">
+                    <div class="flex-align-center gap-1">
+                        
+                        <h5 class="fw-normal m-0 title-color" style="">{{row.u_email}}</h5>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-ride-details">
+            <div class="ride-info">
+                <h6 class="fw-normal content-color">{{row.trip_date | date:'medium'}}</h6>
+                <div class="flex-align-center gap-2">
+                    <a class="comm-icon">
+                        <img class="img-fluid icon-btn" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/messages-fill.svg"
+                            alt="messages">
+                    </a>
+                    <a href="tel:+4733378901" class="comm-icon">
+                        <img class="img-fluid icon-btn" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/call-fill.svg"
+                            alt="call">
+                    </a>
+                </div>
+            </div>
+            <ul class="ride-location-listing mt-3">
+                <li class="border-0 shadow-none">
+                    <div class="location-box">
+                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg"
+                            alt="location">
+                        <h5 class="fw-light m-0 title-color">{{row.pickUpAddress}}</h5>
+                    </div>
+                </li>
+
+                <li class="border-0 shadow-none">
+                    <div class="location-box">
+                        <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="gps">
+                        <h5 class="fw-light m-0 title-color border-0">{{row.dropAddress}}
+                        </h5>
+                    </div>
+                </li>
+            </ul>
+                <div class="w-100" *ngIf="trip_status == 'accepted'">
+                        <ul class="mt-0 ride-location-listing align-content-center">
+                            <li class="location-box">
+                                <img class="icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhX6yk4PuUseDOFGctqr6E2t0osNNefMaceA&s"
+                                    alt="location">
+                                <h5 class="fw-light title-color mt-0">
+                                    Please enter the Pickup OTP to start the ride    
+                                </h5>
+                            </li>
+                            
+                        </ul>
+                        <input type="hidden" formControlName="trip_tbl_id">
+
+                        <div class="custom-container pb-2 otp-form" style="background: #F5F5F5;">
+                            <div class="form-input dark-border-gradient bg-white" *ngFor="let ctrl of [1,2,3,4]; let i = index">
+                                <input
+                                #otpInput
+                                [formControlName]="'otp' + (i+1)"
+                                placeholder="0"
+                                maxlength="1"
+                                class="form-control bg-white active"
+                                (keyup)="onOtpKeyUp($event, i)"
+                                />
+                            </div>
+                            
+                            </div >
+                            <div class="m-0 p-0" *ngIf="loginForm.get('otp1')?.invalid && loginForm.get('otp1')?.touched || loginForm.get('otp2')?.invalid && loginForm.get('otp2')?.touched || loginForm.get('otp3')?.invalid && loginForm.get('otp3')?.touched || loginForm.get('otp4')?.invalid && loginForm.get('otp4')?.touched">
+                            <small class="text-danger">Please Enter OTP</small>
+                            </div>
+                </div>
+        </div>
+        <button *ngIf="trip_status == 'accepted'" class="btn theme-btn w-100 mt-3">Confirm & Pickup Customer</button>
+        <button type="button" (click)="completeRide(row.trip_tbl_id)" *ngIf="trip_status == 'confirm' || trip_status == 'onboard' " class="btn theme-btn w-100 mt-3">Complete Customer Ride</button>
+
     </div>
+</form>
+
+</li>
+
+</ul>
+</div>
+<div class="custom-container">
+    <ul class="payment-method-list d-flex justify-content-between mt-2 pt-0">
+        <li class="w-100">
+            <div class="payment-list-box">
+                <label class="form-check-label" for="flexRadioDefault"> Cash</label>
+                <input class="form-check-input" type="radio" name="flexRadioDefault" checked id="flexRadioDefault">
+            </div>
+        </li>
+        <li class="w-100">
+            <div class="payment-list-box">
+                <label class="form-check-label" for="flexRadioDefault1"> Online</label>
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            </div>
+        </li>
+        
+    </ul>
+</div>
 </section>
 <!-- active ride end -->
 

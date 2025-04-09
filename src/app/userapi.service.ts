@@ -7,13 +7,13 @@ import { Injectable } from '@angular/core';
 export class UserapiService {
 
   token = localStorage.getItem('token');
-    // endpoint:any='http://localhost/cab_booking/api/';
-    endpoint:any='https://192.168.1.151/cab_booking/api/';
+    endpoint:any='http://localhost/cab_booking/api/';
+    // endpoint:any='https://192.168.1.151/cab_booking/api/';
     constructor(private http:HttpClient) {
-      // localStorage.setItem('imgpath', 'http://localhost/cab_booking/uploads/'); 
-      // localStorage.setItem('path', 'http://localhost/cab_booking/api/');
-      localStorage.setItem('imgpath', 'https://192.168.1.151/cab_booking/uploads/'); 
-      localStorage.setItem('path', 'https://192.168.1.151/cab_booking/');
+      localStorage.setItem('imgpath', 'http://localhost/cab_booking/uploads/'); 
+      localStorage.setItem('path', 'http://localhost/cab_booking/api/');
+      // localStorage.setItem('imgpath', 'https://192.168.1.151/cab_booking/uploads/'); 
+      // localStorage.setItem('path', 'https://192.168.1.151/cab_booking/');
      }
 
      userRegistration(data:any){
@@ -59,6 +59,10 @@ export class UserapiService {
       return this.http.post(this.endpoint+'getDistanceCalculation',{'pickupLocation':pickupLocation,'pickUpCity':pickUpCity,'pickUpAddress':pickUpAddress,'pickUplatitude':pickUplatitude,'pickUplongitude':pickUplongitude,'pickUpPostalCode':pickUpPostalCode,'pickUpState':pickUpState,'destination':destination,'dropLocation':dropLocation,'dropCity':dropCity,'dropAddress':dropAddress,'droplatitude':droplatitude,'droplongitude':droplongitude,'dropPostalCode':dropPostalCode,'dropState':dropState});
 
      }
+     calculatefareDistance(brandId:any,duration:any,distance:any)
+     {
+      return this.http.post(this.endpoint+'calculatefareDistance',{'brandId':brandId,'duration':duration,'distance':distance,'token':this.token})
+     }
      ride_category()
      {
       return this.http.get(this.endpoint+'ride_category');
@@ -92,6 +96,18 @@ export class UserapiService {
      isTripConfirmed(tripId:any)
      {
       return this.http.post(this.endpoint+'isTripConfirmed',{'trip_tbl_id':tripId,'token':this.token})
+     }
+     IsRideConfirmed(tripId:any)
+     {
+      return this.http.post(this.endpoint+'IsRideConfirmed',{'trip_tbl_id':tripId,'token':this.token})
+     }
+     IsRideCompleted(tripId:any)
+     {
+      return this.http.post(this.endpoint+'IsRideCompleted',{'trip_tbl_id':tripId,'token':this.token})
+     }
+     saveDriverReview(formData:any)
+     {
+      return this.http.post(this.endpoint+'saveDriverReview',{'formData':formData,'token':this.token})
      }
 
 }

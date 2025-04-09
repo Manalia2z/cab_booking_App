@@ -28,7 +28,7 @@
         <ul class="pickup-location-listing">
             <li>
                 <div class="location-box">
-                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/location-fill.svg" alt="location">
+                    <img class="icon" src="./../../../assets/images/svg/location-fill.svg" alt="location">
                     <input formControlName="pickupLocation" type="text" id="inputpickup" class="form-control" placeholder="Pickup location"
                         [value]="pickupLocation"
                         (keyup)="onSearchChange($event, 'pickup')">
@@ -39,7 +39,7 @@
             </li>
             <li>
                 <div class="location-box">
-                    <img class="icon" src="https://themes.pixelstrap.com/pwa/taxido/assets/images/svg/gps.svg" alt="gps">
+                    <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
                     <input formControlName="destination" type="text" id="inputdestination" class="form-control border-0" placeholder="Enter destination"
                         [value]="destination"
                         (keyup)="onSearchChange($event, 'destination')">
@@ -100,7 +100,7 @@
           <div *ngIf="showBrands" class="vehicle-types-list bg-white rounded" style="display: block;width: 100%;overflow: visible;">
           
             <div *ngFor="let row of brands;let i=index;" class="p-1" style="white-space: nowrap;display: inline-block !important;">
-              <input type="radio" [value]="row.vehicle_brand_tbl_id"  formControlName="vehicle_brand_id"  class="btn-check" [id]="'btn-check'+i+'status'">
+              <input (change)="getAmount($event,row.vehicle_brand_tbl_id)" type="radio" [value]="row.vehicle_brand_tbl_id"  formControlName="vehicle_brand_id"  class="btn-check" [id]="'btn-check'+i+'status'">
               <label class="btn vehicle-type-button p-1 m-0 btn-outline-success" style="height: 30px;" [for]="'btn-check'+i+'status'">
                     {{row.brand_name}}
               </label>
@@ -121,7 +121,7 @@
                                 <span class="status accent-color fw-normal">{{distance}}</span>
                             </div>
                             <div class="flex-spacing  mt-2">
-                                <h6 class="fw-mediun success-color"></h6>
+                                <h6 class="fw-mediun success-color">&#8377;  {{payment_amt}}</h6>
                                 <h6 class="fw-normal content-color">{{duration}}</h6>
                             </div>
                         </div>

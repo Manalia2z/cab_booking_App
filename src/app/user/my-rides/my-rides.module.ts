@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ import { FooterPageModule } from 'src/app/user/footer/footer.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    MyRidesPageRoutingModule,FooterPageModule
+    MyRidesPageRoutingModule,FooterPageModule,ReactiveFormsModule
   ],
   declarations: [MyRidesPage]
 })

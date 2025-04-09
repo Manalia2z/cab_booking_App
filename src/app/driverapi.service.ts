@@ -7,14 +7,14 @@ import { Injectable } from '@angular/core';
 export class DriverapiService {
 
     token = localStorage.getItem('token');
-    // endpoint:any='http://localhost/cab_booking/api/'
-    endpoint:any='https://192.168.1.151/cab_booking/api/'
+    endpoint:any='http://localhost/cab_booking/api/'
+    // endpoint:any='https://192.168.1.151/cab_booking/api/'
     constructor(private http:HttpClient) {
-      // localStorage.setItem('imgpath', 'http://localhost/cab_booking/uploads/'); 
-      // localStorage.setItem('path', 'http://localhost/cab_booking/api/');
+      localStorage.setItem('imgpath', 'http://localhost/cab_booking/uploads/'); 
+      localStorage.setItem('path', 'http://localhost/cab_booking/api/');
 
-      localStorage.setItem('imgpath', 'https://192.168.1.151/cab_booking/uploads/'); 
-      localStorage.setItem('path', 'https://192.168.1.151/cab_booking/');
+      // localStorage.setItem('imgpath', 'https://192.168.1.151/cab_booking/uploads/'); 
+      // localStorage.setItem('path', 'https://192.168.1.151/cab_booking/');
 
      }
 
@@ -85,9 +85,19 @@ export class DriverapiService {
      }
      acceptTrip(tripId:any){
       return this.http.post(this.endpoint+'acceptTrip',{'trip_tbl_id':tripId,'token':this.token})
-      
-     }
+    }
 
-     
-
+    acceptedTrips(){
+      return this.http.post(this.endpoint+'acceptedTrips',{'token':this.token})
+     }
+    confirmTrips(status:any){
+      return this.http.post(this.endpoint+'acceptedTrips',{'trip_status':status,'token':this.token})
+     }
+     check_userPickupOtp(formData:any)
+     {
+      return this.http.post(this.endpoint+'check_userPickupOtp',{formData})
+     }
+     completeRide(trip_tbl_id:any){
+      return this.http.post(this.endpoint+'completeRide',{'trip_tbl_id':trip_tbl_id,'token':this.token})
+     }
 }

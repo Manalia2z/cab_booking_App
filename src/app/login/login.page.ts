@@ -23,6 +23,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
      const userType = localStorage.getItem('userType');
      const token = localStorage.getItem('token');
+      if(userType == 'user' && token)
+      {
+        this.router.navigate(['/user/home']);
+      }
+
+      if(userType == 'driver' && token)
+      {
+          this.router.navigate(['/driver/home']);
+      }
+
   }
   loginForm : any = new FormGroup({
     "email": new FormControl("", [Validators.required,Validators.email ]),
