@@ -2,9 +2,11 @@
   <div class="auth-bg-image"></div>
   <div class="auth-content-bg auth-content-bg-bottom">
       <div class="custom-container white-background pb-2">
-          <div class="auth-title mt-0">
+          <div class="auth-title mt-0 d-flex justify-content-between">
               <div class="loader-line"></div>
+              <!-- <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo"> -->
               <h6>Hey, You have been missed !</h6>
+
           </div>
 
           <form class="auth-form" id="loginForm" [formGroup]="loginForm" (ngSubmit)="loginUser()" enctype="multipart/form-data">
@@ -35,28 +37,29 @@
                 <div class="show-hide toggler" (click)="togglePassword()">
                     <i class="iconsax fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" data-icon="eye"></i>
                 </div>
-                <div class="m-0 p-0" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                    <small class="text-danger">Enter Password...</small>
-                  </div>
+              
             </div>
-            
+            <div class="m-0 p-0" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <small class="text-danger">Enter Password...</small>
+              </div>
               <div class="flex-spacing">
                   <div class="form-group mt-0">
                     
                   </div>
-                  <a class="forgot" >Forgot password?</a>
+                  <!-- <a class="forgot" style="color: #D50000 !important;">Forgot password?</a> -->
               </div>
 
-              <div class="division">
-                  <span>OR</span>
-              </div>
+             
 
 
-              <a routerLink="/login-with-number" class="btn theme-btn google-btn w-100 flex-center gap-2 mt-2">
+              <!-- <a routerLink="/login-with-number" class="btn text-white theme-btn google-btn w-100 flex-center gap-2 mt-2">
                   <img class="img-fluid google" src="./../../../assets/images/svg/mobile.svg" alt="mobile" /> with
-                  Number</a>
+                  Number</a> -->
 
-              <button type="submit" class="btn theme-btn w-100 auth-btn mt-2">Login</button>
+              <button type="submit" class="btn theme-btn w-100 auth-btn mt-4">Login</button>
+              <div class="division">
+                <span>OR</span>
+            </div>
               <h6 class="content-color fw-normal text-center"> New User ?
                   <a routerLink="/user-registration" class="title-color fw-medium">Sign up</a>
               </h6>

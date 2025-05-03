@@ -46,7 +46,7 @@
 /* font family */
 /* color variables */
 :root {
-  --theme-color: 25, 150, 117;
+  --theme-color: black;
   --title-color: 31, 31, 31;
   --content-color: 143, 143, 143;
   --box-bg: 245, 245, 245;
@@ -59,15 +59,15 @@
   --black: 0, 0, 0;
 }
 
-.dark {
-  --theme-color: 25, 150, 117;
+/* .dark {
+  --theme-color: black
   --content-color: 127, 131, 132;
   --title-color: 255, 255, 255;
   --white: 52, 52, 52;
   --black: 255, 255, 255;
   --box-bg: 31, 31, 31;
   --line-color: 65, 65, 65;
-}
+} */
 
 /*-----------------------------------------------------------------------------------
 
@@ -272,7 +272,8 @@ section,
 }
 
 body {
-  font-family: "GT Walsheim Pro";
+  /* font-family: "GT Walsheim Pro"; */
+  font-family: "GT Walsheim Pro" !important;
   max-width: 600px;
   position: relative;
   width: 100%;
@@ -377,7 +378,7 @@ li {
 }
 
 .theme-btn {
-  background-color: rgba(var(--theme-color), 1);
+  background-color: black !important;
   color: rgb(255, 255, 255);
 }
 @media (max-width: 600px) {
@@ -2607,8 +2608,8 @@ body.dark .offcanvas.sidebar-offcanvas .offcanvas-header .sidebar-logo .logo-dar
   color: rgba(var(--content-color), 1);
 }
 .my-ride-tab .nav-item .nav-link.active {
-  background-color: rgba(var(--theme-color), 1);
-  color: rgb(255, 255, 255);
+  background-color: #f3c12e !important;
+  color: rgb(2, 2, 2) !important;
   transition: all 0.5s ease-in-out;
 }
 .my-ride-tab .nav-item .nav-link.active:hover {
@@ -2659,8 +2660,8 @@ body.dark .offcanvas.sidebar-offcanvas .offcanvas-header .sidebar-logo .logo-dar
 .auth-header {
   position: sticky;
   top: 0;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   line-height: 1;
   display: flex;
   justify-content: space-between;
@@ -2787,7 +2788,7 @@ body.dark .auth-header .logo {
   position: sticky;
   top: 0;
   padding-top: 25px;
-  background-color: rgba(var(--theme-color), 1);
+  background-color: black !important;
   z-index: 2;
 }
 @media (max-width: 600px) {
@@ -3159,7 +3160,7 @@ body.dark .main-header .header-panel .logo-dark {
   left: 50%;
   width: 60px;
   height: 8px;
-  background: rgba(var(--theme-color), 1);
+  background: #d50000 !important;
   transform: translate(-50%, -50%);
   border-radius: 10px 10px 0 0;
 }
@@ -3180,7 +3181,7 @@ body.dark .main-header .header-panel .logo-dark {
   display: none;
 }
 .navbar-menu ul li.active span {
-  color: rgba(var(--theme-color), 1);
+  color: rgb(163, 24, 6) !important;
   font-weight: 500;
 }
 
@@ -4429,9 +4430,9 @@ body.dark .auth-bg-image-box .auth-bg-image {
 }
 .total-ride-list li {
   padding-bottom: 5px;
-  background-color: rgba(var(--theme-color), 1);
+  background-color: black !important;
   border-radius: 8px;
-  outline: 1px solid rgba(var(--line-color), 1);
+  outline: 1px solid #fee611 !important;
 }
 .total-ride-list li .ride-box {
   display: block;

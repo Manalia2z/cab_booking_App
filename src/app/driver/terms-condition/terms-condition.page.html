@@ -1,16 +1,21 @@
-<ion-header [translucent]="true">
-    <header id="header" class="main-header inner-page-header">
-      <div class="custom-container">
-          <div class="header-panel">
-              <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
-                  <i class="fa fa-chevron-left text-secondary icon-btn" data-icon="text-align-left"> </i>
-              </a>
-              <h3>Terms & Condition</h3>
-          </div>
-      </div>
-  </header>
-  </ion-header>
-
+  <ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h6 class="categories-title text-white mt-2">Terms & Condition</h6>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+</ion-header>
 <ion-content [fullscreen]="true">
  
 

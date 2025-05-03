@@ -1,299 +1,117 @@
-<ion-header [translucent]="true">
-  <header id="header" class="main-header inner-page-header">
-    <div class="custom-container">
-        <div class="header-panel">
-            <div class="flex-align-center gap-2">
-                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                    <ion-buttons slot="start">
-                      <ion-menu-button class="text-dark"></ion-menu-button>
-                    </ion-buttons>
-                </a>
-                <h3 class="categories-title"> My Ride</h3>
-            </div>
 
-            <div class="flex-align-center gap-sm-3 gap-2">
-                <a href="chatting.html">
-                    <i class="iconsax icon-btn" data-icon="messages-2"> </i>
-                </a>
-                <a href="notification.html">
-                    <i class="iconsax icon-btn noti-icon" data-icon="bell-2"> </i>
-                </a>
+
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a  routerLink="/driver/home" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h6 class="categories-title text-white">My Rides</h6>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 </ion-header>
-
 <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
 
-<!-- header end -->
 
-<!-- my ride section starts -->
 <section class="section-b-space">
+
     <ul class="nav nav-pills my-ride-tab w-100 border-0 m-0" id="Tab" role="tablist">
-
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="pill-pending-tab" data-bs-toggle="pill"
-                data-bs-target="#pending-tab">Pending Ride</button>
+            <button (click)="getRideList('accepted',1)" class="nav-link" [class.active] = 'tab_id == 1' >Active Ride</button>
         </li>
+        
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pill-complete-tab" data-bs-toggle="pill" data-bs-target="#complete-tab">
+                <button class="nav-link" (click)="getRideList('completed',2)" [class.active] = 'tab_id == 2'>
                 Complete Ride</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pill-cancel-tab" data-bs-toggle="pill" data-bs-target="#cancel-tab">Cancel
-                Ride</button>
-        </li>
+        <!-- <li class="nav-item" role="presentation">
+            <a routerLink="/driver/cancel-ride"> <button (click)="getRideList('cancel')" class="nav-link" id="pill-cancel-tab" data-bs-toggle="pill" data-bs-target="#cancel-tab">Cancel
+                Ride</button></a>
+        </li> -->
     </ul>
-
     <div class="custom-container">
-        <div class="tab-content ride-content" id="TabContent">
-            <div class="tab-pane fade active show" id="pending-tab">
-                <ul class="my-ride-list driver-ride-list">
-                    <li class="white-background">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
-                                <a href="pending-ride-details.html" class="my-ride-img">
-                                    <img class="img-fluid profile-img" src="../../assets/images/profile/p5.png"
-                                        alt="p5">
+        <ul class="my-ride-list">
+            <li *ngFor="let row of trip_list;">
+                <div class="my-ride-box" (click)="openRideDetails(row.trip_tbl_id)">
+                    <div class="my-ride-head">
+                        <a href="#" class="my-ride-img">
+                            <img class="img-fluid my-ride-icon" src="./../../../assets/images/svg/car-svgrepo-com (5).svg"
+                                alt="receipt">
+                        </a>
+
+                        <div class="my-ride-content flex-column">
+                            <div class="flex-spacing">
+                                <a href="#">
+                                    <h6 class="title-color fw-medium">ID : 12000052</h6>
                                 </a>
-
-                                <div class="my-ride-content flex-column">
-                                    <div class="flex-spacing">
-                                        <a href="pending-ride-details.html">
-                                            <h6 class="title-color fw-medium">Peter Thornton</h6>
-                                        </a>
-                                        <h5 class="fw-mediun success-color">$256</h5>
-                                    </div>
-                                    <div class="flex-align-center gap-3">
-                                        <div class="flex-align-center gap-1">
-                                            <img class="star" src="../../../assets/images/svg/star.svg" alt="star">
-                                            <h5 class="fw-normal title-color">4.8</h5>
-                                            <span class="content-color fw-normal">(127)</span>
-                                        </div>
-                                        <div class="flex-align-center gap-1">
-                                            <i class="iconsax icon" data-icon="route-1"> </i>
-                                            <h6 class="fw-normal title-color">3 km</h6>
-                                        </div>
-                                    </div>
-                                </div>
+                                <span class="status accent-color fw-normal text-capitalize">{{row.trip_status}}</span>
                             </div>
-
-                            <div class="my-ride-details">
-                                <div class="ride-info">
-                                    <h6 class="fw-normal title-color">15 May’25 at 10:15 AM</h6>
-                                    <div class="flex-align-center gap-2">
-                                        <a href="chatting.html">
-                                            <img class="img-fluid communication-icon"
-                                                src="./../../../assets/images/svg/messages-fill.svg" alt="messages">
-                                        </a>
-                                        <a href="tel:+4733378901">
-                                            <img class="img-fluid communication-icon"
-                                                src="./../../../assets/images/svg/call-fill.svg" alt="call">
-                                        </a>
-                                    </div>
-                                </div>
-                                <ul class="ride-location-listing">
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">17, Yonge St, Toronto, Canada</h5>
-                                        </div>
-                                    </li>
-
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">20, Yonge St, Toronto, Canada
-                                            </h5>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <div class="flex-spacing  mt-2">
+                                <h6 class="fw-mediun success-color">{{row.payment_amt | currency : 'INR'}}</h6>
+                                <h6 class="fw-normal content-color">{{row.entry_time*1000 | date : 'medium'}}</h6>
                             </div>
-                            <a href="ride-verification.html" class="btn theme-btn w-100 mt-3">Pickup Customer</a>
-
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
 
-            <div class="tab-pane fade" id="complete-tab">
-                <ul class="my-ride-list driver-ride-list">
-                    <li class="white-background">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
-                                <a href="complete-ride-details.html" class="my-ride-img">
-                                    <img class="img-fluid profile-img" src="../../assets/images/profile/p5.png"
-                                        alt="p5">
-                                </a>
-
-                                <div class="my-ride-content flex-column">
-                                    <div class="flex-spacing">
-                                        <a href="complete-ride-details.html">
-                                            <h6 class="title-color fw-medium">Aathryn Murphy</h6>
-                                        </a>
-                                        <h5 class="fw-mediun success-color">$220</h5>
-                                    </div>
-                                    <div class="flex-align-center gap-3">
-                                        <div class="flex-align-center gap-1">
-                                            <img class="star" src="../../../assets/images/svg/star.svg" alt="star">
-                                            <h5 class="fw-normal title-color">4.6</h5>
-                                            <span class="content-color fw-normal">(65)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="my-ride-details">
-                                <div class="ride-info">
-                                    <h6 class="fw-normal title-color">4 May’25 at 9:10 AM</h6>
+                    <div class="my-ride-details">
+                        <div class="ride-info">
+                            <div class="ride-info-content">
+                                <div class="d-flex align-content-center gap-2 lh-base">
+                                    <h5 class="fw-normal title-color">{{row.u_name}}</h5>
                                     <div class="flex-align-center gap-1">
-                                        <i class="iconsax icon" data-icon="route-1"> </i>
-                                        <h6 class="fw-normal title-color">2 km</h6>
+                                        <!-- <img class="star" src="./../../../assets/images/svg/star.svg" alt="star"> -->
+                                        <!-- <h5 class="fw-normal title-color">4.8</h5> -->
+                                        <!-- <span class="count content-color fw-normal">(127)</span> -->
                                     </div>
                                 </div>
-                                <ul class="ride-location-listing">
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">12, custber St, ottawa, Canada</h5>
-                                        </div>
-                                    </li>
-
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">86, custber St, Toronto,
-                                                Canada
-                                            </h5>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <h6 class="fw-normal content-color mt-1">{{row.type_name}}</h6>
                             </div>
+                            <img class="img-fluid profile-img" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                                alt="p5">
                         </div>
-                    </li>
-                    <li class="white-background">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
-                                <a href="complete-ride-details.html" class="my-ride-img">
-                                    <img class="img-fluid profile-img" src="../../assets/images/profile/p4.png"
-                                        alt="p5">
-                                </a>
 
-                                <div class="my-ride-content flex-column">
-                                    <div class="flex-spacing">
-                                        <a href="complete-ride-details.html">
-                                            <h6 class="title-color fw-medium">Templeton Peck</h6>
-                                        </a>
-                                        <h5 class="fw-mediun success-color">$180</h5>
-                                    </div>
-                                    <div class="flex-align-center gap-3">
-                                        <div class="flex-align-center gap-1">
-                                            <img class="star" src="../../../assets/images/svg/star.svg" alt="star">
-                                            <h5 class="fw-normal title-color">4.2</h5>
-                                            <span class="content-color fw-normal">(17)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <ul class="ride-location-listing mt-3">
+                            <li class="location-box">
+                                <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com (1).svg"
+                                    alt="location">
+                                <h5 class="fw-light title-color">{{row.pickUpAddress}}</h5>
+                            </li>
 
-                            <div class="my-ride-details">
-                                <div class="ride-info">
-                                    <h6 class="fw-normal title-color">18 May’25 at 4:40 PM</h6>
-                                    <div class="flex-align-center gap-1">
-                                        <i class="iconsax icon" data-icon="route-1"> </i>
-                                        <h6 class="fw-normal title-color">1 km</h6>
-                                    </div>
-                                </div>
-                                <ul class="ride-location-listing">
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">32, monstry cir, ottawa, Canada</h5>
-                                        </div>
-                                    </li>
-
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">35, custber St, ottawa, Canada
-                                            </h5>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="tab-pane fade" id="cancel-tab">
-                <ul class="my-ride-list driver-ride-list">
-                    <li class="white-background">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
-                                <a href="cancel-ride-details.html" class="my-ride-img">
-                                    <img class="img-fluid profile-img" src="../../assets/images/profile/p5.png"
-                                        alt="p5">
-                                </a>
-
-                                <div class="my-ride-content flex-column">
-                                    <div class="flex-spacing">
-                                        <a href="cancel-ride-details.html">
-                                            <h6 class="title-color fw-medium">Peter Thornton</h6>
-                                        </a>
-                                        <h5 class="fw-mediun success-color">$256</h5>
-                                    </div>
-                                    <div class="flex-align-center gap-3">
-                                        <div class="flex-align-center gap-1">
-                                            <img class="star" src="../../../assets/images/svg/star.svg" alt="star">
-                                            <h5 class="fw-normal title-color">4.8</h5>
-                                            <span class="content-color fw-normal">(127)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="my-ride-details">
-                                <div class="ride-info">
-                                    <h6 class="fw-normal title-color">5 May’25 at 2:10 PM</h6>
-                                    <div class="flex-align-center gap-1">
-                                        <i class="iconsax icon" data-icon="route-1"> </i>
-                                        <h6 class="fw-normal title-color">1 km</h6>
-                                    </div>
-                                </div>
-                                <ul class="ride-location-listing">
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">20, suberin St, Toronto, Canada</h5>
-                                        </div>
-                                    </li>
-
-                                    <li class="border-0 shadow-none">
-                                        <div class="location-box">
-                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                            <h5 class="fw-light title-color border-0">12, custber St, ottawa, Canada
-                                            </h5>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                            <li class="location-box">
+                                <img class="icon" src="./../../../assets/images/svg/location-define-svgrepo-com.svg" alt="gps">
+                                <h5 class="fw-light title-color border-0">{{row.destination}}
+                                </h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li *ngIf="noActiveTrip" class="text-center mt-3">
+                <div class="empty-box">
+                    <img class="img-fluid empty-img " style="height: 140px;width: 140px;" src="./../../../assets/images/svg/empty-bed-svgrepo-com.svg" alt="empty">
+                    <h3 class="title-color">No Active Ride</h3>
+                    <p class="content-color pb-3">You have no active ride at the moment.</p>
+                </div>
+            
+            </li>
+        </ul>
     </div>
 </section>
-<!-- my ride section end -->
 
 <!-- panel-space start -->
 <section class="panel-space"></section>
 <app-footer></app-footer>
+
 </ion-content>

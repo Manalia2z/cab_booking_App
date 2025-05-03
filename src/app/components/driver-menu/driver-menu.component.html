@@ -3,35 +3,35 @@
     <!-- Logo Section -->
     <div class="logo-section">
       <!-- <img src="assets/logo.png" alt="TAXIDO" class="logo"> -->
-      <img src="../../../assets/images/logo.jpg" style="height: 60px;width: 60px;" alt="DINAS CAB" class="logo">
+      <img src="../../../assets/dlogo.png" style="height: 60px;width: 60px;" alt="DINAS CAB" class="logo">
     </div>
    
     
     <!-- Menu Items -->
     <ion-content>
-      <div class="profile-section">
+      <div class="profile-section" *ngFor="let row of det;">
         <div class="head-bg w-100"> 
-          <h3>Jonathan Higgins</h3>
-          <p>Driver</p>
+          <h3>{{row.d_name}}</h3>
+          <p>{{row.d_email}}</p>
         </div>
       </div>
       <ion-list lines="none">
-        <ion-item routerLink="/driver/home">
+        <ion-item routerLink="/driver/home" (click)="closeMenu()">
           <ion-icon name="home-outline" slot="start"></ion-icon>
           <ion-label class="label">Home</ion-label>
         </ion-item>
         
-        <ion-item routerLink="/driver/myride">
+        <ion-item routerLink="/driver/my-rides" (click)="closeMenu()">
           <ion-icon name="car-outline" slot="start"></ion-icon>
           <ion-label class="label">My Ride</ion-label>
         </ion-item>
         
-        <ion-item routerLink="/driver/notifications">
+        <!-- <ion-item routerLink="/driver/notifications" (click)="closeMenu()">
           <ion-icon name="notifications-outline" slot="start"></ion-icon>
           <ion-label class="label">Notification</ion-label>
-        </ion-item>
+        </ion-item> -->
         
-        <ion-item routerLink="/driver/profile-setting">
+        <ion-item routerLink="/driver/profile-setting" (click)="closeMenu()">
           <ion-icon name="settings-outline" slot="start"></ion-icon>
           <ion-label class="label">Setting</ion-label>
         </ion-item>
@@ -43,7 +43,7 @@
     
     <!-- Logout Section -->
     <div class="logout-section">
-      <ion-item routerLink="/login">
+      <ion-item (click)="logout()">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         <ion-label class="label">Logout</ion-label>
       </ion-item>

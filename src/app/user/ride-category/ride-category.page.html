@@ -1,24 +1,22 @@
-<header id="header" class="main-header inner-page-header">
-    <div class="custom-container">
-        <div class="header-panel">
-            <div class="flex-align-center gap-2">
-                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                    <i class="iconsax icon-btn" data-icon="text-align-left"> </i>
-                </a>
-                <h3 class="categories-title">Categories</h3>
-            </div>
 
-            <div class="flex-align-center gap-sm-3 gap-2">
-                <a href="chatting.html">
-                    <i class="iconsax icon-btn" data-icon="messages-2"> </i>
-                </a>
-                <a href="notification.html">
-                    <i class="iconsax icon-btn noti-icon" data-icon="bell-2"> </i>
-                </a>
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/user/home" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h3 class="categories-title text-white">Ride Category</h3>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
+</ion-header>
 <ion-content [fullscreen]="true">
 
 <!-- header end -->
@@ -27,11 +25,21 @@
 <section class="section-b-space">
     <div class="custom-container">
         <ul class="main-categories-list">
-            <li *ngFor="let row of ride_category;">
-                <a [routerLink]="'/user/searchLocation/'+row.ride_category_tbl_id" class="main-categories-box ride" style="background-image: url('./../../../assets/d8d74a00613c7b6c668e.png');">
+           
+            <li>
+                <a routerLink="/user/search-location-outstation" class="main-categories-box ride" style="background-image: url('./../../../assets/d8d74a00613c7b6c668e.png');">
                     <div class="main-categories-content">
-                        <h5>{{row.r_cat_name}}</h5>
-                        <h6>{{row.r_cat_desc}}</h6>
+                        <h5>Outstation</h5>
+                        <h6>Used for travel city to city</h6>
+                        <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/user/search-by-stops" class="main-categories-box ride" style="background-image: url('./../../../assets/d8d74a00613c7b6c668e.png');">
+                    <div class="main-categories-content">
+                        <h5>Ride Now</h5>
+                        <h6>used only for all over the world</h6>
                         <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
                     </div>
                 </a>

@@ -40,15 +40,38 @@ export class ActiveRidePage implements OnInit {
 accepted_trip :any;
 otp:any;
 trip_status:any;
-  ngOnInit() {
+noActiveTrip:boolean = false;
+
+  ngOnInit() 
+  {
+    this.accepted_trip = '';
+    this.trip_status='pending';
       this.api.acceptedTrips().subscribe((res:any)=>{
-      this.accepted_trip = res.data;
-      this.trip_status = res.data[0].trip_status;
-      console.log(res,this.trip_status);
-      this.loginForm.patchValue({
-        "trip_tbl_id" : res.data[0].trip_tbl_id
-      })
+        console.log(res);
+        if(res.status == 'success')
+        {
+          this.noActiveTrip = false;
+            this.accepted_trip = res.data;
+              if(res.data[0]){
+              this.trip_status = res.data[0].trip_status;
+              
+              }
+            console.log("-------------",res,this.trip_status);
+            this.loginForm.patchValue({
+              "trip_tbl_id" : res.data[0].trip_tbl_id
+            })
+      }else{
+        this.noActiveTrip = true;
+        this.accepted_trip = [];
+      }
     })
+  }
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.ngOnInit();
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 2000);
   }
   validateOtp()
   {
@@ -105,6 +128,7 @@ trip_status:any;
       {
         this.presentToast(res.msg);
         this.cdr.detectChanges(); 
+        // this.ngOnInit();
       }else{
         this.presentToast(res.msg);
       }

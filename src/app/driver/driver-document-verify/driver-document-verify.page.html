@@ -4,11 +4,11 @@
   <header id="header" class="auth-header inner-page-header white-background pb-3">
     <div class="custom-container">
         <div class="header-panel">
-            <a rouetLink="/driver/driver-registration">
-                <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
+            <a routerLink="/driver/home">
+                <i class="iconsax fa fa-chevron-left icon-btn" data-icon="chevron-left"> </i>
             </a>
-            <img class="img-fluid logo" src="../../assets/images/logo/driver/driver-logo.png" alt="logo">
-            <img class="img-fluid logo-dark" src="../../assets/images/logo/driver/driver-logo-dark.png" alt="logo">
+            <img class="img-fluid logo" src="../../../assets/dlogo.png" alt="logo">
+            <img class="img-fluid logo-dark" src="../../../assets/dlogo.png" alt="logo">
         </div>
     </div>
 </header>
@@ -16,7 +16,7 @@
 
 <!-- document varify  page starts -->
 <section class="auth-content-bg" style="height: 100%;">
-    <div class="custom-container">
+    <div class="custom-container bg-white pt-2">
         <ul class="line-design">
             <li class="active"></li>
             <li></li>
@@ -33,10 +33,10 @@
          
             <li class="form-group">
                 <h5 class="fw-medium title-color mb-2">Driving License</h5>
-                <div id="output" class="upload-image">
-                    <input formControlName="d_license_photo" (change)="onFileSelected($event)" id="file" class="form-control upload-file" type="file" id="formFileLg">
+                <div id="output">
+                    <input formControlName="d_license_photo" (change)="onFileSelected($event)" id="file" class="form-control" type="file" id="formFileLg">
                     <i class="iconsax upload-icon" data-icon="logout-2"> </i>
-                    <h5>Upload Image</h5>
+                    
                 </div>
                 <div class="m-0 p-0" *ngIf="loginForm.get('d_license_photo')?.invalid && loginForm.get('d_license_photo')?.touched">
                     <small class="text-danger">Please Upload License</small>
@@ -44,10 +44,10 @@
             </li>
             <li class="form-group">
                 <h5 class="fw-medium title-color mb-2">Pan Card</h5>
-                <div id="output" class="upload-image">
-                    <input formControlName="d_pan_photo" id="file" (change)="onFileSelected1($event)" class="form-control upload-file" type="file" id="formFileLg">
+                <div id="output">
+                    <input formControlName="d_pan_photo" id="file" (change)="onFileSelected1($event)" class="form-control" type="file" id="formFileLg">
                     <i class="iconsax upload-icon" data-icon="logout-2"> </i>
-                    <h5>Upload Image</h5>
+                    
                 </div>
                 <div class="m-0 p-0" *ngIf="loginForm.get('d_pan_photo')?.invalid && loginForm.get('d_pan_photo')?.touched">
                     <small class="text-danger">Please Upload Pan Card Image</small>
@@ -55,16 +55,16 @@
             </li>
             <li class="form-group">
                 <h5 class="fw-medium title-color mb-2">Driver Photo</h5>
-                <div id="output" class="upload-image">
-                    <input formControlName="driver_photo" id="file" (change)="onFileSelected2($event)" class="form-control upload-file" type="file" id="formFileLg">
+                <div id="output">
+                    <input formControlName="driver_photo" id="file" (change)="onFileSelected2($event)" class="form-control" type="file" id="formFileLg">
                     <i class="iconsax upload-icon" data-icon="logout-2"> </i>
-                    <h5>Upload Image</h5>
+                    
                 </div>
                 <div class="m-0 p-0" *ngIf="loginForm.get('driver_photo')?.invalid && loginForm.get('driver_photo')?.touched">
                     <small class="text-danger">Please Upload Driver Photo</small>
                   </div>
             </li>
-            <li class="form-group">
+            <!-- <li class="form-group">
                 <div class="d-flex">
                     <div class="w-50" *ngIf="imageUrl">
                         <label for="">Driving License</label>
@@ -81,7 +81,7 @@
                         <img class="w-100" *ngIf="imageUrl2" [src]="imageUrl2" style="height: 150px;object-fit: contain;"/>
                     </div>
                 </div>
-            </li>
+            </li> -->
             
         </ul>
         <section class="panel-space"></section>

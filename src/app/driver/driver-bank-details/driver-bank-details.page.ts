@@ -43,6 +43,23 @@ export class DriverBankDetailsPage implements OnInit {
   });
 
   ngOnInit() {
+    this.api.getDriverDetails().subscribe((res:any)=>{
+      console.log(res);
+      this.bankDetailsForm.patchValue({
+        bank_name:res.det.driver_det[0].bank_name,
+        bank_acc_holder_name:res.det.driver_det[0].bank_acc_holder_name,
+        bank_account_no:res.det.driver_det[0].bank_account_no,
+        branch_name:res.det.driver_det[0].branch_name,
+        bank_ifsc_code:res.det.driver_det[0].bank_ifsc_code,
+    })
+  })
+  }
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.ngOnInit();
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 2000);
   }
  savebank()
   {
@@ -55,6 +72,7 @@ export class DriverBankDetailsPage implements OnInit {
       if(res.status=='success'){
         this.dismissLoader();
         this.presentToast(res.msg);
+        this.router.navigate(['/driver/home']);
       }
       else{
         this.dismissLoader();

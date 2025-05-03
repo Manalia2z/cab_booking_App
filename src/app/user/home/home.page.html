@@ -1,210 +1,240 @@
-<ion-header [translucent]="true">
-    
-  <header id="header" class="main-header">
-    <div class="custom-container">
-        <div class="header-panel">
-            <div class="flex-align-center gap-2">
-                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                <ion-buttons slot="start">
-                    <ion-menu-button class="text-white"></ion-menu-button>
-                  </ion-buttons>
-                  </a>
+<ion-header class="d-none">
+    <header id="header" class="main-header">
+        <div class="custom-container" >
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
                     <!-- <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                    <i class="fa fa-bars text-white icon-btn" data-icon="text-align-left"> </i>
+                      <ion-buttons slot="start">
+                        <ion-menu-button class="text-white"></ion-menu-button>
+                      </ion-buttons>
+                      </a> -->
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                    <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+                        <h6 class="text-white"><b>Deena's <br>Cab Booking</b></h6>
+                    </a>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <!-- <a>
+                        <i class="fa text-white fa-comment-o icon-btn" data-icon="messages-2"> </i>
+                    </a>
+                    <a >
+                        <i class="fa fa-bell-o text-white icon-btn" data-icon="bell-2"> </i>
                     </a> -->
-                    <img class="img-fluid logo user-logo" src="../../assets/images/logo.jpg" style="height: 40px;" alt="logo">
-              
-                    <!-- <img class="img-fluid logo user-logo" src="../../assets/images/logo/user/user-logo-white.png" alt="logo"> -->
-            </div>
-
-            <div class="flex-align-center gap-sm-3 gap-2">
-                <a href="chatting.html">
-                    <i class="fa text-white fa-comment-o icon-btn" data-icon="messages-2"> </i>
-                </a>
-                <a href="notification.html">
-                    <i class="fa fa-bell-o text-white icon-btn" data-icon="bell-2"> </i>
-                </a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    <div class="container-fluid pb-4" *ngIf="noActiveTrip">
+        <div class="card card-custom p-4 border-0 mt-4 shadow-lg">
+          <div class="d-flex justify-content-start align-items-center mb-1">
+            <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 50px;" alt="logo">
+            <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+              <h6 class="text-dark ml-2">&nbsp;<b>Deena's <br>&nbsp;Cab Booking</b>
+            </h6>
+            </a>
+           <div>
+              <!-- <button class="icon-btn"><i class="fas fa-search"></i></button> -->
+              <!-- <button class="icon-btn"><i class="far fa-bell"></i></button> -->
+            </div>
+          </div>
+      
+          <div *ngFor="let row of det;">
+            <h3 class="fw-bold mb-1 mt-0 pt-0">Hey,</h3>
+            <h2 class="fw-bold m-0 text-dark">{{row.u_name}}</h2>
+            <p class="text-muted mb-3">Book your ride now... 👋</p>
+          </div>
+      
+          <div class="position-relative" (click)="SearchLocation()">
+            <i class="fa fa-search text-danger search-icon"></i>
+            <input (click)="SearchLocation()" style="border: 0;height: 50px;" type="text" class="form-control search-input" placeholder="Search destinations">
+          </div>
+        </div>
+        <div class="card card-custom p-4 border-0 mt-3">
+            <div class="title ">
+                <h3 class="mt-0 p-0">Top Categories</h3>
+            </div>
+        
+            <ul class="categories-list">
+                <li style="width: 150px;height: 100px;" class="shadow-sm border rounded-3 d-flex justify-content-center align-content-center">
+                    <a  class="" style="width: 110px !important;height: 85px;padding: 15px;border-radius: 12px;">
+                     <img style="height: 80px;" class="img-fluid categories-img" src="./../../../assets/images/auto-rickshaw-svgrepo-com.svg" alt="c1">
+                    </a>
+                    
+                </li>
+                <li style="width: 150px;height: 100px;" class="shadow-sm border rounded-3 d-flex justify-content-center align-content-center">
+                    <a class="" style="width: 110px !important;height: 85px;padding: 15px;border-radius: 12px;">
+                       <img style="height: 80px;" class="img-fluid categories-img" src="./../../../assets/images/car-side-svgrepo-com.svg" alt="c1">
+                    </a>
+                </li>  
 
+            </ul>
+               <!-- <hr  style="justify-content: center;width: 100%;border: 0.1px solid gray; "/> -->
+            <ul class="categories-list text-center">
+                <h5 class="m-0 mt-1 p-0" style="font-family: Arial, Helvetica, sans-serif;">Book Your <br>Auto Ride Now</h5>
+
+                <h5 class="m-0 mt-1 p-0" style="font-family: Arial, Helvetica, sans-serif;">Book Your <br>Destination Trip</h5>
+
+
+            </ul>
+
+        </div>
+        <div class="card card-custom p-4 border-0 mt-3">
+   
+        <div id="map" class="map-container shadow-sm mt-3"></div>
+
+        </div>
+    </div>
+      
+    
+    <div class="container-fluid pb-4" *ngIf="!noActiveTrip">
+        <div *ngFor="let row of det;" class="card card-custom p-4 border-0 mt-4" style="box-shadow: rgba(214, 166, 90, 0.16) 0px 10px 36px 0px, rgba(203, 206, 67, 0.06) 0px 0px 0px 1px;border-radius: 20px;">
+          <div class="d-flex justify-content-center align-items-center mb-1">
+            <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 50px;" alt="logo">
+            <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+              <!-- <h6 class="text-dark ml-2">&nbsp;<b>Deena's <br>&nbsp;Cab Booking</b></h6> -->
+            </a>
+           <div>
+              <!-- <button class="icon-btn"><i class="fas fa-search"></i></button> -->
+              <!-- <button class="icon-btn"><i class="far fa-bell"></i></button> -->
+            </div>
+          </div>
+      
+          <div>
+            <h3 class="fw-bold mb-1 mt-0 pt-0">Hey,</h3>
+            <h2 class="fw-bold m-0 text-dark">{{row.u_name}}</h2>
+            <p class="text-muted mb-1">Below Is Your ride Details... 👋</p>
+          </div>
+
+        </div>
+        <div class="p-2 pt-0 border-0 mt-2" style="box-shadow: rgba(156, 42, 42, 0.56) 0px 22px 70px 4px;border-radius: 20px;">
+                
+                    <ul class="my-ride-list border-0 pt-0 mt-0" style="border-top-right-radius: 60px;">
+                        <li *ngFor="let row of trip_list;" class="border-0"> 
+                            <div class="my-ride-box border-0 shadow-none" >
+                                <div class="my-ride-head" (click)="openRideDetails(row.trip_tbl_id)">
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon" src="./../../../assets/images/auto-rickshaw-svgrepo-com (1).svg"
+                                            alt="receipt">
+                                    </a>
+    
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">ID : 12000052</h6>
+                                            </a>
+                                            <span class="status accent-color fw-normal text-capitalize">{{row.trip_status}}</span>
+                                        </div>
+                                        <div class="flex-spacing  mt-2">
+                                            <h6 class="fw-mediun success-color">{{row.payment_amt | currency : 'INR'}}</h6>
+                                            <h6 class="fw-normal content-color">{{row.entry_time*1000 | date : 'medium'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="my-ride-details">
+                                    <div class="ride-info" (click)="openRideDetails(row.trip_tbl_id)">
+                                        <div class="ride-info-content">
+                                            <div class="d-flex align-content-center gap-2 lh-base">
+                                                <h5 class="fw-normal title-color">{{row.u_name}}</h5>
+                                                <div class="flex-align-center gap-1">
+                                                    <!-- <img class="star" src="./../../../assets/images/svg/star.svg" alt="star"> -->
+                                                    <!-- <h5 class="fw-normal title-color">4.8</h5> -->
+                                                    <!-- <span class="count content-color fw-normal">(127)</span> -->
+                                                </div>
+                                            </div>
+                                            <h6 class="fw-normal content-color mt-1">{{row.type_name}} <span class="bg-light text-success p-1 rounded "><b>({{row.vehicle_no}})</b></span></h6>
+                                        </div>
+                                        <img class="img-fluid profile-img" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                                            alt="p5">
+                                    </div>
+    
+                                    <ul (click)="openRideDetails(row.trip_tbl_id)" class="ride-location-listing mt-3">
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com (1).svg"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">{{row.pickUpAddress}}</h5>
+                                        </li>
+    
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-define-svgrepo-com.svg" alt="gps">
+                                            <h5 class="fw-light title-color border-0">{{row.destination}}
+                                            </h5>
+                                        </li>
+                                      
+                                    </ul>
+                                    <a (click)="openRideDetails(row.trip_tbl_id)" class="float-left btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-warning" >
+                                        <i class="iconsax icon fa fa-info text-right text-dark text-danger" data-icon="trash"> </i>
+                                    </a>
+                                    <a (click)="cancelTrip(row.trip_tbl_id)" class="float-end btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-danger" *ngIf="row.trip_status == 'pending'">
+                                        Cancel Ride 
+                                    </a>
+                                    <a  class="float-end btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-success" *ngIf="row.trip_status == 'accepted'">
+                                       Accepted - {{row.accepted_time*1000 | date : 'medium'}}
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li *ngIf="noActiveTrip" class="text-center mt-3">
+                            <div class="empty-box">
+                                <img class="img-fluid empty-img " style="height: 140px;width: 140px;" src="./../../../assets/images/svg/empty-bed-svgrepo-com.svg" alt="empty">
+                                <h3 class="title-color">No Active Ride</h3>
+                                <p class="content-color pb-3">You have no active ride at the moment.</p>
+                            </div>
+                        
+                        </li>
+                    </ul>
+               
+    
+        </div>
+        <div class="card p-4 border-0 mt-1" style="box-shadow: rgba(244, 238, 132, 0.16) 0px 10px 36px 0px, rgba(203, 206, 67, 0.06) 0px 0px 0px 1px;border-radius: 20px;">
+   
+            <div  #mapRef id="map" class="map-container shadow-sm mt-3"></div>
+    
+            </div>
+      </div>
+  
+
+      
 <!-- header end -->
 
-<!-- search section starts -->
-<section class="home-profile-section section-b-space pt-0">
-    
-    <div class="custom-container">
-        <div class="form-input">
-            <input type="search" class="form-control with-icon" id="inputusername"
-                placeholder="Search destinations" (click)="SearchLocation()">
-            <i class="iconsax search-icon" data-icon="search-normal-2"> </i>
-            <a (click)="SearchLocation()" class="date-time-picker">
-                <i class="iconsax icon" data-icon="calendar-1"></i>
-            </a>
-        </div>
-    </div>
-</section>
-<!-- search section end -->
 
-<!-- slider section starts -->
+    <!-- <section class="home-profile-section section-b-space text-dark pt-0" style="box-shadow: rgba(251, 174, 143, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;background: #fff0f0;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">
+        <div class="custom-container">
+
+            <div class="" *ngFor="let row of det;">
+                <h2 style="font-size: 20px;font-family:  Georgia, serif;" class="pt-2">Hey , 
+                    <i><h1 style="color: #b02c00;" class="m-0 p-0">{{row.u_name}} , </h1></i>
+                </h2>
+                <p class="pb-1 pt-2" style="font-family:  Georgia, serif;font-size: 15px;"><i>Book Your Ride Now ...</i></p>
+            </div>
+            <div class="form-input">
+                <input style="padding: calc(12px + 3 * (100vw - 320px) / 448) 45px;" type="search" class="form-control with-icon" id="inputusername"
+                    placeholder="Search destinations" (click)="SearchLocation()">
+                <i class="iconsax fa fa-search search-icon" data-icon="search-normal-2"> </i>
+                <a (click)="SearchLocation()" class="date-time-picker">
+                    <i class="iconsax fa fa-calendar icon" style="color: #D50000;" data-icon="calendar-1">
+                    </i>
+                </a>
+            </div>
+        </div>
+    </section> -->
+
+
+
+
 <section>
-    <div class="swiper banner1 home-banner">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img class="img-fluid slider-img w-100" src="../../assets/images/slider/slider1.png" alt="slider">
-            </div>
-            <div class="swiper-slide">
-                <img class="img-fluid slider-img w-100" src="../../assets/images/slider/slider2.png" alt="slider">
-            </div>
-        </div>
-    </div>
-</section>
-<!-- slider section end -->
 
-<!-- category section starts -->
-<section>
-    <div class="title px-20">
-        <h3>Top Categories</h3>
-    </div>
-
-    <ul class="categories-list px-20">
-        <li>
-            <a href="search-location.html" class="categories-box">
-                <div class="d-flex flex-column flex-nowrap justify-content-between h-100">
-                    <h6>Ride</h6>
-                    <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
-                </div>
-                <img class="img-fluid categories-img" src="./../../../assets/images/svg/1.svg" alt="c1">
-            </a>
-        </li>
-        <li>
-            <a href="outstation.html" class="categories-box">
-                <div class="d-flex flex-column flex-nowrap justify-content-between h-100">
-                    <h6>Outstation</h6>
-                    <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
-
-                </div>
-                <img class="img-fluid categories-img" src="./../../../assets/images/svg/2.svg" alt="c1">
-            </a>
-        </li>
-        <li>
-            <a href="rental.html" class="categories-box">
-                <div class="d-flex flex-column flex-nowrap justify-content-between h-100">
-                    <h6>Rental</h6>
-                    <i class="iconsax arrow-icon" data-icon="arrow-right"> </i>
-                </div>
-                <img class="img-fluid categories-img" src="./../../../assets/images/svg/3.svg" alt="c1">
-            </a>
-        </li>
-    </ul>
-</section>
-<!-- category section end -->
-
-<!-- offer section starts -->
-<section>
-    <div class="custom-container">
-        <div class="title">
-            <h3>Today’s Offer</h3>
-        </div>
-
-        <div class="row gy-3">
-            <div class="col-12">
-                <div class="coupon-box">
-                    <div class="coupon-details">
-                        <div class="coupon-content">
-                            <a href="accept-ride-details.html" class="coupon-name">
-                                <img class="img-fluid coupon-img" src="../../assets/images/profile/p6.png" alt="c1">
-                                <div>
-                                    <h5 class="fw-normal title-color">Johnson Smith</h5>
-                                </div>
-                            </a>
-                            <div class="rating">
-                                <img class="img-fluid star" src="../../../assets/images/svg/star.svg" alt="star">
-                                <h6>4.5</h6>
-                            </div>
-                        </div>
-                        <p>Up to 10 km from Wankover city area</p>
-
-                        <ul class="content-list">
-                            <li><i class="iconsax icon" data-icon="car"></i>Mini Sedan</li>
-                            <li><i class="iconsax icon" data-icon="user-1"></i>4 Person</li>
-                        </ul>
-                        <div class="flex-align-center pt-2">
-                            <h6 class="content-color fw-normal">Valid till: 4/5/2025</h6>
-                        </div>
-                    </div>
-                    <div class="coupon-discount">20% OFF</div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="coupon-box">
-                    <div class="coupon-details">
-                        <div class="coupon-content">
-                            <a href="accept-ride-details.html" class="coupon-name">
-                                <img class="img-fluid coupon-img" src="../../assets/images/profile/p5.png" alt="c1">
-                                <div>
-                                    <h5 class="fw-normal title-color">mike Dowson</h5>
-                                </div>
-                            </a>
-                            <div class="rating">
-                                <img class="img-fluid star" src="../../../assets/images/svg/star.svg" alt="star">
-                                <h6>4.2</h6>
-                            </div>
-                        </div>
-                        <p>Up to 50 km from Wankover city area</p>
-
-                        <ul class="content-list">
-                            <li><i class="iconsax icon" data-icon="car"></i>Mini Sedan</li>
-                            <li><i class="iconsax icon" data-icon="user-1"></i>4 Person</li>
-                        </ul>
-                        <div class="flex-align-center pt-2">
-                            <h6 class="content-color fw-normal">Valid till: 14/5/2025</h6>
-                        </div>
-                    </div>
-                    <div class="coupon-discount">50% OFF</div>
-
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="coupon-box">
-                    <div class="coupon-details">
-                        <div class="coupon-content">
-                            <a href="accept-ride-details.html" class="coupon-name">
-                                <img class="img-fluid coupon-img" src="../../assets/images/profile/p4.png" alt="c1">
-                                <div>
-                                    <h5 class="fw-normal title-color">Aathryn Murphy</h5>
-                                </div>
-                            </a>
-                            <div class="rating">
-                                <img class="img-fluid star" src="../../../assets/images/svg/star.svg" alt="star">
-                                <h6>4.3</h6>
-                            </div>
-                        </div>
-                        <p>Up to 15 km from Wankover city area</p>
-
-                        <ul class="content-list">
-                            <li><i class="iconsax icon" data-icon="car"></i>Mini Sedan</li>
-                            <li><i class="iconsax icon" data-icon="user-1"></i>4 Person</li>
-                        </ul>
-                        <div class="flex-align-center pt-2">
-                            <h6 class="content-color fw-normal">Valid till: 21/5/2025</h6>
-                        </div>
-                    </div>
-                    <div class="coupon-discount">30% OFF</div>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 <!-- offer section end -->
 
 <!-- panel-space start -->
-<section class="panel-space"></section>
+<section class="panel-space bg-white"></section>
   <app-footer></app-footer>
 </ion-content>

@@ -1,0 +1,120 @@
+<ion-header>
+  <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+      <div class="custom-container mt-1">
+          <div class="header-panel">
+              <div class="flex-align-center gap-2">
+                  <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
+                      <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                  </a>
+                  &nbsp;<h5 class="categories-title text-white">Upload Vehicle Documents</h5>
+              </div>
+  
+              <div class="flex-align-center gap-sm-3 gap-2">
+                  <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+              </div>
+          </div>
+      </div>
+  </header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section class="section-b-space">
+    
+    <div class="custom-container bg-white">
+  
+        <ul class="offer-listing">
+            <li class="w-100" *ngFor="let row of list;let i = index;" >
+                <div class="offer-box text-center">
+                    <div class="p-0 m-0 text-center">
+                        <h4 style="font-size: 15px;" class="m-0 mb-1"> {{row.vehicle_no}}</h4>
+                       
+                    </div>
+
+                    
+                </div>
+            </li>
+
+         
+        </ul>
+ 
+
+      <form class="auth-form" id="loginForm" [formGroup]="loginForm" (ngSubmit)="uploadVehicleDoc()" enctype="multipart/form-data">
+
+      <ul class="auth-form">
+       <div class="row">
+
+          <li class="form-group float-left">
+              <h5 class="fw-medium title-color mb-2">Insurance Document</h5>
+              <div id="output">
+                  <input formControlName="Insurance_doc" (change)="onFileSelected2($event)" accept="image/*" id="file" class="form-control" type="file" id="formFileLg">
+              </div>
+              <div class="m-0 p-0" *ngIf="loginForm.get('Insurance_doc')?.invalid && loginForm.get('Insurance_doc')?.touched">
+                  <small class="text-danger">Please Upload Insurance Document</small>
+                </div>
+          </li>
+          <li class="form-group float-left">
+            <h5 class="fw-medium title-color mb-2">Insurance Expiry Date</h5>
+            <div id="output">
+                <input formControlName="InsuranceExpiry_date" class="form-control" type="date" >
+                
+            </div>
+            <div class="m-0 p-0" *ngIf="loginForm.get('Insurance_doc')?.invalid && loginForm.get('Insurance_doc')?.touched">
+                <small class="text-danger">Please Enter Insurance Doc Expiry</small>
+              </div>
+        </li>
+          <li class="form-group float-left">
+              <h5 class="fw-medium title-color mb-2">Rc Book</h5>
+              <div id="output">
+                  <input formControlName="rc_book" accept="image/*" id="file" (change)="onFileSelected1($event)" class="form-control" type="file" id="formFileLg">
+                  
+              </div>
+              <div class="m-0 p-0" *ngIf="loginForm.get('rc_book')?.invalid && loginForm.get('rc_book')?.touched">
+                  <small class="text-danger">Please Upload RC Book Image</small>
+                </div>
+          </li>
+          <li class="form-group float-left">
+            <h5 class="fw-medium title-color mb-2">RC Expiry</h5>
+            <div id="output">
+                <input formControlName="rc_expiry_date" class="form-control" type="date" >
+                
+            </div>
+            <div class="m-0 p-0" *ngIf="loginForm.get('Insurance_doc')?.invalid && loginForm.get('Insurance_doc')?.touched">
+                <small class="text-danger">Please Enter Insurance Doc Expiry</small>
+              </div>
+        </li>
+          <li class="form-group">
+              <h5 class="fw-medium title-color mb-2">Permit Document Image</h5>
+              <div id="output">
+                  <input formControlName="permit_doc" accept="image/*" id="file" (change)="onFileSelected($event)" class="form-control" type="file" id="formFileLg">
+                  
+              </div>
+              <div class="m-0 p-0" *ngIf="loginForm.get('permit_doc')?.invalid && loginForm.get('permit_doc')?.touched">
+                  <small class="text-danger">Please Upload Permit Document Image</small>
+                </div>
+          </li>
+          <li class="form-group float-left">
+            <h5 class="fw-medium title-color mb-2">Permit Expiry</h5>
+            <div id="output">
+                <input formControlName="permit_expiry_date" class="form-control" type="date" >
+                
+            </div>
+            <div class="m-0 p-0" *ngIf="loginForm.get('Insurance_doc')?.invalid && loginForm.get('Insurance_doc')?.touched">
+                <small class="text-danger">Please Enter Insurance Doc Expiry</small>
+              </div>
+        </li>
+
+       </div>
+          
+      </ul>
+      <div class="fixed-btn" style="background: whitesmoke;">
+          <div class="custom-container">
+              <button type="submit" class="btn theme-btn w-100">Next</button>
+          </div>
+      </div>
+      <section class="panel-space" style="background-color: white;"></section>
+
+      </form>
+  </div>
+</section>
+
+</ion-content>

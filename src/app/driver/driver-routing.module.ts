@@ -25,7 +25,8 @@ const routes: Routes = [  {
 {
   path: 'driver-document-verify',
   loadChildren: () => import('./driver-document-verify/driver-document-verify.module').then( m => m.DriverDocumentVerifyPageModule)
-},  {
+},
+  {
     path: 'vehicle-registration',
     loadChildren: () => import('./vehicle-registration/vehicle-registration.module').then( m => m.VehicleRegistrationPageModule)
   },
@@ -60,6 +61,34 @@ const routes: Routes = [  {
   {
     path: 'privacy-policy',
     loadChildren: () => import('./privacy-policy/privacy-policy.module').then( m => m.PrivacyPolicyPageModule)
+  },
+  {
+    path: 'active-ride-det/:id',
+    loadChildren: () => import('./active-ride-det/active-ride-det.module').then( m => m.ActiveRideDetPageModule)
+  },
+  {
+    path: 'complete-ride-det',
+    loadChildren: () => import('./complete-ride-det/complete-ride-det.module').then( m => m.CompleteRideDetPageModule)
+  },
+  {
+    path: 'completed-ride',
+    loadChildren: () => import('./completed-ride/completed-ride.module').then( m => m.CompletedRidePageModule)
+  },
+  {
+    path: 'cancel-ride',
+    loadChildren: () => import('./cancel-ride/cancel-ride.module').then( m => m.CancelRidePageModule)
+  },
+  {
+    path: 'vehicle-reg-list',
+    loadChildren: () => import('./vehicle-reg-list/vehicle-reg-list.module').then( m => m.VehicleRegListPageModule)
+  },
+  {
+    path: 'add-vehicle-documents/:id',
+    loadChildren: () => import('./add-vehicle-documents/add-vehicle-documents.module').then( m => m.AddVehicleDocumentsPageModule)
+  },
+  {
+    path: 'vehicle-document-list',
+    loadChildren: () => import('./vehicle-document-list/vehicle-document-list.module').then( m => m.VehicleDocumentListPageModule)
   },
 
 

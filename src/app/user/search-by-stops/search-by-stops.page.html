@@ -1,0 +1,254 @@
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/user/home" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h3 class="categories-title text-white">My Rides</h3>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+</ion-header>
+<ion-content [fullscreen]="true" style="background-color: #F5F5F5 important;">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    <!-- location section starts -->
+
+    <section class="location-section pt-0">
+
+        <div class="custom-container">
+
+            <ul class="pickup-location-listing bg-white">
+
+                <li class="mt-2">
+                    <div class="location-box">
+                        <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com.svg"
+                            alt="location">
+                        <input list="stops" id="stops" [value]="currentAddress" (keyup)="getStop($event,'point_one')"
+                            type="text" id="inputpickup" class="bg-white form-control" placeholder="Pickup location">
+                        <i (click)="currentAddress='' ; point1='';payment_amt = 0;" class="fa fa-close text-danger"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="location-box">
+                        <img class="icon" src="./../../../assets/images/svg/location-define-svgrepo-com.svg" alt="gps">
+                        <input [value]="destination" (keyup)="getStop($event,'point_two')" type="text"
+                            id="inputdestination" class="bg-white form-control border-0"
+                            placeholder="Enter destination">
+                            <i  (click)="destination='' ; point2='';payment_amt = 0;" class="fa fa-close text-danger"></i>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- location section starts -->
+
+    <!-- categories place list starts -->
+    <!-- <section class="category-place-section">
+      <div class="custom-container">
+          <ul class="categories-place-list float-end">
+              <li class="" (click)="getCurrentLocation()">
+                  <a class="categories-place-box">
+                      <img class="place-icon" src="./../../../assets/images/svg/location-pin-svgrepo-com (1).svg" alt="home">
+                      <h5>Get Current Location</h5>
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </section> -->
+    <!-- categories place list end -->
+
+
+    <!-- recent search list starts -->
+    <section *ngIf="suggestions.length > 0">
+        <div class="custom-container" *ngIf="suggestions">
+            <h3 class="title-color fw-medium mb-2">Seached Locations Details</h3>
+            <ul class="recent-place-list" *ngIf="suggestions">
+                <li *ngFor="let place of suggestions" (click)="selectPlace(place, searchType,place.location_by)">
+                    <div class="recent-box">
+                        <div class="recent-icon">
+                            <img class="icon" src="./../../../assets/images/svg/history.svg" alt="history">
+                        </div>
+                        <div>
+                            <h5>{{place.city}}, {{place.pincode}}</h5>
+                            <p> {{ place.stop_name }} ,  <b>{{place.state}}</b></p>
+                            <!-- <p *ngIf="place.description!=''"> {{ place.description }} ,  <b>{{place.state}}</b></p> -->
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- <div class="theme-content-bg" > -->
+    <div class="theme-content-bg" *ngIf="(point1!='') && (point2!='') && pt1_location_by=='manual' && pt2_location_by=='manual'">
+        <div class="custom-container">
+            <div class="tab-content ride-content" id="TabContent">
+                <div class="tab-pane fade active show" id="active-tab">
+                    <ul class="my-ride-list">
+                        <li>
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon" src="./../../../assets/images/auto.jpg"
+                                            alt="receipt">
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">Auto</h6>
+                                            </a>
+                                            <span class="status accent-color fw-normal"></span>
+                                        </div>
+                                        <div class="flex-spacing  mt-2">
+                                            <h6 class="fw-mediun success-color">{{distance}} </h6>
+                                            <h6 class="fw-normal content-color">{{duration}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form class="theme-form p-3" >
+            <h5 class="p-0 mt-3 mb-2 fw-medium title-color">Payment</h5>
+            <div class="order-type">
+                <div class="flex-spacing gap-3 w-100">
+                    <div class="form-check form-check3">
+                        <input autocomplete="off" (change)="getSharedMode('private',travel_amt_private)" class="form-check-input" type="radio" name="sharedType" id="fixed45" checked>
+                        <label class="form-check-label box-background" for="fixed45">
+                            <span class="check-box"></span>
+                            <span class="name">Personal ({{travel_amt_private}})</span>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-check3">
+                        <input autocomplete="off" (change)="getSharedMode('shared',travel_amt_shared)" class="form-check-input" type="radio" name="sharedType" id="fixed469">
+                        <label class="form-check-label box-background" for="fixed469">
+                            <span class="check-box"></span>
+                            <span class="name">Shared {{travel_amt_shared}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <h5 class="p-0 mt-3 mb-2 fw-medium title-color">Payment Method</h5>
+            <div class="order-type">
+                <div class="flex-spacing gap-3 w-100">
+                    <div class="form-check form-check3">
+                        <input (change)="getPaymentMode('cash')" class="form-check-input" type="radio" name="RadioDefault" id="fixed45" checked>
+                        <label class="form-check-label box-background" for="fixed45">
+                            <span class="check-box"></span>
+                            <span class="name">Cash</span>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-check3">
+                        <input (change)="getPaymentMode('online')" class="form-check-input" type="radio" name="RadioDefault" id="fixed469">
+                        <label class="form-check-label box-background" for="fixed469">
+                            <span class="check-box"></span>
+                            <span class="name">Online-Payment</span>
+                        </label>
+                    </div>
+                </div>
+            </div> -->
+        </form>
+        <div class="custom-container">
+            <button (click)="bookTripManually()" class="btn theme-btn w-100 my-3 auth-btn">Book Ride</button>
+        </div>
+    </div>
+    <div class="theme-content-bg" *ngIf="(point1!='') && (point2!='') && (pt1_location_by=='auto' || pt2_location_by=='auto') && (isValidAmount(payment_amt))">
+        <div class="custom-container">
+            <div class="tab-content ride-content" id="TabContent">
+                <div class="tab-pane fade active show" id="active-tab">
+                    <ul class="my-ride-list">
+                        <li>
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon" src="./../../../assets/images/auto.jpg"
+                                            alt="receipt">
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">Auto</h6>
+                                            </a>
+                                            <span class="status accent-color fw-normal"></span>
+                                        </div>
+                                        <div class="flex-spacing  mt-2">
+                                            <h6 class="fw-mediun success-color">{{distance}} </h6>
+                                            <h6 class="fw-normal content-color">{{duration}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form class="theme-form p-3">
+            <h5 class="p-0 mt-3 mb-2 fw-medium title-color">Payment</h5>
+            <div class="order-type">
+                <div class="flex-spacing gap-3 w-100">
+                    <div class="form-check form-check3">
+                        <input class="form-check-input" type="radio" name="sharedType" id="fixed45" checked>
+                        <label class="form-check-label box-background" for="fixed45">
+                            <span class="check-box"></span>
+                            <span class="name">Personal (&#8377; {{payment_amt}})</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <h5 class="p-0 mt-3 mb-2 fw-medium title-color">Payment Method</h5>
+            <div class="order-type">
+                <div class="flex-spacing gap-3 w-100">
+                    <div class="form-check form-check3">
+                        <input (change)="getPaymentMode('cash')" class="form-check-input" type="radio" name="RadioDefault" id="fixed45" checked>
+                        <label class="form-check-label box-background" for="fixed45">
+                            <span class="check-box"></span>
+                            <span class="name">Cash</span>
+                        </label>
+                    </div>
+
+                    <div class="form-check form-check3">
+                        <input (change)="getPaymentMode('online')" class="form-check-input" type="radio" name="RadioDefault" id="fixed469">
+                        <label class="form-check-label box-background" for="fixed469">
+                            <span class="check-box"></span>
+                            <span class="name">Online-Payment</span>
+                        </label>
+                    </div>
+                </div>
+            </div> -->
+        </form>
+        <div class="custom-container">
+            <button (click)="bookTrip_auto()" class="btn theme-btn w-100 my-3 auth-btn">Book Ride</button>
+        </div>
+    </div>
+    <!-- recent search list end -->
+
+
+    <!-- panel-space start -->
+    <section class="panel-space"></section>
+    
+</ion-content>

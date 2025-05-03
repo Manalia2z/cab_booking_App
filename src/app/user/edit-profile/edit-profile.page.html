@@ -1,13 +1,80 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>edit-profile</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit-profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/user/profile-setting" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h5 class="categories-title text-white">Edit Profile</h5>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+</ion-header>
+<ion-content [fullscreen]="true"  style="background: #F4F4F4 !important;">
+
+    <!-- my ride section starts -->
+    <section class="section-b-space" style="background: #F5F5F5;padding-top: 1px !important;position: relative;top: -15px;">
+      <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+   <div class="setting-section profile-setting-section" style="background: #F4F4F4;">
+        <div class="custom-container">
+            <form class="theme-form" id="editForm" [formGroup]="editForm" (ngSubmit)="UpdateUser()">
+                <div class="form-group mt-0">
+                    <label class="form-label mb-2" for="Inputname">User Name</label>
+                    <input type="text"  class="form-control" formControlName="u_name"  id="Inputname" placeholder="Enter your name">
+                     <div class="m-0 p-0" *ngIf="editForm.get('u_name')?.invalid && editForm.get('u_name')?.touched">
+                        <small class="text-danger">Please Enter Valid  Name...</small>
+                      </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="form-label mb-2" for="Inputemail">User Email</label>
+                    <input type="email" class="form-control" formControlName="u_email" id="Inputemail" placeholder="Enter your email">
+                    <div class="m-0 p-0" *ngIf="editForm.get('u_email')?.invalid && editForm.get('u_email')?.touched">
+                      <small class="text-danger">Please Enter Email...</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label mb-2" for="Inputemail">User Password</label>
+                    <input type="email" readonly class="form-control" formControlName="u_password" id="Inputemail" placeholder="Enter your email">
+                    <div class="m-0 p-0" *ngIf="editForm.get('u_password')?.invalid && editForm.get('u_password')?.touched">
+                        <small class="text-danger">Please Enter Your Password...</small>
+                      </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label mb-1" for="Inputid">City</label>
+                        <select formControlName="city_tbl_id" class="form-select form-control" id="Inputid" placeholder="Enter Address">
+                          <option value="" selected disabled>Select City</option>
+                          <option [attr.selected]="row.city_tbl_id == city_tbl_id" *ngFor="let row of city;" [value]="row.city_tbl_id">{{row.city_name}}</option>
+                        </select>
+                    <div class="m-0 p-0" *ngIf="editForm.get('city_tbl_id')?.invalid && editForm.get('city_tbl_id')?.touched">
+                      <small class="text-danger">Select City</small>
+                    </div>
+                </div>
+
+               
+
+
+        <div class="fixed-btn">
+            <div class="custom-container">
+                <button type="submit" class="btn theme-btn w-100 auth-btn">Update</button>
+            </div>
+        </div>
+            
+
+            </form>
+        </div>
+    </div>
+    </section>
 </ion-content>

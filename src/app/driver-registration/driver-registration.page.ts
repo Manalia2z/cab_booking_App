@@ -23,6 +23,8 @@ export class DriverRegistrationPage implements OnInit {
   loginForm : any = new FormGroup({
     "d_name": new FormControl("", [Validators.required]),
     "d_address": new FormControl("", [Validators.required]),
+    "d_password": new FormControl("", [Validators.required]),
+    "city_tbl_id": new FormControl("", [Validators.required]),
     "d_number":  new FormControl("", 
       [
         Validators.required,
@@ -55,12 +57,17 @@ export class DriverRegistrationPage implements OnInit {
   {
     this.loadingController.dismiss();
   }
+  city :any;
   ngOnInit() {
-  
+    this.api.getCity().subscribe((res:any)=>{
+      console.log("city",res);
+      this.city = res.data;
+    })
   }
 
   registerNewUser()
   {
+    console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       this.showLoading("Please Wait..");
       console.log(this.loginForm.value);

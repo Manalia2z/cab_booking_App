@@ -10,7 +10,8 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'footer',
     loadChildren: () => import('./footer/footer.module').then( m => m.FooterPageModule)
   },
@@ -49,6 +50,22 @@ const routes: Routes = [
   {
     path: 'terms-condition',
     loadChildren: () => import('./terms-condition/terms-condition.module').then( m => m.TermsConditionPageModule)
+  },
+  {
+    path: 'search-by-stops',
+    loadChildren: () => import('./search-by-stops/search-by-stops.module').then( m => m.SearchByStopsPageModule)
+  },
+  {
+    path: 'active-ride-det/:trip_id',
+    loadChildren: () => import('./active-ride-det/active-ride-det.module').then( m => m.ActiveRideDetPageModule)
+  },
+  {
+    path: 'complete-ride-det',
+    loadChildren: () => import('./complete-ride-det/complete-ride-det.module').then( m => m.CompleteRideDetPageModule)
+  },
+  {
+    path: 'search-location-outstation',
+    loadChildren: () => import('./search-location-outstation/search-location-outstation.module').then( m => m.SearchLocationOutstationPageModule)
   },
 
 ];

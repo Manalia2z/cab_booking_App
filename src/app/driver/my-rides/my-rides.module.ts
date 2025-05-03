@@ -8,6 +8,7 @@ import { MyRidesPageRoutingModule } from './my-rides-routing.module';
 
 import { MyRidesPage } from './my-rides.page';
 import { FooterPageModule } from 'src/app/driver/footer/footer.module';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { FooterPageModule } from 'src/app/driver/footer/footer.module';
     MyRidesPageRoutingModule,
     FooterPageModule
   ],
-  declarations: [MyRidesPage]
+  declarations: [MyRidesPage],
+    providers : [Geolocation]
 })
 export class MyRidesPageModule {}

@@ -1,16 +1,26 @@
-
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a  routerLink="/driver/home" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h5 class="categories-title text-white">Active Ride</h5>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+</ion-header>
 
 <ion-content [fullscreen]="true">
-<header id="" class="">
-<div class="custom-container">
-<div class="header-panel d-flex">
-<a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-    <i class="iconsax icon-btn" data-icon="text-align-left"> </i>
-</a>
-<h3>Active Ride</h3>
-</div>
-</div>
-</header>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
 <!-- header end -->
 
 <!-- active ride starts -->
@@ -30,12 +40,12 @@
                     <a>
                         <h6 class="title-color fw-medium">{{row.u_name}}</h6>
                     </a>
-                    <h5 class="fw-mediun success-color m-0">$256</h5>
+                    <h5 class="fw-mediun success-color m-0">&#8377; 256</h5>
                 </div>
                 <div class="flex-align-center gap-3">
                     <div class="flex-align-center gap-1">
                         
-                        <h5 class="fw-normal m-0 title-color" style="">{{row.u_email}}</h5>
+                        <h5 class="fw-normal m-0 title-color" style="">{{row.trip_status}}</h5>
                         
                     </div>
                 </div>
@@ -72,65 +82,32 @@
                         </h5>
                     </div>
                 </li>
+              
+        
             </ul>
-                <div class="w-100" *ngIf="trip_status == 'accepted'">
-                        <ul class="mt-0 ride-location-listing align-content-center">
-                            <li class="location-box">
-                                <img class="icon" src="./../../../assets/d8d74a00613c7b6c668e.png"
-                                    alt="location">
-                                <h5 class="fw-light title-color mt-0">
-                                    Please enter the Pickup OTP to start the ride    
-                                </h5>
-                            </li>
-                            
-                        </ul>
-                        <input type="hidden" formControlName="trip_tbl_id">
-
-                        <div class="custom-container pb-2 otp-form" style="background: #F5F5F5;">
-                            <div class="form-input dark-border-gradient bg-white" *ngFor="let ctrl of [1,2,3,4]; let i = index">
-                                <input
-                                #otpInput
-                                [formControlName]="'otp' + (i+1)"
-                                placeholder="0"
-                                maxlength="1"
-                                class="form-control bg-white active"
-                                (keyup)="onOtpKeyUp($event, i)"
-                                />
-                            </div>
-                            
-                            </div >
-                            <div class="m-0 p-0" *ngIf="loginForm.get('otp1')?.invalid && loginForm.get('otp1')?.touched || loginForm.get('otp2')?.invalid && loginForm.get('otp2')?.touched || loginForm.get('otp3')?.invalid && loginForm.get('otp3')?.touched || loginForm.get('otp4')?.invalid && loginForm.get('otp4')?.touched">
-                            <small class="text-danger">Please Enter OTP</small>
-                            </div>
-                </div>
+            <a [routerLink]="'/driver/active-ride-det/'+row.trip_tbl_id" *ngIf="row.trip_status == 'accepted' ">
+                <button *ngIf="row.trip_status == 'accepted'" class="btn theme-btn w-100 mt-3">Confirm & Pickup Customer</button>
+            </a>
+            <a [routerLink]="'/driver/active-ride-det/'+row.trip_tbl_id">
+                <button type="button" *ngIf="row.trip_status == 'confirm' || row.trip_status == 'onboard' " class="btn theme-btn w-100 mt-3">Complete Customer Ride</button>
+            </a>  
         </div>
-        <button *ngIf="trip_status == 'accepted'" class="btn theme-btn w-100 mt-3">Confirm & Pickup Customer</button>
-        <button type="button" (click)="completeRide(row.trip_tbl_id)" *ngIf="trip_status == 'confirm' || trip_status == 'onboard' " class="btn theme-btn w-100 mt-3">Complete Customer Ride</button>
 
     </div>
 </form>
 
 </li>
+<li *ngIf="noActiveTrip" class="text-center mt-3">
+    <div class="empty-box">
+        <img class="img-fluid empty-img " style="height: 140px;width: 140px;" src="./../../../assets/images/svg/empty-bed-svgrepo-com.svg" alt="empty">
+        <h3 class="title-color">No Active Ride</h3>
+        <p class="content-color pb-3">You have no active ride at the moment.</p>
+    </div>
 
+</li>
 </ul>
 </div>
-<div class="custom-container">
-    <ul class="payment-method-list d-flex justify-content-between mt-2 pt-0">
-        <li class="w-100">
-            <div class="payment-list-box">
-                <label class="form-check-label" for="flexRadioDefault"> Cash</label>
-                <input class="form-check-input" type="radio" name="flexRadioDefault" checked id="flexRadioDefault">
-            </div>
-        </li>
-        <li class="w-100">
-            <div class="payment-list-box">
-                <label class="form-check-label" for="flexRadioDefault1"> Online</label>
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-            </div>
-        </li>
-        
-    </ul>
-</div>
+
 </section>
 <!-- active ride end -->
 

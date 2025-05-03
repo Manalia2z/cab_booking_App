@@ -6,8 +6,8 @@
     <header id="header" class="auth-header">
       <div class="custom-container">
           <div class="header-panel pb-0">
-              <img class="img-fluid mx-auto logo" src="../../assets/images/logo/driver/driver-logo.png" alt="logo">
-              <img class="img-fluid mx-auto logo-dark" src="../../assets/images/logo/driver/driver-logo-dark.png"
+              <img class="img-fluid mx-auto logo" src="../../../assets/dlogo.png" alt="logo">
+              <img class="img-fluid mx-auto logo-dark" src="../../../assets/dlogo.png"
                   alt="logo">
           </div>
       </div>
@@ -15,9 +15,9 @@
   <!-- header end -->
 
   <!-- signup page starts -->
-  <div class="auth-bg-image-box">
-      <div class="auth-bg-image"></div>
-      <div class="auth-content-bg auth-content-bg-bottom">
+  <div class="">
+      <!-- <div class="auth-bg-image"></div> -->
+      <div class="">
           <div class="custom-container white-background pb-2">
               <div class="auth-title">
                   <div class="loader-line"></div>
@@ -58,7 +58,29 @@
                         <small class="text-danger">Enter Email</small>
                       </div>
                   </div>
-
+                  <div class="form-group">
+                    <label class="form-label mb-2" for="Inputemail">Password</label>
+                    <div class="position-relative">
+                        <input type="password" formControlName="d_password" class="form-control" id="Inputemail" placeholder="Enter your Password">
+                        <i class="fa fa-envelope text-secondary icon" data-icon="mail"></i>
+                    </div>
+                    <div class="m-0 p-0" *ngIf="loginForm.get('d_password')?.invalid && loginForm.get('d_password')?.touched">
+                      <small class="text-danger">Enter Password</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label mb-1" for="Inputid">City</label>
+                      <div class="position-relative">
+                          <select formControlName="city_tbl_id" class="form-select form-control" id="Inputid" placeholder="Enter Address">
+                            <option value="" selected disabled>Select City</option>
+                            <option *ngFor="let row of city;" [value]="row.city_tbl_id">{{row.city_name}}</option>
+                          </select>
+                          <i class="fa fa-map-marker text-secondary icon" data-icon="profile-card"></i>
+                      </div>
+                      <div class="m-0 p-0" *ngIf="loginForm.get('city_tbl_id')?.invalid && loginForm.get('city_tbl_id')?.touched">
+                        <small class="text-danger">Select City</small>
+                      </div>
+                </div>
                   <div class="form-group">
                       <label class="form-label mb-1" for="Inputid">Address</label>
                       <div class="position-relative">

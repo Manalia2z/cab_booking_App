@@ -23,6 +23,8 @@ export class UserRegistrationPage implements OnInit {
 
   loginForm : any = new FormGroup({
     "u_name": new FormControl("", [Validators.required]),
+    "u_password": new FormControl("", [Validators.required]),
+    "city_tbl_id": new FormControl("", [Validators.required]),
     "u_number":  new FormControl("", 
       [
         Validators.required,
@@ -36,8 +38,12 @@ export class UserRegistrationPage implements OnInit {
     ),
   });
   loader : any;
+  city:any;
   ngOnInit() {
-
+    this.userApi.getCity().subscribe((res:any)=>{
+      console.log(res); 
+      this.city = res.data;
+    })
   }
   async presentToast(msg:any) {
     const toast = await this.toastController.create({
@@ -67,7 +73,7 @@ export class UserRegistrationPage implements OnInit {
       this.userApi.userRegistration(this.loginForm.value).subscribe((res:any)=>{
         console.log("res",res);
         if(res.status == 'success')
-        {
+        { 
           localStorage.setItem('token',res.token);
           localStorage.setItem('userType','user');
           this.presentToast(res.msg);

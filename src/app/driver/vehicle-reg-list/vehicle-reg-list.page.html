@@ -1,0 +1,91 @@
+<ion-header>
+  <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+      <div class="custom-container mt-1">
+          <div class="header-panel">
+              <div class="flex-align-center gap-2">
+                  <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
+                      <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                  </a>
+                  &nbsp;<h5 class="categories-title text-white">My Vehicles</h5>
+              </div>
+  
+              <div class="flex-align-center gap-sm-3 gap-2">
+                  <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+              </div>
+          </div>
+      </div>
+  </header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+  <section class="section-b-space">
+    <div class="custom-container">
+        <ul class="offer-listing">
+            <li class="w-100" *ngFor="let row of list;let i = index;" >
+                <div class="offer-box">
+                    <div class="offer-head p-0 m-0">
+                        <h4 style="font-size: 15px;" class="m-0 mb-1"> {{i+1}}.  {{row.vehicle_no}}</h4>
+                        <div class=" flex-align-center gap-2">
+                            <!-- <a *ngIf="row.payment_status=='pending'"  class="d-flex align-items-center" >
+                                <i class="iconsax icon fa fa-inr text-primary icon" data-icon="edit-2">&nbsp;Pay Now </i>
+                            </a> -->
+                            <a (click)="uploadVehicleDoc(row.vehicle_tbl_id)">
+                                <i  class="iconsax fa fa-upload text-primary icon" data-icon="edit-2"> </i>
+                            </a>
+                            
+                            <!-- <a (click)="deleteVehicle(row.vehicle_tbl_id)">
+                              <i class="iconsax icon fa fa-trash text-danger error-icon" data-icon="trash"> </i>
+                          </a> -->
+                        </div>
+                    </div>
+
+                    <div class="offer-content">
+                        <h6 *ngIf="!row.Insurance_doc" class="fw-normal text-danger">Please Upload The Vehicle Documents </h6>
+                        <h6 *ngIf="row.Insurance_doc" class="fw-normal text-success">Documents Uploaded <img style="width: 25px;height: 25px;" src="./../../../assets/images/svg/tick-2-svgrepo-com.svg" alt=""> </h6>
+                        <div class="flex-spacing flex-wrap gap-2 mt-sm-3 mt-2">
+                            <div class="flex-align-center">
+                                <ul class="ride-info-list">
+                                    <li class="info-content">
+                                        <i class="iconsax icon" data-icon="car"> </i>
+                                        <span>{{row.name_model}}</span>
+                                    </li>
+                                    <li class="info-content">
+                                        <i class="iconsax icon" data-icon="user-1"> </i>
+                                        <span>{{row.Seats}} person</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h6 class="validity"> Reg Date : {{row.v_reg_date}}</h6>
+                        </div>
+                    </div>
+                    <div class="active-part">
+                        <h6 class="fw-normal title-color">Ride Active Status <br>
+                            <span class="text-success" *ngIf="row.v_availability=='deactive'" style="font-size: 13px;">(Active This Vehicle If You Using For A Current Ride)</span>
+                            <span class="text-success" *ngIf="row.v_availability=='active'" style="font-size: 13px;"><b>(You Using This Vehicle For Current Ride)</b></span>
+                        </h6>
+                        <div class="switch-btn">
+                           
+                            <input type="checkbox" disabled checked="checked" *ngIf="row.payment_status=='Verified' && row.v_availability=='active'">
+                            <input type="checkbox" (change)="activeVehicle(row.vehicle_tbl_id)" *ngIf="row.payment_status=='Verified' && row.v_availability!='active'">
+                        </div>
+                    </div>
+                    <div class="active-part w-100 justify-content-center">
+                        <button (click)="payNow(row.reg_fee,row.vehicle_tbl_id)" *ngIf="row.payment_status=='pending'" class="btn btn-sm btn-block pt-1 pb-1 btn-primary" >
+                            PAY NOW TO ACTIVATE YOUR VEHICLE
+                        </button>
+                        <button *ngIf="row.payment_status=='Verified'" class="btn btn-sm btn-block pt-1 pb-1 btn-success" >
+                           PAYMENT VERIFIED - {{row.paid_time*1000 | date:'dd/MM/yyyy'}}
+                        </button>
+                    </div>
+                    
+                </div>
+            </li>
+
+         
+        </ul>
+    </div>
+</section>
+</ion-content>

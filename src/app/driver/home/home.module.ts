@@ -9,6 +9,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { FooterPageModule } from '../../driver/footer/footer.module';
 import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { NewOrderModule } from '../new-order/new-order.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    FooterPageModule
+    FooterPageModule,
+    NewOrderModule
   ],
   declarations: [HomePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

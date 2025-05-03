@@ -1,0 +1,169 @@
+<ion-header>
+  <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+    <div class="custom-container mt-1">
+      <div class="header-panel">
+        <div class="flex-align-center gap-2">
+          <a routerLink="/user/home" data-bs-toggle="offcanvas">
+            <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+          </a>
+          &nbsp;<h3 class="categories-title text-white">My Rides</h3>
+        </div>
+
+        <div class="flex-align-center gap-sm-3 gap-2">
+          <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+        </div>
+      </div>
+    </div>
+  </header>
+</ion-header>
+<ion-content [fullscreen]="true" style="background-color: #F5F5F5 important;">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- location section starts -->
+
+  <section class="location-section pt-0">
+
+    <div class="custom-container">
+
+      <ul class="pickup-location-listing bg-white">
+
+        <li class="mt-2">
+          <div class="location-box">
+            <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com.svg" alt="location">
+            <input list="stops" id="stops" [value]="currentAddress" (keyup)="getStop($event,'point_one')" type="text"
+              id="inputpickup" class="bg-white form-control" placeholder="Pickup location">
+            <i (click)="currentAddress='' ; point1='';payment_amt = 0;" class="fa fa-close text-danger"></i>
+          </div>
+        </li>
+        <li>
+          <div class="location-box">
+            <img class="icon" src="./../../../assets/images/svg/location-define-svgrepo-com.svg" alt="gps">
+            <input [value]="destination" (keyup)="getStop($event,'point_two')" type="text" id="inputdestination"
+              class="bg-white form-control border-0" placeholder="Enter destination">
+            <i (click)="destination='' ; point2='';payment_amt = 0;" class="fa fa-close text-danger"></i>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+
+
+  <!-- recent search list starts -->
+  <section *ngIf="suggestions.length > 0">
+    <div class="custom-container" *ngIf="suggestions">
+      <h3 class="title-color fw-medium mb-2">Seached Locations Details</h3>
+      <ul class="recent-place-list" *ngIf="suggestions">
+        <li *ngFor="let place of suggestions" (click)="selectPlace(place, searchType,place.location_by)">
+          <div class="recent-box">
+            <div class="recent-icon">
+              <img class="icon" src="./../../../assets/images/svg/history.svg" alt="history">
+            </div>
+            <div>
+              <h5>{{place.city}}, {{place.pincode}}</h5>
+              <p> {{ place.stop_name }} , <b>{{place.state}}</b></p>
+              <!-- <p *ngIf="place.description!=''"> {{ place.description }} ,  <b>{{place.state}}</b></p> -->
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="location-section pt-0">
+    <!-- <section class="location-section pt-0" *ngIf="point1 && point2 && currentAddress!='' && destination!=''"> -->
+
+    <div class="custom-container">
+      <form class="theme-form mt-0 pt-2" class="theme-form" id="cabForm" [formGroup]="cabForm" (ngSubmit)="bookRide()">
+        <div class="form-group text-end col-12 mt-4 pt-2">
+         
+            Return Trip&nbsp;
+            <input (change)="ChangeReturn($event)" type="checkbox" checked class="bg-white mt-1 float-end" style="width: 20px;height: 20px;"> 
+        </div>
+          <div class="form-group mt-1">
+          <label class="form-label mb-1 mt-2" for="Inputpassenger2">Vehicle type</label>
+          <select formControlName="vehicle_brand_id" class="form-control form-select white-background" id="Inputpassenger2"
+            placeholder="Enter vehicle type" (change)="calculateFareByVehicleType($event)">
+            <option value="">Select Vehicle Brands To Travel</option>
+            <option *ngFor="let row of brandsList;" [value]="row.vehicle_brand_tbl_id">{{row.brand_name}}</option>
+          </select>
+        </div>
+        <div class="form-group mt-2">
+          <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Distance</label> -->
+          <input type="text" placeholder="Distance" style="background-color: ghostwhite;"  readonly [value]="distance" formControlName="distance"   class="form-control" >
+          <div class="m-0 p-0" *ngIf="cabForm.get('distance')?.invalid && cabForm.get('distance')?.touched">
+            <small class="text-danger">Please Select Location</small>
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Duration</label> -->
+          <input type="text" readonly placeholder="Duration" formControlName="duration" [value]="duration" class="form-control" style="background-color: ghostwhite;" >
+        </div>
+        <div class="form-group mt-2">
+          <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Payment  (Auto-calculated after completing trip)</label> -->
+          <input type="text" placeholder="Payment  (Auto-calculated after completing trip)" style="background-color: ghostwhite;"  readonly formControlName="payment_amt" [value]="payment_amt" class="form-control" >
+        </div>
+        <div class="form-group mt-2">
+          <label class="form-label mb-1 mt-2" for="Inputdatetime2">Date and time</label>
+          <input type="datetime-local" formControlName="pickupDate" class="form-control white-background" >
+          <div class="m-0 p-0" *ngIf="cabForm.get('pickupDate')?.invalid && cabForm.get('pickupDate')?.touched">
+            <small class="text-danger">Please Select Pickup Date & Time</small>
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Number of Passengers</label> -->
+          <input type="text" inputmode="numeric" placeholder="Number of Passengers" formControlName="no_of_passaengers" class="form-control white-background" >
+          <div class="m-0 p-0" *ngIf="cabForm.get('no_of_passaengers')?.invalid && cabForm.get('no_of_passaengers')?.touched">
+            <small class="text-danger">Please Enter Number Of Passengers</small>
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Number of Luggage Bags</label> -->
+          <input type="text" inputmode="numeric" placeholder="Number of Luggage Bags" formControlName="no_of_luggage" class="form-control white-background" >
+          <div class="m-0 p-0" *ngIf="cabForm.get('no_of_luggage')?.invalid && cabForm.get('no_of_luggage')?.touched">
+            <small class="text-danger">Please Number of Luggage Bags</small>
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          <!-- <label class="form-label mb-1 mt-2" for="InputDescription">Special Instructions / Notes (Optional)</label> -->
+          <textarea formControlName="description" class="form-control white-background" id="InputDescription" placeholder="Special Instructions / Notes (Optional)"
+            rows="3"></textarea>
+        </div>
+        
+   
+        <!-- <h5 class="p-0 mt-3 mb-2 fw-medium title-color">Payment Method</h5> -->
+        <div class="order-type mt-2 bg-white">
+          <div class="flex-spacing gap-3 w-100">
+            <div class="form-check form-check3">
+              <input class="form-check-input" type="radio" name="RadioDefault" id="fixed4123" checked />
+              <label class="form-check-label" for="fixed4123">
+                <span class="check-box"></span>
+                <span class="name">Cash</span>
+              </label>
+            </div>
+
+            <div class="form-check form-check3">
+              <input class="form-check-input" type="radio" name="RadioDefault" id="fixed469" />
+              <label class="form-check-label" for="fixed469">
+                <span class="check-box"></span>
+                <span class="name">Online-Payment</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <section class="panel-space"></section>
+        <div class="bg-white border-0 w-100 pb-2 pt-0" style="position: fixed;bottom: 0;">
+          <button type="submit" class="btn theme-btn w-100 mt-3 auth-btn">Book Ride</button>
+        </div>
+      </form>
+
+    </div>
+  </section>
+  
+  <!-- panel-space start -->
+
+
+</ion-content>

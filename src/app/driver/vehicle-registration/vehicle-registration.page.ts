@@ -3,7 +3,10 @@ import { UserapiService } from './../../userapi.service';
 import { DriverapiService } from './../../driverapi.service';
 import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal, LoadingController,ToastController } from '@ionic/angular';
+import { IonModal, LoadingController,ToastController,Platform  } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-vehicle-registration',
   templateUrl: './vehicle-registration.page.html',
@@ -16,7 +19,10 @@ export class VehicleRegistrationPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private platform: Platform,
+    private iab: InAppBrowser,
+    private http: HttpClient
   ) { }
 
   regForm : any = new FormGroup({
@@ -24,12 +30,12 @@ export class VehicleRegistrationPage implements OnInit {
     "vehicle_type_tbl_id": new FormControl("", [Validators.required]),
     "name_model": new FormControl("", [Validators.required]),
     "v_reg_date": new FormControl("", [Validators.required]),
-    "vehicle_no": new FormControl("", [Validators.required]),
+    "vehicle_no": new FormControl("", [Validators.required,Validators.pattern(/^[A-Z]{2} [0-9]{2} [A-Z]{2} [0-9]{4}$/)]),
     "Seats": new FormControl("", [Validators.required]),
     "fuel_type": new FormControl("", [Validators.required]),
     "photo": new FormControl("", [Validators.required]),
     "owner_tbl_id": new FormControl("", [Validators.required]),
-    "vehicle_brand_id": new FormControl("", [Validators.required]),
+    "vehicle_brand_id": new FormControl(""),
     "reg_fee": new FormControl("", [Validators.required]),
   });
   vehiclePhoto:any;
@@ -46,6 +52,19 @@ export class VehicleRegistrationPage implements OnInit {
       reader.readAsDataURL(file);
       console.log(this.vehiclePhoto);
     }
+  }
+  formatVehicleNo(event: any) {
+    let input = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    
+    // Format: XX NN XX NNNN
+    let formatted = '';
+    if (input.length > 0) formatted += input.substring(0, 2);
+    if (input.length >= 3) formatted += ' ' + input.substring(2, 4);
+    if (input.length >= 5) formatted += ' ' + input.substring(4, 6);
+    if (input.length >= 7) formatted += ' ' + input.substring(6, 10);
+
+    event.target.value = formatted.trim();
+    this.regForm.get('vehicle_no')?.setValue(formatted.trim(), { emitEvent: false });
   }
   async presentToast(msg:any) {
     const toast = await this.toastController.create({
@@ -83,19 +102,55 @@ export class VehicleRegistrationPage implements OnInit {
       this.vehicle_type = res.data.vehicle_type;
     })
   }
+
+
+  payNow(amt:any,vehicle_tbl_id:any)
+  {
+    this.api.createOrderId(amt).subscribe((res:any)=>{
+      console.log(res);
+      if (res.status && res.order_id) {
+        const redirectUrl = `https://a2zithub.org/deenas_cab/api/checkout?order_id=${res.order_id}&key=${res.key}&amount=${res.amount}&vehicle_tbl_id=${vehicle_tbl_id}&user_token=${localStorage.getItem('token')}`;
+        console.log(redirectUrl);
+        const browser: InAppBrowserObject = this.iab.create(redirectUrl, '_blank', {
+          location: 'no',
+          clearcache: 'yes',
+          toolbar: 'no'
+        });
+        
+        
+
+        browser.on('loadstop').subscribe((event:any) => {
+          if (event.url.includes('success')) {
+            this.presentToast('Payment Success!');
+            alert('Payment Success!');
+            browser.close();
+          } else if (event.url.includes('failed')) {
+            this.presentToast('Payment Failed!');
+            alert('Payment Failed!');
+            browser.close();
+          }
+        });
+      }
+    });
+  
+
+  }
   registerNewVehicle()
   {
-    console.log(this.regForm.value);
+
 
    if (this.regForm.valid) {
       this.showLoading("Please Wait..");
       console.log(this.regForm.value);
       this.api.saveVehicleRegistration(this.regForm.value,this.imageUrl).subscribe((res:any)=>{
+        console.log("res",res);
         if(res.status=='success')
         {
           this.dismissLoader();
           this.presentToast(res.msg);
-          this.router.navigate(['/driver/home']);
+          // this.router.navigate(['/driver/home']);
+          this.payNow(1,res.vehicle_tbl_id);
+
         }else{
           this.presentToast(res.msg);
           this.dismissLoader();
@@ -129,8 +184,7 @@ export class VehicleRegistrationPage implements OnInit {
   {
     this.regForm.patchValue({
       reg_fee:regFee,
-      driver_tbl_id : localStorage.getItem('token'),
-      vehicle_brand_id : ''
+      driver_tbl_id : localStorage.getItem('token')
     })
 
     if(isAval == 'yes')

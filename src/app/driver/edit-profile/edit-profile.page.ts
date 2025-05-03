@@ -35,7 +35,7 @@ export class EditProfilePage implements OnInit {
    }
 
     editForm : any = new FormGroup({
-    "d_name": new FormControl("", [Validators.required]),
+    "d_name": new FormControl("", [Validators.required, Validators.pattern("^[a-zA-Z ]+$") ],),
     "d_email": new FormControl("", [Validators.required]),
     "d_address": new FormControl("", [Validators.required]),
     "d_password": new FormControl("", [Validators.required]),
@@ -64,6 +64,7 @@ UpdateDriver()
       if(res.status=='success'){
         this.dismissLoader();
         this.presentToast(res.msg);
+        this.router.navigate(['/driver/profile-setting']);
       }
       else{
         this.dismissLoader();

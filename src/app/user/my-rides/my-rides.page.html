@@ -1,62 +1,74 @@
 
 
-<ion-content [fullscreen]="true">
-
-<!-- header end -->
-<header id="header" class="main-header inner-page-header" >
-    <div class="custom-container">
-        <div class="header-panel">
-            <div class="flex-align-center gap-2">
-                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                  <ion-buttons slot="start">
-                    <ion-menu-button class="text-dark"></ion-menu-button>
-                  </ion-buttons>
-                </a>
-                <h3 class="categories-title"> My Ride</h3>
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/user/home" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h3 class="categories-title text-white">My Rides</h3>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
             </div>
-
-            <!-- <div class="flex-align-center gap-sm-3 gap-2">
-                <a href="chatting.html">
-                    <i class="iconsax icon-btn" data-icon="messages-2"> </i>
-                </a>
-                <a href="notification.html">
-                    <i class="iconsax icon-btn noti-icon" data-icon="bell-2"> </i>
-                </a>
-            </div> -->
         </div>
-    </div>
-</header>
-<!-- my ride section starts -->
-<section class="section-b-space" style="background: #F5F5F5;padding-top: 1px !important;position: relative;top: -15px;">
+    </header>
+</ion-header>
+<ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    <!-- <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h3 class="categories-title text-white">Categories</h3>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                   
+                </div>
+            </div>
+        </div>
+    </header> -->
 
-    <ul class="nav nav-pills d-none my-ride-tab w-100 border-0 m-0" id="Tab" role="tablist">
+<section class="section-b-space">
+
+    <ul class="nav nav-pills my-ride-tab w-100 border-0 m-0" id="Tab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button (click)="getRideDet('accepted')" class="nav-link " id="pill-active-tab" data-bs-toggle="pill"
-                data-bs-target="#active-tab">Active Ride</button>
+            <button (click)="getRideList('accepted',1)" class="nav-link" [class.active] = 'tab_id == 1' >Active Ride</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button (click)="getRideDet('pending')" class="nav-link active" id="pill-pending-tab" data-bs-toggle="pill"
-                data-bs-target="#pending-tab">Pending Ride</button>
-        </li>
+        
 
         <li class="nav-item" role="presentation">
-            <button (click)="getRideDet('complete')" class="nav-link" id="pill-complete-tab" data-bs-toggle="pill" data-bs-target="#complete-tab">
+                <button class="nav-link" (click)="getRideList('completed',2)" [class.active] = 'tab_id == 2'>
                 Complete Ride</button>
         </li>
+
+        
         <li class="nav-item" role="presentation">
-            <button (click)="getRideDet('cancel')" class="nav-link" id="pill-cancel-tab" data-bs-toggle="pill" data-bs-target="#cancel-tab">Cancel
-                Ride</button>
+            <button class="nav-link" (click)="getRideList('cancel',3)" [class.active] = 'tab_id == 3'>
+                    Cancelled Ride</button>
         </li>
     </ul>
-    <div class="custom-container mt-0 pt-0">
+    <div class="custom-container">
         <div class="tab-content ride-content" id="TabContent">
-            <div class="tab-pane fade active show" id="active-tab">
-                <ul class="my-ride-list" *ngIf="trip_status=='pending'">
-                    <li *ngFor="let row of trip_list;">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
+            
+                <ul class="my-ride-list">
+                    <li *ngFor="let row of trip_list;"> 
+                        <div class="my-ride-box" >
+                            <div class="my-ride-head" (click)="openRideDetails(row.trip_tbl_id)">
                                 <a href="#" class="my-ride-img">
-                                    <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
+                                    <img class="img-fluid my-ride-icon" src="./../../../assets/images/svg/car-svgrepo-com (5).svg"
                                         alt="receipt">
                                 </a>
 
@@ -65,287 +77,69 @@
                                         <a href="#">
                                             <h6 class="title-color fw-medium">ID : 12000052</h6>
                                         </a>
-                                        <span class="status accent-color fw-normal">Pending</span>
+                                        <span class="status accent-color fw-normal text-capitalize">{{row.trip_status}}</span>
                                     </div>
                                     <div class="flex-spacing  mt-2">
-                                        <h6 class="fw-mediun success-color">&#8377; 203</h6>
-                                        <h6 class="fw-normal content-color">{{row.entry_time * 1000 | date:'medium'}}</h6>
+                                        <h6 class="fw-mediun success-color">{{row.payment_amt | currency : 'INR'}}</h6>
+                                        <h6 class="fw-normal content-color">{{row.entry_time*1000 | date : 'medium'}}</h6>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="my-ride-details">
-                                <div class="ride-info">
+                                <div class="ride-info" (click)="openRideDetails(row.trip_tbl_id)">
                                     <div class="ride-info-content">
                                         <div class="d-flex align-content-center gap-2 lh-base">
-                                            
+                                            <h5 class="fw-normal title-color">{{row.u_name}}</h5>
                                             <div class="flex-align-center gap-1">
-                                                <h5 class="fw-normal title-color">{{row.distance}} KM</h5>
-                                                <span class="count content-color fw-normal">({{row.type_name}})</span>
+                                                <!-- <img class="star" src="./../../../assets/images/svg/star.svg" alt="star"> -->
+                                                <!-- <h5 class="fw-normal title-color">4.8</h5> -->
+                                                <!-- <span class="count content-color fw-normal">(127)</span> -->
                                             </div>
                                         </div>
-                                        <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
+                                        <h6 class="fw-normal content-color mt-1">{{row.type_name}}</h6>
                                     </div>
-                                    <i class="fa fa-user bg-light rounded-circle p-2" style="font-size: 29px;"></i>
+                                    <img class="img-fluid profile-img" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
+                                        alt="p5">
                                 </div>
 
-                                <ul class="ride-location-listing mt-3">
+                                <ul (click)="openRideDetails(row.trip_tbl_id)" class="ride-location-listing mt-3">
                                     <li class="location-box">
-                                        <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
+                                        <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com (1).svg"
                                             alt="location">
-                                        <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
+                                        <h5 class="fw-light title-color">{{row.pickUpAddress}}</h5>
                                     </li>
 
                                     <li class="location-box">
-                                        <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                        <h5 class="fw-light title-color border-0">{{row.dropLocation}}
+                                        <img class="icon" src="./../../../assets/images/svg/location-define-svgrepo-com.svg" alt="gps">
+                                        <h5 class="fw-light title-color border-0">{{row.destination}}
                                         </h5>
                                     </li>
-                                    
+                                  
                                 </ul>
-                                <div class="w-100">
-                                    <ul class="ride-location-listing align-content-center">
-                                        <li class="location-box">
-                                            <img class="icon" src="./../../../assets/d8d74a00613c7b6c668e.png"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">
-                                                <b>"Hang tight! Your ride is being confirmed. We'll notify you shortly. 🚖✨"</b>
-                                            </h5>
-                                        </li>
-                                    </ul>
-                                    <div class="ride-info-content">
-                                        <div class="gap-1">
-                                            <img src="./../../../assets/book-pending.gif" style="width: 100%;height: 185px;" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="my-ride-list" *ngIf="trip_status=='accepted'">
-                    <li *ngFor="let row of trip_list;">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
-                                <a href="#" class="my-ride-img">
-                                    <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
-                                        alt="receipt">
+                                <a (click)="openRideDetails(row.trip_tbl_id)" class="float-left btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-warning" >
+                                    <i class="iconsax icon fa fa-info text-right text-dark text-danger" data-icon="trash"> </i>
                                 </a>
-
-                                <div class="my-ride-content flex-column">
-                                    <div class="flex-spacing">
-                                        <a href="#">
-                                            <h6 class="title-color fw-medium">ID : 12000052</h6>
-                                        </a>
-                                        <span class="status text-success fw-normal">Confirmed</span>
-                                    </div>
-                                    <div class="flex-spacing  mt-1">
-                                        <h6 class="fw-mediun success-color">&#8377; 203</h6>
-                                        <h6 class="fw-normal content-color">{{row.entry_time * 1000 | date:'medium'}}</h6>
-                                    </div>
-                                    <div class="flex-spacing  mt-1">
-                                        <h6 class="fw-mediun success-color">Confirmed At</h6>
-                                        <h6 class="fw-normal content-color">{{row.accepted_time * 1000 | date:'short'}}</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="my-ride-details">
-                                <div class="ride-info">
-                                    <div class="ride-info-content">
-                                        <div class="d-flex align-content-center lh-base">
-                                            <div class="flex-align-center">
-                                                <h5 class="fw-normal title-color">{{row.d_name}} | {{row.distance}} KM</h5>
-                                                <span class="count content-color fw-normal">({{row.type_name}})</span>
-                                            </div>
-                                        </div>
-                                        <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
-                                    </div>
-                                    <a href="#" class="my-ride-img">
-                                        <img class="img-fluid my-ride-icon rounded-circle border border-warning" style="height: 50px;width: 50px;" [src]="imgpath+row.driver_photo"
-                                            alt="receipt">
-                                    </a>
-                                </div>
-
-                                <ul class="ride-location-listing mt-3">
-                                    <li class="location-box">
-                                        <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
-                                            alt="location">
-                                        <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
-                                    </li>
-
-                                    <li class="location-box">
-                                        <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                        <h5 class="fw-light title-color border-0">{{row.dropLocation}}
-                                        </h5>
-                                    </li>
-                                    
-                                </ul>
-                                
-                                <div class="w-100">
-                                    <ul class="ride-location-listing align-content-center">
-                                        <li class="location-box">
-                                            <img class="icon" src="./../../../assets/d8d74a00613c7b6c668e.png"
-                                                alt="location">
-                                            <h5 class="fw-light title-color">
-                                                Your ride has been accepted by the driver. The driver is en route to your pickup location. Please be ready.
-                                            </h5>
-                                        </li>
-                                        
-                                    </ul>
-                                    <div class="custom-container pb-2" style="background: #F5F5F5;">
-                                        
-                                        <form class="otp-form">
-                                            <div class="form-input dark-border-gradient bg-white">
-                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[0]">
-                                            </div>
-                                            <div class="form-input dark-border-gradient bg-white">
-                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[1]">
-                                            </div>
-                                            <div class="form-input dark-border-gradient bg-white">
-                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[2]">
-                                            </div>
-                                            <div class="form-input dark-border-gradient bg-white">
-                                                <input readonly class="form-control bg-white active" [value]="row.Pick_Up_OTP[3]">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="ride-info-content">
-                                        <div class="gap-1">
-                                            <img src="./../../../assets/trip-accepted1.gif" class="rounded-3" style="width: 100%;height: 180px;" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                            </div>
-                       
-                        </div>
-                    </li>
-             
-                </ul>
-                <ul class="my-ride-list" *ngIf="trip_status=='confirm' || trip_status=='onboard'">
-                    <li *ngFor="let row of trip_list;">
-                        <div class="my-ride-box">
-                            <div class="my-ride-head">
-                                <a href="#" class="my-ride-img">
-                                    <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
-                                        alt="receipt">
+                                <a (click)="cancelTrip(row.trip_tbl_id)" class="float-end btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-danger" *ngIf="row.trip_status == 'pending'">
+                                    Cancel Ride <i class="iconsax icon fa fa-trash text-right text-white error-icon" data-icon="trash"> </i>
                                 </a>
-
-                                <div class="my-ride-content flex-column">
-                                    <div class="flex-spacing">
-                                        <a href="#">
-                                            <h6 class="title-color fw-medium">ID : 12000052</h6>
-                                        </a>
-                                        <span class="status text-success fw-normal">Onboarded</span>
-                                    </div>
-                                    <div class="flex-spacing  mt-1">
-                                        <h6 class="fw-mediun success-color">&#8377; 203</h6>
-                                        <h6 class="fw-normal content-color">{{row.entry_time * 1000 | date:'medium'}}</h6>
-                                    </div>
-                                    <div class="flex-spacing  mt-1">
-                                        <h6 class="fw-mediun success-color">Confirmed At</h6>
-                                        <h6 class="fw-normal content-color">{{row.accepted_time * 1000 | date:'short'}}</h6>
-                                    </div>
-                                </div>
                             </div>
-
-                            <div class="my-ride-details">
-                                <div class="ride-info">
-                                    <div class="ride-info-content">
-                                        <div class="d-flex align-content-center lh-base">
-                                            <div class="flex-align-center">
-                                                <h5 class="fw-normal title-color">{{row.d_name}} | {{row.distance}} KM</h5>
-                                                <span class="count content-color fw-normal">({{row.type_name}})</span>
-                                            </div>
-                                        </div>
-                                        <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
-                                    </div>
-                                    <a href="#" class="my-ride-img">
-                                        <img class="img-fluid my-ride-icon rounded-circle border border-warning" style="height: 50px;width: 50px;" [src]="imgpath+row.driver_photo"
-                                            alt="receipt">
-                                    </a>
-                                </div>
-
-                                <ul class="ride-location-listing mt-3">
-                                    <li class="location-box">
-                                        <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
-                                            alt="location">
-                                        <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
-                                    </li>
-
-                                    <li class="location-box">
-                                        <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
-                                        <h5 class="fw-light title-color border-0">{{row.dropLocation}}
-                                        </h5>
-                                    </li>
-                                    
-                                </ul>
-                                
-                                <div class="w-100">
-                                 
-                                   
-                                    <div class="ride-info-content">
-                                        <div class="gap-1">
-                                            <img src="./../../../assets/map.jpg" class="rounded-3" style="width: 100%;height: 180px;" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                               
-                            </div>
-                       
                         </div>
                     </li>
-                </ul>
-                <ul class="my-ride-list" *ngIf="trip_status=='completed'">
-                <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="submitReview()" enctype="multipart/form-data">
-                  
-                    <div class="custom-container" *ngFor="let row of trip_list;">
-                        <div class="profile-section" >
-                            <div class="profile-image d-flex justify-content-center">
-                                <img class="img-fluid rounded-circle profile-pic mt-0" style="height: 70px;width: 70px;" [src]="imgpath+row.driver_photo" alt="p8">
-                            </div>
-                            <h3 class="profile-name mt-0 text-center">{{row.d_name}}</h3>
-                            <h6 class="fw-normal content-color mt-1 text-center">{{row.d_email}}</h6>
-            
-                            <h5 class="fw-medium title-color mt-3 mb-2">Rate Us</h5>
-                            <div class="rating-box ion-padding">
-                                <ul class="rating-list">
-                                  <li *ngFor="let star of stars; let i = index" (click)="rate(i + 1)">
-                                    <ion-icon
-                                      [name]="i < selectedRating ? 'star' : 'star-outline'"
-                                      class="star-icon"
-                                    ></ion-icon>
-                                  </li>
-                                </ul>
-                                <h4 class="fw-medium title-color">{{ selectedRating }}/5</h4>
-                              </div>
-            
-                            <div class="tip-part">
-                               <div class="theme-form mt-2">
-                                    <div class="form-group mt-0">
-                                        <label class="form-label mb-2" for="Inputname">Add Comments</label>
-                                        <textarea formControlName="review" class="form-control white-background" id="Inputname" rows="3" placeholder="Enter comment">The ride was good.</textarea>
-                                    </div>
-                                    <button class="btn mt-2 theme-btn w-100">Submit Review</button>
-                                </div>
-                            </div>
-                           
+                    <li *ngIf="noActiveTrip" class="text-center mt-3">
+                        <div class="empty-box">
+                            <img class="img-fluid empty-img " style="height: 140px;width: 140px;" src="./../../../assets/images/svg/empty-bed-svgrepo-com.svg" alt="empty">
+                            <h3 class="title-color">No Active Ride</h3>
+                            <p class="content-color pb-3">You have no active ride at the moment.</p>
                         </div>
-                    </div>
-                    </form>
-            
-                   
+                    
+                    </li>
                 </ul>
-                <ul class="my-ride-list" *ngIf="tripAval">
-                    <h4>No Active Trips Available Right Now...</h4>
-                </ul>
-            </div>
+           
+
         </div>
     </div>
 </section>
-<!-- my ride section end -->
 
 <!-- panel-space start -->
 <section class="panel-space"></section>

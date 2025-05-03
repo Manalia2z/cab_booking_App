@@ -1,18 +1,24 @@
-
+<ion-header>
+  <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+      <div class="custom-container mt-1">
+          <div class="header-panel">
+              <div class="flex-align-center gap-2">
+                  <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
+                      <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                  </a>
+                  &nbsp;<h5 class="categories-title text-white">Vehicle Registration</h5>
+              </div>
+  
+              <div class="flex-align-center gap-sm-3 gap-2">
+                  <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+              </div>
+          </div>
+      </div>
+  </header>
+</ion-header>
 
 <ion-content [fullscreen]="true">
-  <header id="header" class="auth-header inner-page-header white-background pb-3">
-    <div class="custom-container">
-        <div class="header-panel">
-            <a routerLink="/driver/driver-document-verify">
-                <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
-            </a>
-            <img class="img-fluid logo" src="../../assets/images/logo/driver/driver-logo.png" alt="logo">
-            <img class="img-fluid logo-dark" src="../../assets/images/logo/driver/driver-logo-dark.png" alt="logo">
-        </div>
-    </div>
-</header>
-<!-- header end -->
+
 
 <section class="auth-content-bg">
   <div class="custom-container">
@@ -30,32 +36,48 @@
 
      <form class="auth-form" id="regForm" [formGroup]="regForm" (ngSubmit)="registerNewVehicle()" enctype="multipart/form-data">
 
-        <ul class="vehicle-types-list">
+        <ul class="vehicle-types-list mb-2">
         
-            <li *ngFor="let row of vehicle_type;let i=index;">
-                <input (change)="getBrands($event,row.is_brand_available,row.vehicle_type_tbl_id,row.reg_fee)" type="radio" class="btn-check" formControlName="vehicle_type_tbl_id" [value]="row.vehicle_type_tbl_id" [id]="'btn-check'+i">
-                <label class="btn vehicle-type-button p-0" [for]="'btn-check'+i"> <img class="img-fluid vehicle-img"
-                  [src]="imgpath+row.vehicle_type_image" alt="van" style="width: 50px;height: 50px;">
-                    {{row.type_name}}
-                </label>
-            </li>
+          <li *ngFor="let row of vehicle_type; let i = index">
+            <input
+              (change)="getBrands($event, row.is_brand_available, row.vehicle_type_tbl_id, row.reg_fee)"
+              type="radio"
+              class="btn-check"
+              formControlName="vehicle_type_tbl_id"
+              [value]="row.vehicle_type_tbl_id"
+              [id]="'btn-check' + i"
+              [attr.checked]="i == 0"
+            >
+
+            <label class="btn vehicle-type-button p-0"  [for]="'btn-check' + i">
+              <img class="img-fluid vehicle-img"
+                   [src]="imgpath + row.vehicle_type_image"
+                   alt="van"
+                   style="width: 50px; height: 50px;">
+              {{ row.type_name }} 
+            </label>
+          </li>
+          
            
         </ul>
         <div class="m-0 p-0" *ngIf="regForm.get('vehicle_type_tbl_id')?.invalid && regForm.get('vehicle_type_tbl_id')?.touched">
           <small class="text-danger">Please Select Vehicle Type...</small>
         </div>
-        <div *ngIf="showBrands" class="vehicle-types-list bg-white rounded" style="display: block;width: 100%;overflow: visible;">
+       
+          <div class="form-group mt-0 mb-2" *ngIf="showBrands">
+            <label class="form-label mb-2" for="InputVehiclename">Select Brand</label>
+            <div class="position-relative">
+              <select type="radio" class="form-control form-select white-background"  formControlName="vehicle_brand_id" >
+                <option value="" selected disabled>Select Brand</option>
+                <option *ngFor="let row of brands;let i=index;" [attr.selected]="i==0" [value]="row.vehicle_brand_tbl_id">{{row.brand_name}}</option>
+              </select>
+            </div>
+            <div class="m-0 p-0" *ngIf="regForm.get('vehicle_brand_id')?.invalid && regForm.get('vehicle_brand_id')?.touched">
+              <small class="text-danger">Please Select vehicle brand...</small>
+            </div>
+            </div>
           
-            <div *ngFor="let row of brands;let i=index;" class="p-1" style="white-space: nowrap;display: inline-block !important;">
-              <input type="radio" [value]="row.vehicle_brand_tbl_id"  formControlName="vehicle_brand_id"  class="btn-check" [id]="'btn-check'+i+'status'">
-              <label class="btn vehicle-type-button p-1 m-0 btn-outline-success" style="height: 30px;" [for]="'btn-check'+i+'status'">
-                    {{row.brand_name}}
-              </label>
-          </div>
-          <div class="m-0 p-0" *ngIf="regForm.get('vehicle_brand_id')?.invalid && regForm.get('vehicle_brand_id')?.touched">
-            <small class="text-danger">Please Select vehicle brand...</small>
-          </div>
-        </div>
+        
           <div class="form-group mt-0">
               <label class="form-label mb-2" for="InputVehiclename">Vehicle Name</label>
               <div class="position-relative">
@@ -68,16 +90,24 @@
               </div>
           </div>
           <div class="form-group mt-0">
-            <label class="form-label mb-2" for="InputVehicleNo">Vehicle No</label>
+            <label class="form-label mb-2 mt-2" for="InputVehicleNo">Vehicle No</label>
             <div class="position-relative">
-                <input type="text" formControlName="vehicle_no" class="form-control white-background" id="InputVehicleNo"
-                    placeholder="Enter vehicle No">
-                <i class="iconsax fa fa-sort icon" data-icon="car"></i>
+              <input
+                type="text"
+                formControlName="vehicle_no"
+                class="form-control white-background"
+                id="InputVehicleNo"
+                placeholder="Enter vehicle No"
+                maxlength="13"
+                (input)="formatVehicleNo($event)"
+              />
+              <i class="iconsax fa fa-sort icon" data-icon="car"></i>
             </div>
             <div class="m-0 p-0" *ngIf="regForm.get('vehicle_no')?.invalid && regForm.get('vehicle_no')?.touched">
-              <small class="text-danger">Please Enter Your Vehicle No...</small>
+              <small class="text-danger">Please enter a valid Vehicle No (e.g. MH 16 JK 8555)</small>
             </div>
-        </div>
+          </div>
+          
           <div class="form-group ">
 
               <label class="form-label mb-2" for="InputRegdate">Registration Date</label>
@@ -117,7 +147,20 @@
                 <small class="text-danger">Please Select Fuel type...</small>
               </div>
           </div>
-          
+          <div class="form-group">
+            <label class="form-label mb-2" for="InputFuel">Select Owner</label>
+            <div class="position-relative">
+                <select formControlName="owner_tbl_id" class="form-control form-select white-background" id="InputFuel">
+                  <option value="" selected disabled>Select Owner</option>
+                  <option value="own">Own</option>
+                  <option value="other">Other</option>
+                  </select>
+                <i class="iconsax fa fa-tint icon" data-icon="users"></i>
+            </div>
+            <div class="m-0 p-0" *ngIf="regForm.get('owner_tbl_id')?.invalid && regForm.get('owner_tbl_id')?.touched">
+              <small class="text-danger">Please Select Vehicle Owner...</small>
+            </div>
+        </div>
 
           <div class="form-group">
               <label class="form-label mb-2" for="Inputseats">Maximum Seats</label>
@@ -132,22 +175,19 @@
           </div>
           <li class="form-group">
             <h5 class="fw-medium title-color mb-2">Vehicle Photo</h5>
-            <div id="output" class="upload-image">
-                <input formControlName="photo" id="file" (change)="onFileSelected($event)" class="form-control upload-file" type="file" id="formFileLg">
-                <i class="iconsax upload-icon" data-icon="logout-2"> </i>
-                <h5>Upload Image</h5>
+            <div id="output" class="position-relative">
+              <input formControlName="photo" style="background-color: white;" id="file" (change)="onFileSelected($event)" class="form-control" type="file" id="formFileLg">
+              <i class="iconsax fa fa-upload icon" data-icon="users"></i>
             </div>
             <div class="m-0 p-0" *ngIf="regForm.get('photo')?.invalid && regForm.get('photo')?.touched">
-                <small class="text-danger">Please Upload Vehicle Photo</small>
-            </div>
+              <small class="text-danger">Please Upload Vehicle Photo</small>
+          </div>
+           
         </li>
-        <div class="w-50" *ngIf="imageUrl">
-          <label for="">Vehicle Image</label>
-          <img class="w-100" accept="image/*"  *ngIf="imageUrl" [src]="imageUrl" style="height: 150px;object-fit: contain;"/>
-      </div>
+       
           <div class="fixed-btn mt-2">
             <div class="custom-container">
-                <button type="submit" class="btn theme-btn w-100 mt-0 auth-btn">Next</button>
+                <button type="submit" class="btn theme-btn w-100 mt-0 auth-btn">Pay & Proceed </button>
                 <!-- <button routerLink="/driver/driver-bank-details" class="btn theme-btn w-100 mt-0 auth-btn">Next</button> -->
             </div>
           </div>

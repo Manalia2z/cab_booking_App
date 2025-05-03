@@ -11,11 +11,12 @@ import { DriverMenuComponent } from './components/driver-menu/driver-menu.compon
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent,UserMenuComponent,DriverMenuComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,IonicModule,GoogleMapsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },HTTP],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },HTTP,InAppBrowser],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

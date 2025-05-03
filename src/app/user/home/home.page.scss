@@ -1,12 +1,53 @@
+.bounce-marker {
+    animation: bounce 1s ease;
+  }
+
+
+  @keyframes bounce {
+    0%   { transform: translateY(-200%); opacity: 0; }
+    50%  { transform: translateY(0); opacity: 1; }
+    70%  { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+  .map-container {
+    height: 200px;
+    border: 2px solid ghostwhite;
+    // overflow: hidden;
+  }
+
+.card-custom {
+    border-radius: 20px;
+    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  .icon-btn {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin-left: 10px;
+  }
+  .search-input {
+    border-radius: 12px;
+    background-color: #f1f3f5;
+    border: none;
+    padding-left: 40px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+  }
+
 .setting-section{
     background-color: whitesmoke;
     font-family: "GT Walsheim Pro";
 }
 
-h5 {
-    font-size: 14px;
-    margin-bottom: 0;
-}
+// h5 {
+//     font-size: 14px;
+//     margin-bottom: 0;
+// }
 
 .wallet-part {
     background-color: rgba(var(--theme-color), 1);
@@ -24,11 +65,11 @@ h5 {
     text-align: left;
 }
 
-h3 {
-    font-size: 18px;
-    font-family: "GT Walsheim Pro";
-    margin-bottom: 0;
-}
+// h3 {
+//     font-size: 18px;
+//     font-family: "GT Walsheim Pro";
+//     margin-bottom: 0;
+// }
 .profile-list .setting-listing li .setting-box {
     display: flex
 ;
@@ -36,20 +77,20 @@ h3 {
     gap: 10px;
 }
 
-h2,h6,h3,h5{
-    font-family: "GT Walsheim Pro";
-    margin: 0;
-}
+// h2,h6,h3,h5{
+//     font-family: "GT Walsheim Pro";
+//     margin: 0;
+// }
 
-h2{
-    font-size: 16px;
-}
+// h2{
+//     font-size: 16px;
+// }
 
 
-h5{
-    font-size: 14px;
-    margin: 0;
-}
+// h5{
+//     font-size: 14px;
+//     margin: 0;
+// }
 .fw-medium{
     font-size: 13px !important;
 }
@@ -64,4 +105,73 @@ h5{
 
 section{
     background-color: whitesmoke;
+}
+
+.fw-medium{
+    font-size: 13px !important;
+}
+
+.fw-light, .fw-normal{
+    font-size: 14px !important;
+}
+
+.my-ride-list li .my-ride-box {
+    padding: 12px;
+}
+
+section{
+    background-color: whitesmoke;
+}
+.rating-box {
+    margin-bottom: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(var(--white), 1);
+    border: 1px solid rgba(var(--line-color), 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 4px 18px 0px rgba(var(--title-color), 0.05);
+}
+.rating-list {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+  }
+  
+  .star-icon {
+    font-size: 30px;
+    color: #ffc107; // gold/yellow color
+    cursor: pointer;
+  }
+  
+  h5 {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+
+.my-ride-list h3 {
+    font-size: 18px;
+    font-family: "GT Walsheim Pro";
+    margin-bottom: 0;
+}
+
+
+.my-ride-list h2,h6,h3,h5{
+    font-family: "GT Walsheim Pro";
+    margin: 0;
+}
+
+.my-ride-list h2{
+    font-size: 16px;
+}
+
+
+.my-ride-list h5{
+    font-size: 14px;
+    margin: 0;
 }

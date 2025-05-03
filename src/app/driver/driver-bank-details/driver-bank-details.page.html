@@ -1,17 +1,27 @@
 
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/driver/profile-setting" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h5 class="categories-title text-white">Bank Details</h5>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+</ion-header>
 
 <ion-content [fullscreen]="true">
-  <header id="header" class="auth-header inner-page-header white-background pb-3">
-    <div class="custom-container">
-        <div class="header-panel">
-            <a routerLink="/driver/vehicle-registration">
-                <i class="iconsax icon-btn" data-icon="chevron-left"> </i>
-            </a>
-            <img class="img-fluid logo" src="../../assets/images/logo/driver/driver-logo.png" alt="logo">
-            <img class="img-fluid logo-dark" src="../../assets/images/logo/driver/driver-logo-dark.png" alt="logo">
-        </div>
-    </div>
-</header>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
 <!-- header end -->
 
 <!-- bank details section starts -->

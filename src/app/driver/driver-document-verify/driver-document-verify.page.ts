@@ -105,6 +105,7 @@ export class DriverDocumentVerifyPage implements OnInit {
   }
   uploadDriverDocuments()
   {
+    
     if (this.loginForm.valid) {
       this.showLoading("Please Wait..");
       console.log(this.loginForm.value);

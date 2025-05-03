@@ -1,0 +1,38 @@
+.new-ride{
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    background: rgba(0, 0, 0, 0.7);;
+    height: 100%;
+    overflow: scroll;
+    
+}
+h2,h6,h3,h5{
+    font-family: "GT Walsheim Pro";
+    margin: 0;
+}
+
+h2{
+    font-size: 16px;
+}
+
+
+h5{
+    font-size: 14px;
+    margin: 0;
+}
+.fw-medium{
+    font-size: 13px !important;
+}
+
+.fw-light, .fw-normal{
+    font-size: 14px !important;
+}
+
+.my-ride-list li .my-ride-box {
+    padding: 12px;
+}
+
+section{
+    background-color: whitesmoke;
+}

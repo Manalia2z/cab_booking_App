@@ -1,15 +1,23 @@
-<ion-header [translucent]="true">
-    <header id="header" class="main-header inner-page-header">
-        <div class="custom-container">
+
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
             <div class="header-panel">
-                <a href="#offcanvasLeft" data-bs-toggle="offcanvas">
-                    <i class="iconsax icon-btn" data-icon="text-align-left"> </i>
-                </a>
-                <h3>Setting</h3>
+                <div class="gap-2 d-flex align-content-center align-items-center">
+                    <a routerLink="/user/home" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h3 class="categories-title mb-3 text-white">Setting</h3>
+                </div>
+    
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;" alt="logo">
+                </div>
             </div>
         </div>
     </header>
 </ion-header>
+
 
 <ion-content [fullscreen]="true">
     
@@ -21,8 +29,8 @@
                   <img class="img-fluid profile-pic" src="../../assets/images/profile/p8.jpeg" alt="p8">
                 </div>
                 <div class="profile-content">
-                  <h3 class="profile-name">{{ user.u_name }}</h3>
-                  <h6 class="fw-normal content-color mt-1">{{ user.u_email }}</h6>
+                  <h5 class="profile-name">{{ user.u_name }}</h5>
+                  <h6 style="font-size: 14px;" class="fw-normal content-color mt-1">{{ user.u_email }}</h6>
                 </div>
               </div>
             </div>
@@ -38,20 +46,20 @@
                                 <i class="fa fa-user text-secondary icon" > </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Profile settings</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Profile settings</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
 
-                    <li class="w-100">
+                    <!-- <li class="w-100">
                         <a href="saved-location.html" class="setting-box">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="location"> </i>
+                                <i class="iconsax fa fa-map text-secondary icon" data-icon="location"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Saved location </h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Saved location </h5>
+                                <i class="iconsax fa fa-map text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
@@ -59,11 +67,11 @@
                     <li class="w-100">
                         <a href="bank-details.html" class="setting-box">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="bank"> </i>
+                                <i class="iconsax fa fa-bank text-secondary icon" data-icon="bank"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Bank details</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Bank details</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
@@ -71,23 +79,23 @@
                     <li class="w-100">
                         <a href="coupon.html" class="setting-box">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="ticket-1"> </i>
+                                <i class="iconsax fa fa-ticket text-secondary icon" data-icon="ticket-1"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Promo code list</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Promo code list</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
-                    </li>
+                    </li> -->
 
                     <li class="w-100">
                         <a  class="setting-box" routerLink="/user/terms-condition">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="password-check"> </i>
+                                <i class="iconsax fa fa-list text-secondary icon" data-icon="password-check"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Terms & Condition</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Terms & Condition</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
@@ -95,17 +103,17 @@
                     <li class="w-100">
                         <a  class="setting-box" routerLink="/user/privacy-policy">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="password-check"> </i>
+                                <i class="iconsax text-secondary fa fa-lock icon" data-icon="password-check"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Privacy Policy</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Privacy Policy</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
                 </ul>
             </div>
-
+<!-- 
             <h4 class="fw-medium theme-color text-capitalize mt-4 mb-2">App details</h4>
             <div class="profile-list">
                 <ul class="setting-listing">
@@ -115,8 +123,8 @@
                                 <i class="iconsax icon" data-icon="password-check"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>App setting </h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">App setting </h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
@@ -127,8 +135,8 @@
                                 <i class="iconsax icon" data-icon="send-2"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Share app</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Share app</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
@@ -139,45 +147,45 @@
                                 <i class="iconsax icon" data-icon="message-dots-notif"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5>Chat support</h5>
-                                <i class="iconsax icon" data-icon="chevron-right"> </i>
+                                <h5 class="mb-3">Chat support</h5>
+                                <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                             </div>
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> -->
 
-            <a class="driver-banner-part">
+            <!-- <a class="driver-banner-part">
                 <div class="driver-img">
                     <img class="img-fluid driver-icon" src="./../../../assets/images/svg/driver-vector-img.svg" alt="">
                 </div>
                 <div class="driver-content">
                     <h4 class="theme-color fw-medium">Become a driver</h4>
-                    <i class="iconsax icon" data-icon="chevron-right"> </i>
+                    <i class="iconsax fa fa-chevron-right text-secondary icon" data-icon="chevron-right"> </i>
                 </div>
-            </a>
+            </a> -->
 
             <h4 class="fw-medium error-color text-capitalize mt-4 mb-2">Alert zone</h4>
             <div class="profile-list alert-list">
                 <ul class="setting-listing">
                     <li class="w-100">
-                        <a href="#delete" class="setting-box" data-bs-toggle="modal">
+                        <a (click)="deleteAccount()" class="setting-box" data-bs-toggle="modal">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="user-2-remove"> </i>
+                                <i class="iconsax text-danger fa fa-remove icon" data-icon="user-2-remove"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5 class="error-color">Delete account</h5>
+                                <h5 class="mb-3 error-color">Delete account</h5>
                             </div>
                         </a>
                     </li>
 
                     <li class="w-100">
-                        <a routerLink="/login" class="setting-box" data-bs-toggle="modal">
+                        <a (click)="logout()" class="setting-box" data-bs-toggle="modal">
                             <div class="setting-icon">
-                                <i class="iconsax icon" data-icon="logout-2"> </i>
+                                <i class="iconsax text-danger fa fa-sign-out icon" data-icon="logout-2"> </i>
                             </div>
                             <div class="setting-content">
-                                <h5 class="error-color">Logout</h5>
+                                <h5 class="mb-3 error-color">Logout</h5>
                             </div>
                         </a>
                     </li>

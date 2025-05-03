@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 
 import { HomePage } from './home.page';
 import { FooterPageModule } from '../footer/footer.module';
@@ -17,6 +18,7 @@ import { FooterPageModule } from '../footer/footer.module';
     HomePageRoutingModule,
     FooterPageModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [Geolocation]
 })
 export class HomePageModule {}
