@@ -1,0 +1,78 @@
+body{
+    font-family: "GT Walsheim Pro";
+}
+.setting-section{
+    background-color: whitesmoke;
+    font-family: "GT Walsheim Pro";
+}
+input{
+    font-family: "GT Walsheim Pro";
+}
+h5 {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+
+h3 {
+    font-size: 18px;
+    font-family: "GT Walsheim Pro";
+    margin-bottom: 0;
+}
+
+
+h2,h6,h3,h5{
+    font-family: "GT Walsheim Pro";
+    margin: 0;
+}
+
+h2{
+    font-size: 16px;
+}
+
+
+h5{
+    font-size: 14px;
+    margin: 0;
+}
+.fw-medium{
+    font-size: 13px !important;
+}
+
+.fw-light, .fw-normal{
+    font-size: 14px !important;
+}
+
+.my-ride-list li .my-ride-box {
+    padding: 12px;
+}
+
+section{
+    background-color: whitesmoke;
+}
+.rating-box {
+    margin-bottom: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(var(--white), 1);
+    border: 1px solid rgba(var(--line-color), 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 4px 18px 0px rgba(var(--title-color), 0.05);
+}
+.rating-list {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+  }
+  
+  .star-icon {
+    font-size: 30px;
+    color: #ffc107; // gold/yellow color
+    cursor: pointer;
+  }
+  

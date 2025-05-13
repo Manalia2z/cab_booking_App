@@ -8,14 +8,16 @@ import { debounceTime, throttleTime, switchMap } from 'rxjs/operators';
 import { DriverapiService } from '../../driverapi.service';
 import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal, LoadingController,ToastController } from '@ionic/angular';
+import { IonModal, LoadingController,ToastController,ModalController  } from '@ionic/angular';
+import { c } from '@angular/core/navigation_types.d-u4EOrrdZ';
+import { FareDetailsComponent } from 'src/app/components/fare-details/fare-details.component';
 @Component({
-  selector: 'app-my-rides',
-  templateUrl: './my-rides.page.html',
-  styleUrls: ['./my-rides.page.scss'],
-  standalone:false
+  selector: 'app-outstation-ride-det',
+  templateUrl: './outstation-ride-det.page.html',
+  styleUrls: ['./outstation-ride-det.page.scss'],
+  standalone : false
 })
-export class MyRidesPage implements OnInit {
+export class OutstationRideDetPage implements OnInit {
 
   constructor(private platform: Platform,private http: HttpClient,private api : UserapiService,
     private activateRoute: ActivatedRoute,
@@ -23,6 +25,7 @@ export class MyRidesPage implements OnInit {
     private fb: FormBuilder,
     private loadingController: LoadingController,
     private toastController: ToastController,
+    private modalCtrl: ModalController,
     private cdr: ChangeDetectorRef
   ) {
 
@@ -41,63 +44,107 @@ export class MyRidesPage implements OnInit {
    imgpath:any;
    intervalId: any;
    tripAval : any;
-   noActiveTrip:boolean = false;
-
-   tab_id:number = 1;
   ngOnInit() {
+    this.activateRoute.params.subscribe((params) => {   
+      console.log(params['id']);
+      this.tripId = params['id'];
+      console.log(this.tripId);
+    })
     this.tripAval = true;
     this.loginForm.patchValue({
-      "review" : "The ride was good."
+      "review" : "The ride was good.",
+      "trip_tbl_id" : this.tripId
     })
+
     this.imgpath = localStorage.getItem('imgpath');
- 
-    this.api.userTripList().subscribe((res:any)=>{
-      console.log(res);
-      
-      if(res.status == 'success')
-      {
-        this.trip_list = res.data.trip;
-        this.noActiveTrip = false;
-      }else{
-        this.noActiveTrip = true;
-        this.trip_list = [];
-      }
+    this.api.getFareDetails(this.tripId).subscribe((res:any)=>{
+      console.log("FARE DETAILS " ,res);
     })
+    this.api.userTripDetails(this.tripId).subscribe((res:any)=>{  
+      console.log("userTripDetails --- ",res);
+      // this.tripId = res.data.trip[0].trip_tbl_id;
+      this.tripAval = false;
+      this.trip_list = res.data.trip;
+      console.log(this.trip_list,'trip_list');
+      if(res.data.trip[0]){
+        this.trip_status = res.data.trip[0].trip_status;
+      }
+    
+          if(this.tripId){
+            if(res.data.trip[0].trip_status == 'pending')
+              {
+                // this.IsRideConfirmed(this.tripId);
+                this.tripAval = false;
+              }
+              else if(res.data.trip[0].trip_status == 'accepted')
+              {
+                this.IsPickOtpValidate(this.tripId);
+                this.tripAval = false;
+              }
+              else if(res.data.trip[0].trip_status == 'confirm' || res.data.trip[0].trip_status == 'onboard')
+                {
+                  this.IsRideCompleted(this.tripId);
+                  this.tripAval = false;
+                }
+              else if(res.data.trip[0].trip_status == 'completed')
+                {
+                  this.tripAval = true;
+                  console.log('completed -- ',this.trip_list);
+                  // this.IsPaymentPaid(this.tripId);
+                  if(res.data.trip[0].payment_status == 'pending'){
+                      this.intervalId = setInterval(() => {
+                        console.log('Is Payment Paid??');
+                        this.api.isPaymentConfirmed(this.tripId).subscribe((res:any)=>{
+                          console.log('Is Payment Paid',res);
+                          if(res.status == 'success')
+                          {
+                            console.log('OK -- Payment Paid');
+                            this.stopInterval();
+                            this.cdr.detectChanges();
+                            this.ngOnInit();
+                            
+                          }
+                        })
+                  }, 10000); 
+                }
+                }
+            }
+    })
+   
   }
-  ionViewWillEnter() {
-    this.ngOnInit();
+  ionViewWillLeave() {
+    console.log('Page is about to be left');
+    this.stopInterval();
+  }
+ async openFareModal(fareId: any) {
+    const modal = await this.modalCtrl.create({
+      component: FareDetailsComponent,
+      componentProps: { fareId: fareId }
+    });
+    await modal.present();
+  }
+  ionViewDidLeave() {
+    console.log('Page has been left');
+    this.stopInterval();
+  }
+  callYourFunction() {
+    console.log('Function called when leaving the page');
+    // Your logic here
+  }
+  handleRefresh(event: CustomEvent) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.stopInterval();
+      this.ngOnInit();
+      (event.target as HTMLIonRefresherElement).complete();
+    }, 2000);
   }
   rate(star: number) {
     this.selectedRating = star;
     // You can now send this.rating to your backend or use it in form
     console.log('User rated:', star);
   }
-  openRideDetails(trip_id:any,rideId:any)
-  {
-    if(rideId == 5)
-    {
-      this.router.navigate(['/user/outstation-ride-det/'+trip_id]);
-    }else{
-      this.router.navigate(['/user/active-ride-det/'+trip_id]);
-    }
-  }
-  handleRefresh(event: CustomEvent) {
-    setTimeout(() => {
-      // Any calls to load data go here
-      this.ngOnInit();
-      (event.target as HTMLIonRefresherElement).complete();
-    }, 2000);
-  }
-  getRideDet(status:any)
-  {
-    this.trip_status = status;
-    this.api.userTripList().subscribe((res:any)=>{
-      console.log(res);
-      this.tripId = res.data.trip[0].trip_tbl_id;
-      this.trip_list = res.data.trip;
-      
-    })
-  }
+
   IsRideCompleted(tripId:any)
   {
     this.intervalId = setInterval(() => {
@@ -107,23 +154,24 @@ export class MyRidesPage implements OnInit {
         if(res.status == 'success' && (res.trip_status == 'completed') && (this.trip_status=='confirm' || this.trip_status=='onboard'))
         {
           console.log('OK');
-          this.api.userTripList().subscribe((res1:any)=>{
+          this.api.userTripListDet(tripId).subscribe((res1:any)=>{
             console.log(res1);
             this.trip_list = res1.data.trip;
-            this.tripId = res1.data.trip[0].trip_tbl_id;
+            
             this.trip_status = res1.data.trip[0].trip_status;;
             
             console.log(res1,'==========');
             this.presentToast("Your Ride Is Completed...!!");
 
-            this.tripId = res1.data.trip[0].trip_tbl_id;
+            
             this.cdr.detectChanges(); 
             this.stopInterval();
+            this.IsPaymentPaid(this.tripId);
           })
         }
 
       })
-    }, 5000); 
+    }, 10000); 
   }
   IsPickOtpValidate(tripId:any)
   {
@@ -134,24 +182,26 @@ export class MyRidesPage implements OnInit {
         if(res.status == 'success' && (res.trip_status == 'confirm' || res.trip_status == 'onboard') && this.trip_status=='accepted')
         {
           console.log('OK');
-          this.api.userTripList().subscribe((res1:any)=>{
+          this.api.userTripListDet(tripId).subscribe((res1:any)=>{
             console.log(res1);
             this.trip_list = res1.data.trip;
-            this.tripId = res1.data.trip[0].trip_tbl_id;
+            
             this.trip_status = res1.data.trip[0].trip_status;;
             
             console.log(res1,'==========');
             this.presentToast("Your Ride Is Confirmed...!!");
 
-            this.tripId = res1.data.trip[0].trip_tbl_id;
             this.cdr.detectChanges(); 
+            
             this.stopInterval();
             this.IsRideCompleted(this.tripId);
+            this.ngOnInit();
+
           })
         }
 
       })
-    }, 5000); 
+    }, 10000); 
   }
   IsRideConfirmed(tripId:any)
   {
@@ -163,17 +213,19 @@ export class MyRidesPage implements OnInit {
         {
           console.log('OK');
           this.trip_status = 'accepted';
-          this.api.userTripList().subscribe((res1:any)=>{
+          this.api.userTripListDet(tripId).subscribe((res1:any)=>{
             console.log(res1);
             this.cdr.detectChanges(); 
             this.trip_list = res1.data.trip;
-            this.tripId = res1.data.trip[0].trip_tbl_id;
+            this.trip_status = res1.data.trip[0].trip_status;;
+            
             this.stopInterval();
+            this.IsRideCompleted(this.tripId);
           })
         }
 
       })
-    }, 5000); 
+    }, 10000); 
   }
   submitReview()
   {
@@ -196,29 +248,23 @@ export class MyRidesPage implements OnInit {
       })
     }
   }
-  getRideList(status:any,tab_id:any){
-    this.tab_id = tab_id;
-    if(status == 'accepted')
+  IsPaymentPaid(tripId:any)
   {
-        this.ngOnInit();
-  }
-  else
-  {
-    this.api.TripListByUser(status).subscribe((res:any)=>{
-      if(res.status == 'success')
-      {
-        this.trip_list = res.data;
-        console.log("trip_list",status,this.trip_list);
-        this.cdr.detectChanges(); 
-        this.noActiveTrip = false;
+    this.intervalId = setInterval(() => {
+      console.log('Is Payment Paid??');
+      this.api.isPaymentConfirmed(tripId).subscribe((res:any)=>{
+        console.log('Is Payment Paid',res);
+        if(res.status == 'success')
+        {
+          console.log('OK -- Payment Paid');
+          this.stopInterval();
+          this.cdr.detectChanges();
+          this.ngOnInit();
+          
+        }
 
-      }else{
-        this.trip_list = [];
-        this.noActiveTrip = true;
-       
-      }
-    })
-  }
+      })
+    }, 10000); 
   }
   async presentToast(msg:any) {
     const toast = await this.toastController.create({
@@ -246,22 +292,6 @@ export class MyRidesPage implements OnInit {
       console.log('Interval stopped!');
     }
   }
-  cancelTrip(tripId:any)
-  {
-    console.log(tripId);
-    if(confirm("Are you sure you want to cancel the trip?"))
-    { 
-      this.api.cancelTrip(tripId).subscribe((res:any)=>{
-        console.log(res);
-        if(res.status=='success')
-        {
-          this.presentToast(res.msg);
-          this.ngOnInit();
-        }else{
-          this.presentToast(res.msg);
-        }
-      })
-    }
-  }
+
 
 }

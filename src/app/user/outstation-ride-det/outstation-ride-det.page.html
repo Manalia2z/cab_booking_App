@@ -1,0 +1,531 @@
+<ion-header>
+    <header id="header" class="main-header inner-page-header pt-1" style="height: 60px;">
+        <div class="custom-container mt-1">
+            <div class="header-panel">
+                <div class="flex-align-center gap-2">
+                    <a routerLink="/user/my-rides" data-bs-toggle="offcanvas">
+                        <i class="iconsax fa fa-chevron-left text-white" data-icon="text-align-left"> </i>
+                    </a>
+                    &nbsp;<h3 class="categories-title text-white">Active Ride</h3>
+                </div>
+
+                <div class="flex-align-center gap-sm-3 gap-2">
+                    <img class="img-fluid logo user-logo" src="../../../assets/dlogo.png" style="height: 40px;"
+                        alt="logo">
+                </div>
+            </div>
+        </div>
+    </header>
+</ion-header>
+<ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <!-- header end -->
+
+    <!-- my ride section starts -->
+    <section class="section-b-space"
+        style="background: #F5F5F5;padding-top: 1px !important;position: relative;top: -15px;">
+
+        <div class="custom-container mt-0 pt-0">
+            <div class="tab-content ride-content" id="TabContent">
+                <div class="tab-pane fade active show" id="active-tab">
+                    <ul class="my-ride-list" *ngIf="trip_status=='pending'">
+                        <li *ngFor="let row of trip_list;">
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
+                                            alt="receipt">
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">ID : 12000052</h6>
+                                            </a>
+                                            <span class="status accent-color fw-normal">Pending</span>
+                                        </div>
+                                        <div class="flex-spacing  mt-2">
+                                            <h6 class="fw-mediun success-color">&#8377; {{row.payment_amt}}</h6>
+                                            <h6 class="fw-normal content-color">{{row.entry_time * 1000 |
+                                                date:'medium'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="my-ride-details">
+                                    <div class="ride-info">
+                                        <div class="ride-info-content">
+                                            <div class="d-flex align-content-center gap-2 lh-base">
+
+                                                <div class="flex-align-center gap-1">
+                                                    <h5 class="fw-normal title-color">{{row.distance}} KM</h5>
+                                                    <span
+                                                        class="count content-color fw-normal">({{row.type_name}})</span>
+                                                </div>
+                                            </div>
+                                            <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
+                                            <div>
+                                                <span style="font-size: 15px;" (click)="openFareModal(row.trip_tbl_id)" class="text-info"><u class="">View Fare Details</u></span>
+                                            </div>
+                                        </div>
+                                        <i class="fa fa-user bg-light rounded-circle p-2" style="font-size: 29px;"></i>
+                                    </div>
+
+                                    <ul class="ride-location-listing mt-3">
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
+                                        </li>
+
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
+                                            <h5 class="fw-light title-color border-0">{{row.dropLocation}}
+                                            </h5>
+                                        </li>
+
+                                    </ul>
+                                    <div class="w-100">
+                                        <ul class="ride-location-listing align-content-center">
+                                            <li class="location-box">
+                                                <img class="icon"
+                                                    src="./../../../assets/images/svg/car-svgrepo-com (5).svg"
+                                                    alt="location">
+                                                <h5 class="fw-light title-color">
+                                                    <b>"Hang tight! Your ride is being confirmed. We'll notify you
+                                                        shortly. 🚖✨"</b>
+                                                </h5>
+                                            </li>
+                                        </ul>
+                                        <div class="ride-info-content">
+                                            <div class="gap-1">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="my-ride-list" *ngIf="trip_status=='accepted'">
+                        <li *ngFor="let row of trip_list;">
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon" *ngIf="!row.vehicle_type_image"
+                                            src="./../../../assets/images/profile-round-1346-svgrepo-com.svg"
+                                            alt="receipt">
+                                        <img class="img-fluid my-ride-icon" *ngIf="row.vehicle_type_image"
+                                            [src]="imgpath+row.vehicle_type_image" alt="receipt">
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">ID : 12000052</h6>
+                                            </a>
+                                            <span class="status text-success fw-normal">Confirmed</span>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">&#8377; {{row.payment_amt}}</h6>
+                                            <h6 class="fw-normal content-color">{{row.entry_time * 1000 |
+                                                date:'medium'}}</h6>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">Confirmed At</h6>
+                                            <h6 class="fw-normal content-color">{{row.accepted_time * 1000 |
+                                                date:'short'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="my-ride-details">
+                                    <div class="ride-info">
+                                        <div class="ride-info-content">
+                                            <div class="d-flex align-content-center lh-base">
+                                                <div class="flex-align-center">
+                                                    <h5 class="fw-normal title-color">{{row.d_name}} | {{row.distance}}
+                                                        KM</h5>
+                                                    <span
+                                                        class="count content-color fw-normal">({{row.type_name}})</span>
+                                                </div>
+                                            </div>
+                                            <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
+                                        </div>
+                                        <a href="#" class="my-ride-img">
+                                            <img class="img-fluid my-ride-icon rounded-circle border border-warning"
+                                                style="height: 50px;width: 50px;" [src]="imgpath+row.driver_photo"
+                                                alt="receipt">
+                                        </a>
+                                    </div>
+
+                                    <ul class="ride-location-listing mt-3">
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
+                                        </li>
+
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
+                                            <h5 class="fw-light title-color border-0">{{row.dropLocation}}
+                                            </h5>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="w-100">
+                                        <ul class="ride-location-listing align-content-center">
+                                            <li class="location-box">
+                                                <img class="icon" src="./../../../assets/images/svg/otp.svg"
+                                                    alt="location">
+                                                <h5 class="fw-light title-color">
+                                                    Your ride has been accepted by the driver. The driver is en route to
+                                                    your pickup location. Please be ready.
+                                                </h5>
+                                            </li>
+
+                                        </ul>
+                                        <div class="custom-container pb-2" style="background: #F5F5F5;">
+                                            <div style="box-shadow: rgba(253, 250, 169, 0.35) 0px -50px 36px -28px inset;"
+                                                class="d-block bg-white card p-2 justify-content-center align-content-center text-center">
+                                                <h5 class="mt-0 mb-0 text-dark"><b>Vehicle No. : {{row.vehicle_no}}</b>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="custom-container pb-2" style="background: #F5F5F5;">
+                                            <div
+                                                class="d-block bg-white card p-2 justify-content-center align-content-center text-center">
+                                                <h1 class="mt-0 mb-0 text-success"><b>O&nbsp;T&nbsp;P :
+                                                        {{row.Pick_Up_OTP[0]}}&nbsp;{{row.Pick_Up_OTP[1]}}&nbsp;{{row.Pick_Up_OTP[2]}}&nbsp;{{row.Pick_Up_OTP[3]}}</b>
+                                                </h1>
+                                            </div>
+
+                                        </div>
+                                        <div class="ride-info-content">
+                                            <div class="gap-1">
+                                                <img src="./../../../assets/trip-accepted1.gif" class="rounded-3"
+                                                    style="width: 100%;height: 180px;" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </li>
+
+                    </ul>
+                    <ul class="my-ride-list" *ngIf="trip_status=='confirm' || trip_status=='onboard'">
+                        <li *ngFor="let row of trip_list;">
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <a href="#" class="my-ride-img">
+                                            <img class="img-fluid my-ride-icon" *ngIf="!row.vehicle_type_image"
+                                                src="./../../../assets/images/profile-round-1346-svgrepo-com.svg"
+                                                alt="receipt">
+                                            <img class="img-fluid my-ride-icon" *ngIf="row.vehicle_type_image"
+                                                [src]="imgpath+row.vehicle_type_image" alt="receipt">
+                                        </a>
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">ID : 12000052</h6>
+                                            </a>
+                                            <span class="status text-success fw-normal">Onboarded</span>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">&#8377; {{row.payment_amt}}</h6>
+                                            <h6 class="fw-normal content-color">{{row.entry_time * 1000 |
+                                                date:'medium'}}</h6>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">Confirmed At</h6>
+                                            <h6 class="fw-normal content-color">{{row.accepted_time * 1000 |
+                                                date:'short'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="my-ride-details">
+                                    <div class="ride-info">
+                                        <div class="ride-info-content">
+                                            <div class="d-flex align-content-center lh-base">
+                                                <div class="flex-align-center">
+                                                    <h5 class="fw-normal title-color">{{row.d_name}} | {{row.distance}}
+                                                        KM</h5>
+                                                    <span
+                                                        class="count content-color fw-normal">({{row.type_name}})</span>
+                                                </div>
+                                            </div>
+                                            <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
+                                        </div>
+                                        <a href="#" class="my-ride-img">
+                                            <img class="img-fluid my-ride-icon rounded-circle border border-warning"
+                                                style="height: 50px;width: 50px;" [src]="imgpath+row.driver_photo"
+                                                alt="receipt">
+                                        </a>
+                                    </div>
+
+                                    <ul class="ride-location-listing mt-3">
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
+                                        </li>
+
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
+                                            <h5 class="fw-light title-color border-0">{{row.dropLocation}}
+                                            </h5>
+                                        </li>
+
+                                    </ul>
+                                    <div class="custom-container pb-2" style="background: #F5F5F5;">
+                                        <div style="box-shadow: rgba(253, 250, 169, 0.35) 0px -50px 36px -28px inset;"
+                                            class="d-block bg-white card p-2 justify-content-center align-content-center text-center">
+                                            <h5 class="mt-0 mb-0 text-dark"><b>Vehicle No. : {{row.vehicle_no}}</b>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="w-100">
+
+
+                                        <div class="ride-info-content">
+                                            <div class="gap-1">
+                                                <img src="./../../../assets/map.jpg" class="rounded-3"
+                                                    style="width: 100%;height: 180px;" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="my-ride-list" *ngIf="trip_status=='completed'">
+                        <li *ngFor="let row of trip_list;">
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <a href="#" class="my-ride-img">
+                                            <img class="img-fluid my-ride-icon" *ngIf="!row.vehicle_type_image"
+                                                src="./../../../assets/images/profile-round-1346-svgrepo-com.svg"
+                                                alt="receipt">
+                                            <img class="img-fluid my-ride-icon" *ngIf="row.vehicle_type_image"
+                                                [src]="imgpath+row.vehicle_type_image" alt="receipt">
+                                        </a>
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">ID : 12000052</h6>
+                                            </a>
+                                            <span
+                                                class="status text-success text-capitalize fw-normal">{{row.trip_status}}</span>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">&#8377; {{row.payment_amt}}</h6>
+                                            <h6 class="fw-normal content-color">{{row.entry_time * 1000 |
+                                                date:'medium'}}</h6>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">Confirmed At</h6>
+                                            <h6 class="fw-normal content-color">{{row.accepted_time * 1000 |
+                                                date:'short'}}</h6>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">Ride Completed At</h6>
+                                            <h6 class="fw-normal content-color">{{row.completed_time * 1000 |
+                                                date:'short'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="my-ride-details">
+                                    <div class="ride-info">
+                                        <div class="ride-info-content">
+                                            <div class="d-flex align-content-center lh-base">
+                                                <div class="flex-align-center">
+                                                    <h5 class="fw-normal title-color">{{row.d_name}} | {{row.distance}}
+                                                        KM</h5>
+                                                    <span
+                                                        class="count content-color fw-normal">({{row.type_name}})</span>
+                                                </div>
+                                            </div>
+                                            <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
+                                        </div>
+                                        <a href="#" class="my-ride-img">
+                                            <img *ngIf="row.driver_photo"
+                                                class="img-fluid my-ride-icon rounded-circle border border-warning"
+                                                style="height: 50px;width: 50px;" [src]="imgpath+row.driver_photo"
+                                                alt="receipt">
+                                            <img *ngIf="!row.driver_photo"
+                                                class="img-fluid my-ride-icon rounded-circle border border-warning"
+                                                style="height: 50px;width: 50px;"
+                                                src="./../../../assets/images/profile-round-1346-svgrepo-com.svg"
+                                                alt="receipt">
+                                        </a>
+                                    </div>
+
+                                    <ul class="ride-location-listing mt-3">
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
+                                        </li>
+
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
+                                            <h5 class="fw-light title-color border-0">{{row.dropLocation}}
+                                            </h5>
+                                        </li>
+
+                                    </ul>
+                                    <div class="custom-container pb-2" style="background: #F5F5F5;">
+                                        <div style="box-shadow: rgba(253, 250, 169, 0.35) 0px -50px 36px -28px inset;"
+                                            class="d-block bg-white card p-2 justify-content-center align-content-center text-center">
+                                            <h5 class="mt-0 mb-0 text-dark"><b>Vehicle No. : {{row.vehicle_no}}</b>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <button *ngIf="row.payment_status == 'pending'"
+                                        class="btn mt-2 btn-warning w-100">Your Payment Is Pending</button>
+                                    <button *ngIf="row.payment_status == 'paid'"
+                                        class="btn mt-2 btn-light w-100">Payment Paid - {{row.payment_paid_time*1000 |
+                                        date:'medium'}}</button>
+
+
+                                </div>
+
+                            </div>
+                            <form *ngIf="row.user_feedback==''" id="loginForm" [formGroup]="loginForm"
+                                (ngSubmit)="submitReview()" enctype="multipart/form-data">
+
+                                <div class="custom-container bg-white mt-3">
+                                    <div class="profile-section">
+
+
+                                        <h5 class="fw-medium title-color mt-3 mb-2">Rate Us - {{row.d_name}}</h5>
+                                        <div class="rating-box ion-padding">
+                                            <ul class="rating-list">
+                                                <li *ngFor="let star of stars; let i = index" (click)="rate(i + 1)">
+                                                    <ion-icon [name]="i < selectedRating ? 'star' : 'star-outline'"
+                                                        class="star-icon"></ion-icon>
+                                                </li>
+                                            </ul>
+                                            <h4 class="fw-medium title-color">{{ selectedRating }}/5</h4>
+                                        </div>
+
+                                        <div class="tip-part">
+                                            <div class="theme-form mt-2">
+                                                <div class="form-group mt-0">
+                                                    <label class="form-label mb-2" for="Inputname">Add Comments</label>
+                                                    <textarea formControlName="review"
+                                                        class="form-control white-background" id="Inputname" rows="3"
+                                                        placeholder="Enter comment">The ride was good.</textarea>
+                                                </div>
+                                                <button class="btn mt-2 theme-btn w-100">Submit Review</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+
+
+
+                    </ul>
+                    <ul class="my-ride-list" *ngIf="trip_status=='cancel'">
+                        <li *ngFor="let row of trip_list;">
+                            <div class="my-ride-box">
+                                <div class="my-ride-head">
+                                    <a href="#" class="my-ride-img">
+                                        <img class="img-fluid my-ride-icon" [src]="imgpath+row.vehicle_type_image"
+                                            alt="receipt">
+                                    </a>
+
+                                    <div class="my-ride-content flex-column">
+                                        <div class="flex-spacing">
+                                            <a href="#">
+                                                <h6 class="title-color fw-medium">ID : 12000052</h6>
+                                            </a>
+                                            <span class="status text-danger fw-normal">Cancelled</span>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun success-color">&#8377; {{row.payment_amt}}</h6>
+                                            <h6 class="fw-normal content-color">{{row.entry_time * 1000 |
+                                                date:'medium'}}</h6>
+                                        </div>
+                                        <div class="flex-spacing  mt-1">
+                                            <h6 class="fw-mediun text-danger">Cancelled At</h6>
+                                            <h6 class="fw-normal content-color">{{row.cancel_time * 1000 |
+                                                date:'short'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="my-ride-details">
+                                    <div class="ride-info">
+                                        <div class="ride-info-content">
+                                            <div class="d-flex align-content-center gap-2 lh-base">
+
+                                                <div class="flex-align-center gap-1">
+                                                    <h5 class="fw-normal title-color">{{row.distance}} KM</h5>
+                                                    <span
+                                                        class="count content-color fw-normal">({{row.type_name}})</span>
+                                                </div>
+                                            </div>
+                                            <h6 class="fw-normal content-color mt-1">{{row.brand_name}}</h6>
+                                        </div>
+                                        <i class="fa fa-user bg-light rounded-circle p-2" style="font-size: 29px;"></i>
+                                    </div>
+
+                                    <ul class="ride-location-listing mt-3">
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/location-fill.svg"
+                                                alt="location">
+                                            <h5 class="fw-light title-color">{{row.pickupLocation}}</h5>
+                                        </li>
+
+                                        <li class="location-box">
+                                            <img class="icon" src="./../../../assets/images/svg/gps.svg" alt="gps">
+                                            <h5 class="fw-light title-color border-0">{{row.dropLocation}}
+                                            </h5>
+                                        </li>
+
+                                    </ul>
+                                    <div class="custom-container pb-2" style="background: #F5F5F5;">
+                                        <div style="box-shadow: rgba(253, 250, 169, 0.35) 0px -50px 36px -28px inset;"
+                                            class="d-block bg-white card p-2 justify-content-center align-content-center text-center">
+                                            <h5 class="mt-0 mb-0 text-dark"><b>Vehicle No. : {{row.vehicle_no}}</b>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- <ul class="my-ride-list" *ngIf="tripAval">
+                      <h4>No Active Trips Available Right Now...</h4>
+                  </ul> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- my ride section end -->
+
+    <!-- panel-space start -->
+    <section class="panel-space"></section>
+    <app-footer></app-footer>
+
+</ion-content>

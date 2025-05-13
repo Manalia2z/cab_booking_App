@@ -130,6 +130,10 @@ export class HomePage implements OnInit {
   {
     this.router.navigate(['/driver/my-rides']);
   }
+  openOutstationList()
+  {
+    this.router.navigate(['/driver/outstation-rides']);
+  }
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'New Ride Request',

@@ -67,6 +67,14 @@ const routes: Routes = [
     path: 'search-location-outstation',
     loadChildren: () => import('./search-location-outstation/search-location-outstation.module').then( m => m.SearchLocationOutstationPageModule)
   },
+  {
+    path: 'outstation-ride-det/:id',
+    loadChildren: () => import('./outstation-ride-det/outstation-ride-det.module').then( m => m.OutstationRideDetPageModule)
+  },
+  {
+    path: 'fare-details',
+    loadChildren: () => import('./fare-details/fare-details.module').then( m => m.FareDetailsPageModule)
+  },
 
 ];
 

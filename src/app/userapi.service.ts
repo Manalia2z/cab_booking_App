@@ -43,6 +43,10 @@ export class UserapiService {
      {
       return this.http.post(this.endpoint+'saveTripAuto',{'locationData':locationData,'token':token,'fare_det':fare_det,});
      }
+     save_outstation(formData:any,locationData:any,token:any,fare_det:any)
+     {
+      return this.http.post(this.endpoint+'save_outstation',{'form':formData,'locationData':locationData,'token':token,'fare_det':fare_det,});
+     }
      saveTripManually(point1:any,point2:any,payment_amt:any,payment_mode:any,city_stops_tbl_id:any,distance:any,duration:any,shared_mode:any)
      {
       return this.http.post(this.endpoint+'saveTripManually',{'point1':point1,'point2':point2,'payment_amt':payment_amt,'payment_mode':payment_mode,'city_stops_tbl_id':city_stops_tbl_id,'distance':distance,'duration':duration,'token':this.token,'shared_mode':shared_mode});
@@ -88,6 +92,10 @@ export class UserapiService {
      {
       return this.http.post(this.endpoint+'userTripList',{'token':this.token})
      }
+     outstationTripList()
+     {
+      return this.http.post(this.endpoint+'outstationTripList',{'token':this.token})
+     }
      userTripListDet(tripId:any)
      {
       return this.http.post(this.endpoint+'userTripListDet',{'trip_tbl_id':tripId,'token':this.token})
@@ -95,6 +103,10 @@ export class UserapiService {
      userTripDetails(tripId:any)
      {
       return this.http.post(this.endpoint+'userTripDetails',{'trip_tbl_id':tripId,'token':this.token})
+     }
+     getFareDetails(tripId:any)
+     {
+      return this.http.post(this.endpoint+'getFareDetails',{'trip_tbl_id':tripId,'token':this.token})
      }
       user_profile()
       {

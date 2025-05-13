@@ -90,6 +90,10 @@ const routes: Routes = [  {
     path: 'vehicle-document-list',
     loadChildren: () => import('./vehicle-document-list/vehicle-document-list.module').then( m => m.VehicleDocumentListPageModule)
   },
+  {
+    path: 'outstation-rides',
+    loadChildren: () => import('./outstation-rides/outstation-rides.module').then( m => m.OutstationRidesPageModule)
+  },
 
 
 ];

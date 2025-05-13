@@ -39,6 +39,10 @@ export class DriverapiService {
      {
       return this.http.post(this.endpoint+'getDriverDetails',{'token':this.token});
      }
+     outstationTripListD()
+     {
+      return this.http.post(this.endpoint+'outstationTripListD',{token:this.token});
+     }
      set_driver_availability(status:any,longitude:any,latitude:any)
      {
       return this.http.post(this.endpoint+'set_driver_availability',{'token':this.token,'d_availability':status,'longitude':longitude,'latitude':latitude});

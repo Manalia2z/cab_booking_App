@@ -1,0 +1,59 @@
+
+<div style="background-color: rgb(100, 96, 96);height: 100%;">
+  <div class="modal-body p-4 align-items-center" style="top: 15%;">
+
+    <div class="card pb-5 pt-2 border col-12 shadow-sm mb-4 rounded-4 border-0">
+  
+      <div class="card-body">
+        <div class="row mb-3 pt-0 mt-0">
+          <div class="float-end" >
+            <button (click)="close()" class="mt-0 float-end btn flex-align-right btn-sm btn-outline-danger text-danger"><b>&#10005;</b></button>
+          </div>
+        </div>
+      
+  <h6>The fare charges details will change automatically if the ride distance (KM) is modified.</h6>
+        <!-- Driver Name & Email -->
+        <div class="row  mt-4">
+          <div *ngFor="let row of fare;">
+           <table class="table  table-lg table-bordered table-striped table-hover">
+            <tr>
+              <th>Base Fare</th>
+              <th>&#8377; {{row.base_fare}}</th>
+            </tr>
+            <tr>
+              <th>Distance Fare</th>
+              <th>&#8377; {{row.distance_fare}}</th>
+            </tr>
+            <tr>
+              <th>Minimum Fare</th>
+              <th>&#8377; {{row.minimum_fare}}</th>
+            </tr>
+             <tr>
+              <th>Minutes</th>
+              <th>{{row.minutes}}</th>
+            </tr>
+             <tr>
+              <th>Per KM Rate</th>
+              <th>{{row.per_km_rate}}</th>
+            </tr>
+             <tr>
+              <th>Per Minute Rate</th>
+              <th>{{row.per_min_rate}}</th>
+            </tr>
+             <tr>
+              <th>Total Pay</th>
+              <th>&#8377; {{row.total_pay_to_cust}}</th>
+            </tr>            
+          </table>  
+        </div>
+        <!-- Vehicle Details -->
+
+  
+        <!-- Pay Now Button -->
+    
+  
+      </div>
+    </div>
+  
+  </div>
+</div>

@@ -81,14 +81,13 @@ export class SearchLocationOutstationPage implements OnInit {
 
   ngOnInit() {
     this.cabForm = this.fb.group({
-      currentLocation: ['', Validators.required],  // Current Location
+      currentAddress: ['', Validators.required],  // Current Location
       destination: ['', Validators.required],      // Destination
       pickupDate: ['', Validators.required],       // Pickup Date
       // pickupTime: ['', Validators.required],       // Pickup Time
       returnTrip: ['yes', Validators.required],       // Return Trip (Yes/No)
       returnDate: [''],                            // Return Date
       returnTime: [''],                            // Return Time
-      cabType: ['', Validators.required],          // Cab Type (e.g., Sedan, SUV)
       numberOfPassengers: [1, [Validators.required, Validators.min(1)]], // Number of passengers
       paymentMode: ['', Validators.required],      // Payment Mode
       vehicle_brand_id: ['', Validators.required],      // Payment Mode
@@ -171,9 +170,38 @@ export class SearchLocationOutstationPage implements OnInit {
           this.currentAddress = res.address;
           this.currentPincode = res.pincode;
           this.currentCity = res.city;
-          this.api.GetNearestStop(this.latitude,this.longitude).subscribe((res_pickups:any)=>{
-            console.log("Pickup Locations:", res_pickups);
-          })
+          this.api.GetPlaceDetails(res.place_id).subscribe(
+            (res1: any) => {
+              console.log("res1==",res1);
+              if (res1.status === "success") 
+                {
+                
+                  this.pickupLocation = res1.details.address;
+                  this.currentAddress = res1.details.address;
+                  this.cabForm.patchValue({
+                    currentAddress : this.currentAddress
+                  })
+                  this.point1 = res1.details.address;
+                  this.pickUpCity = res1.details.city; 
+                  this.pickUpAddress = res1.details.address; 
+                  this.pickUplatitude = res1.details.latitude; 
+                  this.pickUplongitude = res1.details.longitude; 
+                  this.pickUpPostalCode = res1.details.postal_code;
+                  this.pickUpState = res1.details.state; 
+                  this.isPickUpLocationFound = 'yes';
+                console.log("Latitude:", res.details.latitude);
+                console.log("Longitude:", res.details.longitude);
+                console.log("City:", res.details.city);
+                console.log("Postal Code:", res.details.postal_code);
+              }
+            },
+            (error: any) => {
+              console.error("Error fetching place details:", error);
+            }
+          );
+          // this.api.GetNearestStop(this.latitude,this.longitude).subscribe((res_pickups:any)=>{
+          //   console.log("Pickup Locations:", res_pickups);
+          // })
         }
       })
     }).catch((error) => {
@@ -182,7 +210,7 @@ export class SearchLocationOutstationPage implements OnInit {
   }
   getAmount(ev:any,brandId:any)
   {
-    this.api.calculatefareDistance(25,this.duration,this.distance).subscribe((res:any)=>{
+    this.api.calculatefareDistance(brandId,this.duration,this.distance).subscribe((res:any)=>{
       console.log("fare Details",res);
       this.payment_amt = res.total_pay_to_cust;
       this.fare_det = res.fare;
@@ -191,6 +219,12 @@ export class SearchLocationOutstationPage implements OnInit {
     console.log(brandId,this.duration,this.distance);
   }
   location_by:any;
+  clear(pt:any)
+  {
+    this.payment_amt = 0;
+    this.currentAddress = '';
+    this.point1 ='';
+  }
   getPlaceDetailsByDet(place:any,type:any,location_by:any) {
   {
     this.api.GetPlaceDetails(place.place_id).subscribe(
@@ -201,7 +235,11 @@ export class SearchLocationOutstationPage implements OnInit {
           if(type == 'point_one'){
             this.pickupLocation = res.details.address;
             this.currentAddress = res.details.address;
-            if(location_by == 'auto'){
+            this.cabForm.patchValue({
+              currentAddress : this.currentAddress
+            })
+            if(location_by == 'auto')
+              {
               this.point1 = res.details.address;
             }
             this.pickUpCity = res.details.city; 
@@ -214,6 +252,9 @@ export class SearchLocationOutstationPage implements OnInit {
           }
           if(type == 'point_two'){
             this.destination = res.details.address;
+            this.cabForm.patchValue({
+              destination : this.destination
+            })
             if(location_by == 'auto'){
               this.point2 = res.details.address;
             }
@@ -298,6 +339,11 @@ isValidAmount(val: any): boolean {
       console.log("getTheExactDistance",res);
       this.distance = res.distance;
       this.duration = res.duration;
+
+      this.cabForm.patchValue({
+        distance : this.distance,
+        duration : this.duration
+      })
     })
   }
 
@@ -306,6 +352,9 @@ isValidAmount(val: any): boolean {
     this.api.calculatefareDistance(id.target.value,this.duration,this.distance).subscribe((res:any)=>{
       console.log("fare Details",res);
       this.payment_amt=res.total_pay_to_cust;
+      this.cabForm.patchValue({
+        payment_amt:this.payment_amt
+      })
       this.fare_det = res.fare;
     })
   }
@@ -425,7 +474,48 @@ isValidAmount(val: any): boolean {
 
   bookRide()
   {
+    this.cabForm.patchValue({
+      paymentMode : this.payment_mode
+    })
+    const locations = [
+      { 
+        isPickUpLocationFound: this.isPickUpLocationFound,
+        isDropLocationFound: this.isDropLocationFound ,
+        pickupLocation : this.pickupLocation,
+        pickUpCity : this.pickUpCity,
+        pickUpAddress : this.pickUpAddress,
+        pickUplatitude : this.pickUplatitude,
+        pickUplongitude : this.pickUplongitude,
+        pickUpPostalCode : this.pickUpPostalCode,
+        pickUpState : this.pickUpState,
+        destination : this.destination,
+        dropLocation : this.dropLocation,
+        dropCity : this.dropCity,
+        dropAddress : this.dropAddress,
+        droplatitude : this.droplatitude,
+        droplongitude : this.droplongitude,
+        dropPostalCode : this.dropPostalCode,
+        dropState : this.dropState,
+        distance : this.distance,
+        duration : this.duration,
+        payment_amt : this.payment_amt,
+        payment_mode : this.payment_mode,
+        shared_mode : this.shared_mode,
+      }
+    ];
+    console.log("locations -- " ,locations);
+    
+    console.log(this.cabForm.value);
     if(this.cabForm.valid) {
+      this.api.save_outstation(this.cabForm.value,locations,this.token,this.fare_det).subscribe((res:any)=>{
+        console.log(" save_outstation ----- ",res);
+        this.presentToast(res.msg);
+        if(res.status == 'success'){
+          this.router.navigate(['user/home']);
+        } else{
+
+        }
+      })
       console.log(this.cabForm.value);
     }else{
       this.markFormGroupTouched(this.cabForm);

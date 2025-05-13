@@ -154,6 +154,7 @@
             </ul>
           </div>
         <div class="custom-container d-flex justify-content-center text-center align-items-center" *ngIf="!aval_status">
+
             <div class="card justify-content-center text-center p-4 border-0"
             style="box-shadow: rgba(244, 238, 132, 0.16) 0px 10px 36px 0px, rgba(203, 206, 67, 0.06) 0px 0px 0px 1px; border-radius: 20px;">
             
@@ -170,7 +171,20 @@
         </div>
             <div class="custom-container" *ngIf="tripAval && aval_status">
 
-
+               <ul style="box-shadow: rgba(229, 99, 0, 0.25) 0px 50px 100px -20px, rgba(225, 72, 7, 0.3) 0px 30px 60px -30px;" class="notification-list">
+                <li (click)="openOutstationList()">
+                    <div class="notification-box">
+                        <div class="notification-icon">
+                            <i class="iconsax fa fa-clock-o icon" data-icon="clock"> </i>
+                        </div>
+                        <div>
+                            <h5 class="m-0 p-0">Outstation Ride's </h5>
+                            <p class="m-0 p-0">Tap To See the Outstation Ride Details.</p>
+                        </div>
+                    </div>
+                </li>
+               
+            </ul>
             <ul class="my-ride-list driver-ride-list mt-1">
                 <div class="title">
                     <h4 class="m-0">All Pending Ride</h4>

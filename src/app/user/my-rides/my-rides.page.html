@@ -66,7 +66,7 @@
                 <ul class="my-ride-list">
                     <li *ngFor="let row of trip_list;"> 
                         <div class="my-ride-box" >
-                            <div class="my-ride-head" (click)="openRideDetails(row.trip_tbl_id)">
+                            <div class="my-ride-head" (click)="openRideDetails(row.trip_tbl_id,row.ride_category_tbl_id)">
                                 <a href="#" class="my-ride-img">
                                     <img class="img-fluid my-ride-icon" src="./../../../assets/images/svg/car-svgrepo-com (5).svg"
                                         alt="receipt">
@@ -87,7 +87,7 @@
                             </div>
 
                             <div class="my-ride-details">
-                                <div class="ride-info" (click)="openRideDetails(row.trip_tbl_id)">
+                                <div class="ride-info" (click)="openRideDetails(row.trip_tbl_id,row.ride_category_tbl_id)">
                                     <div class="ride-info-content">
                                         <div class="d-flex align-content-center gap-2 lh-base">
                                             <h5 class="fw-normal title-color">{{row.u_name}}</h5>
@@ -103,7 +103,7 @@
                                         alt="p5">
                                 </div>
 
-                                <ul (click)="openRideDetails(row.trip_tbl_id)" class="ride-location-listing mt-3">
+                                <ul (click)="openRideDetails(row.trip_tbl_id,row.ride_category_tbl_id)" class="ride-location-listing mt-3">
                                     <li class="location-box">
                                         <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com (1).svg"
                                             alt="location">
@@ -117,7 +117,7 @@
                                     </li>
                                   
                                 </ul>
-                                <a (click)="openRideDetails(row.trip_tbl_id)" class="float-left btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-warning" >
+                                <a (click)="openRideDetails(row.trip_tbl_id,row.ride_category_tbl_id)" class="float-left btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-warning" >
                                     <i class="iconsax icon fa fa-info text-right text-dark text-danger" data-icon="trash"> </i>
                                 </a>
                                 <a (click)="cancelTrip(row.trip_tbl_id)" class="float-end btn btn-block btn-sm pt-1 pb-1 mt-2 mb-2 btn-danger" *ngIf="row.trip_status == 'pending'">

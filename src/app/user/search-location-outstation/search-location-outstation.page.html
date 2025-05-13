@@ -22,7 +22,7 @@
   </ion-refresher>
   <!-- location section starts -->
 
-  <section class="location-section pt-0">
+  <section class="location-section pt-0 mb-0">
 
     <div class="custom-container">
 
@@ -33,7 +33,7 @@
             <img class="icon" src="./../../../assets/images/svg/location-pin-svgrepo-com.svg" alt="location">
             <input list="stops" id="stops" [value]="currentAddress" (keyup)="getStop($event,'point_one')" type="text"
               id="inputpickup" class="bg-white form-control" placeholder="Pickup location">
-            <i (click)="currentAddress='' ; point1='';payment_amt = 0;" class="fa fa-close text-danger"></i>
+            <i (click)="clear('point_one')" class="fa fa-close text-danger"></i>
           </div>
         </li>
         <li>
@@ -46,9 +46,14 @@
           </div>
         </li>
       </ul>
+
     </div>
   </section>
-
+  <div class="recent-icon float-end bg-light">
+    <span (click)="getCurrentLocation()" style="font-size: 10px;" class="btn btn-warning btn-sm p-0 pt-1 pb-1 pl-1 pr-1"> &nbsp; &nbsp;Use Current Location&nbsp; 
+    <img class="icon" src="./../../../assets/images/svg/location-define-svgrepo-com.svg" style="height: 20px;width: 20px;" alt="history">
+    &nbsp;</span>&nbsp;&nbsp;&nbsp;
+   </div>
 
 
   <!-- recent search list starts -->
@@ -71,12 +76,12 @@
       </ul>
     </div>
   </section>
+  <form class="theme-form mt-0 pt-2" class="theme-form" id="cabForm" [formGroup]="cabForm" (ngSubmit)="bookRide()">
 
-  <section class="location-section pt-0">
-    <!-- <section class="location-section pt-0" *ngIf="point1 && point2 && currentAddress!='' && destination!=''"> -->
+  <!-- <section class="location-section pt-0"> -->
+    <section class="location-section pt-0" *ngIf="point1 && point2 && currentAddress!='' && destination!=''">
 
     <div class="custom-container">
-      <form class="theme-form mt-0 pt-2" class="theme-form" id="cabForm" [formGroup]="cabForm" (ngSubmit)="bookRide()">
         <div class="form-group text-end col-12 mt-4 pt-2">
          
             Return Trip&nbsp;
@@ -92,18 +97,18 @@
         </div>
         <div class="form-group mt-2">
           <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Distance</label> -->
-          <input type="text" placeholder="Distance" style="background-color: ghostwhite;"  readonly [value]="distance" formControlName="distance"   class="form-control" >
+          <input type="text" placeholder="Distance" style="background-color: ghostwhite;"  readonly formControlName="distance"   class="form-control" >
           <div class="m-0 p-0" *ngIf="cabForm.get('distance')?.invalid && cabForm.get('distance')?.touched">
             <small class="text-danger">Please Select Location</small>
           </div>
         </div>
         <div class="form-group mt-2">
           <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Duration</label> -->
-          <input type="text" readonly placeholder="Duration" formControlName="duration" [value]="duration" class="form-control" style="background-color: ghostwhite;" >
+          <input type="text" readonly placeholder="Duration" formControlName="duration" class="form-control" style="background-color: ghostwhite;" >
         </div>
         <div class="form-group mt-2">
           <!-- <label class="form-label mb-1 mt-2" for="Inputdatetime2">Payment  (Auto-calculated after completing trip)</label> -->
-          <input type="text" placeholder="Payment  (Auto-calculated after completing trip)" style="background-color: ghostwhite;"  readonly formControlName="payment_amt" [value]="payment_amt" class="form-control" >
+          <input type="text" placeholder="Payment  (Auto-calculated after completing trip)" style="background-color: ghostwhite;"  readonly formControlName="payment_amt" class="form-control" >
         </div>
         <div class="form-group mt-2">
           <label class="form-label mb-1 mt-2" for="Inputdatetime2">Date and time</label>
@@ -138,7 +143,7 @@
         <div class="order-type mt-2 bg-white">
           <div class="flex-spacing gap-3 w-100">
             <div class="form-check form-check3">
-              <input class="form-check-input" type="radio" name="RadioDefault" id="fixed4123" checked />
+              <input (click)="getPaymentMode('cash')" class="form-check-input" type="radio" name="RadioDefault" id="fixed4123" checked />
               <label class="form-check-label" for="fixed4123">
                 <span class="check-box"></span>
                 <span class="name">Cash</span>
@@ -146,7 +151,7 @@
             </div>
 
             <div class="form-check form-check3">
-              <input class="form-check-input" type="radio" name="RadioDefault" id="fixed469" />
+              <input (click)="getPaymentMode('online')" class="form-check-input" type="radio" name="RadioDefault" id="fixed469" />
               <label class="form-check-label" for="fixed469">
                 <span class="check-box"></span>
                 <span class="name">Online-Payment</span>
@@ -155,13 +160,14 @@
           </div>
         </div>
         <section class="panel-space"></section>
-        <div class="bg-white border-0 w-100 pb-2 pt-0" style="position: fixed;bottom: 0;">
-          <button type="submit" class="btn theme-btn w-100 mt-3 auth-btn">Book Ride</button>
-        </div>
-      </form>
+
 
     </div>
   </section>
+  <div class="bg-white border-0 w-100 pb-2 pt-0 mx-auto" style="position: fixed;bottom: 0;">
+    <button type="submit" class="btn theme-btn w-100 mt-3 auth-btn">Book Ride</button>
+  </div>
+</form>
   
   <!-- panel-space start -->
 
